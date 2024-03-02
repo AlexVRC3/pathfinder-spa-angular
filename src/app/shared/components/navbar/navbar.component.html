@@ -1,0 +1,9 @@
+<nav class="navbar navbar-light bg-light ">
+  <div class="container-fluid">
+    <a class="navbar-brand">Pathfinder</a>
+    <form class="d-flex" [formGroup]="formNavBar" (ngSubmit)="submit()">
+      <input class="form-control me-2" type="search" formControlName="search" placeholder="Buscar ruta..." aria-label="Buscar ruta">
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+    </form>
+  </div>
+</nav>
