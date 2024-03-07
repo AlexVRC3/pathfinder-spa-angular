@@ -1,8 +1,17 @@
-<nav class="navbar navbar-light bg-light ">
+<nav class="navbar">
   <div class="container-fluid">
-    <a class="navbar-brand">Pathfinder</a>
+    <a class="navbar-brand" href="http://PathFinderSpa">
+      <img class="logo" src="assets\svg\logoHeader.svg" alt="Your SVG Image" />
+    </a>
+    <div clas="navbar-brand"></div>
     <form class="d-flex" [formGroup]="formNavBar" (ngSubmit)="submit()">
-      <input class="form-control me-2" type="search" formControlName="search" placeholder="Buscar ruta..." aria-label="Buscar ruta">
+      <input
+        class="form-control me-2"
+        type="search"
+        formControlName="search"
+        placeholder="Buscar ruta..."
+        aria-label="Buscar ruta"
+      />
       <button class="btn btn-outline-success" type="submit">Buscar</button>
     </form>
   </div>
