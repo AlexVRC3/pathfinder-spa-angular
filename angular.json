@@ -24,7 +24,10 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/logo.svg",
+              "src/assets",
+              "src/svg/logoHeader.svg",
+              "src/assets/images/mountain-trail.jpg"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
