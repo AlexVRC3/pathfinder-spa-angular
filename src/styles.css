@@ -1,3 +1,7 @@
-body {
-    background: #110f16;
+body{
+    background-image: url('src/assets/images/mountain-trail.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%, 200%;
+    background-attachment: fixed;
+    background-position-y: -700px;
 }

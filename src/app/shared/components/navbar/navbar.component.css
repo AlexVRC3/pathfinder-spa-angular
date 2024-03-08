@@ -1,5 +1,5 @@
 .navbar{
-    background-color:#34241c;
+    background-color: #333D29;
 }
 .logo{
     position:absolute;
@@ -11,19 +11,19 @@
 }
 
 .btn-outline-success {
-    --bs-btn-color: #906b43;
-    --bs-btn-border-color: #906b43;
+    --bs-btn-color: #A4AC86;
+    --bs-btn-border-color: #A4AC86;
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #906b43;
-    --bs-btn-hover-border-color: #906b43;
+    --bs-btn-hover-bg: #A4AC86;
+    --bs-btn-hover-border-color: #A4AC86;
     --bs-btn-focus-shadow-rgb: 25, 135, 84;
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #906b43;
-    --bs-btn-active-border-color: #906b43;
+    --bs-btn-active-bg: #A4AC86;
+    --bs-btn-active-border-color: #A4AC86;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #906b43;
+    --bs-btn-disabled-color: #A4AC86;
     --bs-btn-disabled-bg: transparent;
-    --bs-btn-disabled-border-color: #906b43;
+    --bs-btn-disabled-border-color: #A4AC86;
     --bs-gradient: none;
 }
 
