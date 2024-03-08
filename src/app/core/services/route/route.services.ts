@@ -14,10 +14,10 @@ export class RouteService implements IRouteService {
   private readonly RUTA = environment.PATH.RUTA;
   constructor(private http: HttpClient, private envService: EnvironmentService){}
 
-  getListRoute(name: string): Observable<Ruta[]> {
+  getListRoute(ubicacion: string): Observable<Ruta[]> {
     const url: string = this.envService.getUrl(this.RUTA.SEARCH);
     const params: HttpParams = new HttpParams()
-                                    .set('name', name);
+                                    .set('ubicacion', ubicacion);
     return this.http.get<Ruta[]>(url, { params });
   }
 
