@@ -11,7 +11,7 @@ import { NavbarCommunicationService } from 'src/app/shared/services/navbar.servi
 })
 export class ListRutasComponent implements OnDestroy {
   private suscriptionNavBarService: Subscription;
-  public foundUser: boolean = true;
+  public foundRuta: boolean = true;
   public listRutas: Ruta[] = [];
   constructor(private readonly navBarServices: NavbarCommunicationService, private readonly rutaService: RouteService) { 
     this.suscriptionNavBarService = this.navBarServices.$data().pipe(
@@ -20,7 +20,7 @@ export class ListRutasComponent implements OnDestroy {
       })
     ).subscribe((data: Ruta[]) => {
       this.listRutas = data;
-      this.foundUser = this.listRutas.length > 0;
+      this.foundRuta = this.listRutas.length > 0;
     });
   }
   
