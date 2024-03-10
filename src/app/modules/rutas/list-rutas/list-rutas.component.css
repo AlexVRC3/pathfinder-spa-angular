@@ -53,7 +53,7 @@ a, a:hover {
   font-size: 1.75rem;
 }
 .postcard .postcard__img {
-  max-height: 180px;
+  max-height: 100px;
   width: 100%;
   object-fit: cover;
   position: relative;
@@ -127,7 +127,7 @@ a, a:hover {
     justify-content: start;
   }
   .postcard .postcard__img {
-    max-width: 300px;
+    max-width: 200px;
     max-height: 100%;
     transition: transform 0.3s ease;
   }
