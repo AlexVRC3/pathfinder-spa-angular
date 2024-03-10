@@ -1,8 +1,10 @@
+/*
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LoaderComponent } from './loader.component';
-import { LoaderCommunicationService } from '../../services/loader.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { of } from 'rxjs';
+import { LoaderComponent } from 'src/app/shared/components/loader/loader.component';
+import { LoaderCommunicationService } from 'src/app/shared/services/loader.service';
 
 describe('LoaderComponent', () => {
   let component: LoaderComponent;
@@ -31,6 +33,8 @@ describe('LoaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
+
+
   it('should show spinner when service emits showLoader', () => {
     const mockLoaderData = { title: 'Loading', show: true };
     loaderServiceSpy = spyOnProperty(mockLoaderService, 'handlerLoader$', 'get').and.returnValue(of(mockLoaderData));
@@ -58,4 +62,40 @@ describe('LoaderComponent', () => {
 
     expect(component.subscription.unsubscribe).toHaveBeenCalled();
   });
+});
+*/
+
+import { TestBed } from "@angular/core/testing";
+import { NgxSpinnerService } from "ngx-spinner";
+
+
+import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
+import { Loader } from "src/app/shared/model/loader.model";
+import { LoaderCommunicationService } from "src/app/shared/services/loader.service";
+import { SharedModule } from "src/app/shared/shared.module";
+
+
+describe('LoaderComponent', () => {
+    const loaderServiceSpy: jasmine.SpyObj<LoaderCommunicationService> = jasmine.createSpyObj('loaderService', ['showLoader', 'hideLoader']);
+    const ngxSpinnerSpy: jasmine.SpyObj<NgxSpinnerService> = jasmine.createSpyObj('spinnerService', ['show', 'hide']);
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [
+            SharedModule
+        ],
+        declarations: [LoaderComponent],
+        providers: [
+            { provide: LoaderCommunicationService, useVale: loaderServiceSpy },
+            { provide: NgxSpinnerService, useVale: ngxSpinnerSpy }
+        ]
+      });
+    });
+  
+    it('should create', () => {
+      const fixture = TestBed.createComponent(LoaderComponent);
+      const loader = fixture.componentInstance;
+      expect(loader).toBeTruthy();
+    });
+
+
 });

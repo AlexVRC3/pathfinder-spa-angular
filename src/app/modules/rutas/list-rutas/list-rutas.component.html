@@ -25,12 +25,9 @@
 	</div>
 </section>
 
-<!--<h1 class="text-white" *ngIf="!foundRuta">
-	<h1 class="text-white">{{ 'rutas.dontfound' | translate }}</h1>
-</h1> -->
 
 <div *ngIf="!foundRuta" class="container py-4">
 	<div class="alert alert-danger" role="alert">
 	  {{ 'rutas.dontfound' | translate }}
 	</div>
-  </div>
+</div>

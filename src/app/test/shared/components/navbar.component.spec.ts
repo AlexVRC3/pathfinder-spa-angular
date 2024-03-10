@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarComponent } from './navbar.component';
+import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
 import { By } from '@angular/platform-browser';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -46,3 +46,4 @@ describe('NavbarComponent', () => {
   });
   
 });
+
