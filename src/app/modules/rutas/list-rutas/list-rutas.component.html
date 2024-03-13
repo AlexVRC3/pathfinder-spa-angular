@@ -1,11 +1,11 @@
 <section class="dark">
 	<div class="container py-4" *ngFor="let r of listRutas; index as i">
 		<article class="postcard dark blue">
-			<a class="postcard__img_link" href="#">
-				<img class="postcard__img" src="https://picsum.photos/seed/picsum/1000/1000" alt="Image Title" />
+			<a class="postcard__img_link" href="#" style="pointer-events: none;">
+				<img class="postcard__img" src="https://picsum.photos/seed/picsum/1000/1000" alt="Image Title" style="transform: scale(1);"/>
 			</a>
 			<div class="postcard__text">
-				<h1 class="postcard__title blue"><a href="#">{{ r.name }}</a></h1>
+				<h1 class="postcard__title blue" style="pointer-events: none;">{{ r.name }}</h1>
 				<div class="postcard__subtitle">
 					<i class="fas fa-calendar-alt mr-2"></i>📍{{ r.ubicacion }}
 				</div>
@@ -13,6 +13,7 @@
 		</article>
 	</div>
 </section>
+
 
 <div *ngIf="!foundRuta" class="container py-4">
 	<div class="alert alert-danger" role="alert">
