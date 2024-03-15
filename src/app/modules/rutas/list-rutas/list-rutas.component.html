@@ -1,18 +1,23 @@
+
 <section class="dark">
-	<div class="container py-4" *ngFor="let r of listRutas; index as i">
-		<article class="postcard dark blue">
-			<a class="postcard__img_link" href="#" style="pointer-events: none;">
-				<img class="postcard__img" src="https://picsum.photos/seed/picsum/1000/1000" alt="Image Title" style="transform: scale(1);"/>
-			</a>
-			<div class="postcard__text">
-				<h1 class="postcard__title blue" style="pointer-events: none;">{{ r.name }}</h1>
-				<div class="postcard__subtitle">
-					<i class="fas fa-calendar-alt mr-2"></i>📍{{ r.ubicacion }}
-				</div>
-			</div>
-		</article>
-	</div>
+    <div class="container py-4" *ngFor="let r of listRutas; index as i">
+        <a class="postcard__link" href="/ruta/{{ r.id }}" target="_blank">
+            <article class="postcard dark blue">
+                <div class="postcard__img">
+                    <img class="postcard__img" src="https://picsum.photos/seed/picsum/1000/1000" alt="Image Title"/>
+                </div>
+                <div class="postcard__text">
+                    <h1 class="postcard__title blue">{{ r.name }}</h1>
+                    <div class="postcard__subtitle">
+                        <i class="fas fa-calendar-alt mr-2"></i>📍{{ r.ubicacion }}
+                    </div>
+                </div>
+            </article>
+        </a>
+    </div>
 </section>
+
+
 
 
 <div *ngIf="!foundRuta" class="container py-4">

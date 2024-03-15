@@ -1,2 +1,4 @@
-<p class="text-white">detalle-rutas works!</p>
-<app-mapa-ruta></app-mapa-ruta>
+<div class="container">
+    <app-mapa-ruta class="map-container"></app-mapa-ruta>
+    <div class="ruta-nombre" *ngIf="ruta">{{ ruta.name }}</div>
+</div>
