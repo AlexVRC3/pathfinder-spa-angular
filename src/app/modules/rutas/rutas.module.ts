@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
 import { DetalleRutasComponent } from './detalle-rutas/detalle-rutas.component';
 import { MapaRutaComponent } from './detalle-rutas/mapa-ruta/mapa-ruta.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MapaRutaComponent } from './detalle-rutas/mapa-ruta/mapa-ruta.component
   ],
   imports: [
     CommonModule,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   exports:[
     ListRutasComponent,

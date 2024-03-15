@@ -21,10 +21,4 @@ export class RouteService implements IRouteService {
     return this.http.get<Ruta[]>(url, { params });
   }
 
-  getRutaById(id: number): Observable<Ruta> {
-    const url: string = this.envService.getUrl(this.RUTA.SEARCH); 
-    const params: HttpParams = new HttpParams().set('id', id);
-    return this.http.get<Ruta>(url,{params});
-  }
-
 }
