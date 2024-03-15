@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Ruta } from 'src/app/core/data/ruta.interface';
@@ -14,8 +13,7 @@ export class ListRutasComponent implements OnDestroy {
   private suscriptionNavBarService: Subscription;
   public foundRuta: boolean = true;
   public listRutas: Ruta[] = [];
-  
-  constructor(private router: Router, private readonly navBarServices: NavbarCommunicationService, private readonly rutaService: RouteService) { 
+  constructor(private readonly navBarServices: NavbarCommunicationService, private readonly rutaService: RouteService) { 
     this.suscriptionNavBarService = this.navBarServices.$data().pipe(
       switchMap((input: string) => {
         return this.rutaService.getListRoute(input);
@@ -28,9 +26,5 @@ export class ListRutasComponent implements OnDestroy {
   
   ngOnDestroy(): void {
     this.suscriptionNavBarService.unsubscribe();
-  }
-
-  verDetalles(ruta: Ruta): void {
-    this.router.navigate(['/ruta', { ruta }]);
   }
 }
