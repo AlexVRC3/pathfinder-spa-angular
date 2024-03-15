@@ -10,17 +10,17 @@ import { RouteService } from 'src/app/core/services/route/route.services';
 })
 export class DetalleRutasComponent implements OnInit {
   rutaId!: number | null;
-  ruta?: Ruta; // Objeto para almacenar los datos de la ruta
+  ruta?: Ruta; 
 
   constructor(
     private route: ActivatedRoute,
-    private routeService: RouteService // Inyecta tu servicio de rutas
+    private routeService: RouteService 
   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const idString = params.get('id'); // Obtener el valor del parámetro como cadena
-      this.rutaId = idString ? +idString : null; // Convertir la cadena a número utilizando el operador "+" (o parseInt)
+      const idString = params.get('id'); 
+      this.rutaId = idString ? +idString : null; 
       if (this.rutaId !== null) {
         this.obtenerRuta();
       }
@@ -28,11 +28,16 @@ export class DetalleRutasComponent implements OnInit {
   }
 
   obtenerRuta() {
-    // Llama al servicio para obtener los datos de la ruta por su ID
-    this.routeService.getRutaById(this.rutaId!).subscribe(ruta => {
-      this.ruta = ruta;
-      // Aquí puedes hacer lo que necesites con los datos de la ruta, como mostrarlos en tu componente HTML
-    });
+    this.routeService.getRutaById(this.rutaId!).subscribe(
+      ruta => {
+        this.ruta = ruta;
+        console.log('Ruta obtenida:', this.ruta);
+      },
+      error => {
+        console.error('Error al obtener la ruta:', error);
+      }
+    );
   }
+  
 
 }

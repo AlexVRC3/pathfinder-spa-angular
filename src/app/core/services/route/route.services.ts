@@ -22,7 +22,7 @@ export class RouteService implements IRouteService {
   }
 
   getRutaById(id: number): Observable<Ruta> {
-    const url: string = this.envService.getUrl(this.RUTA.SEARCH); // Suponiendo que tengas una ruta para obtener una ruta por su ID
+    const url: string = this.envService.getUrl(this.RUTA.SEARCH); 
     const params: HttpParams = new HttpParams().set('id', id);
     return this.http.get<Ruta>(url,{params});
   }

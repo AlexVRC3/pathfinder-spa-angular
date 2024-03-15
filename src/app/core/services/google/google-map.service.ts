@@ -7,9 +7,9 @@ import { Loader } from '@googlemaps/js-api-loader';
 export default class GoogleMapService {
   
   map!: google.maps.Map;
-  startPoint: google.maps.LatLngLiteral = { lat: 51.233334, lng: 6.78333 }; // Punto de inicio (latitud y longitud)
-  endPoint: google.maps.LatLngLiteral = { lat: 51.3, lng: 6.9 }; // Punto de fin (latitud y longitud)
-  routeCoordinates: google.maps.LatLngLiteral[] = []; // Coordenadas de la ruta
+  startPoint: google.maps.LatLngLiteral = { lat: 51.233334, lng: 6.78333 }; 
+  endPoint: google.maps.LatLngLiteral = { lat: 51.3, lng: 6.9 }; 
+  routeCoordinates: google.maps.LatLngLiteral[] = []; 
 
   constructor() {}
 
@@ -40,7 +40,7 @@ export default class GoogleMapService {
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer({
       map: this.map,
-      suppressMarkers: true // No mostrar marcadores en la ruta
+      suppressMarkers: false
     });
 
     const request = {
@@ -52,7 +52,7 @@ export default class GoogleMapService {
     directionsService.route(request, (result, status) => {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsRenderer.setDirections(result);
-        // Almacenar las coordenadas de la ruta
+       
         if(result != null){
           this.routeCoordinates = result.routes[0].overview_path.map((path: any) => {
             return { lat: path.lat(), lng: path.lng() };
