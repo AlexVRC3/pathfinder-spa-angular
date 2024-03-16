@@ -8,7 +8,8 @@ export const environment = {
   PATH: {
     CONTEXT: '',
     RUTA: {
-      SEARCH: '/ruta/search'
+      SEARCH: '/ruta/search',
+      GET: '/ruta'
     }
   }
 };

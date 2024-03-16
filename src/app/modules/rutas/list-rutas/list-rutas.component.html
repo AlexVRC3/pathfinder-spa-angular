@@ -2,7 +2,7 @@
 
 <section class="dark">
     <div class="container py-4" *ngFor="let r of listRutas; index as i">
-        <a class="postcard__link" href="/ruta/{{ r.id }}" target="_blank">
+        <a class="postcard__link" [routerLink]="['/ruta', r.id ]">
             <article class="postcard dark blue">
                 <div class="postcard__img">
                     <img class="postcard__img" src="https://picsum.photos/seed/picsum/1000/1000" alt="Image Title"/>
@@ -20,9 +20,4 @@
 
 
 
-
-<div *ngIf="!foundRuta" class="container py-4">
-	<div class="alert alert-danger" role="alert">
-	  {{ 'rutas.dontfound' | translate }}
-	</div>
-</div>
+<app-error *ngIf="!foundRuta" [message]="'rutas.dontfound' | translate"></app-error>

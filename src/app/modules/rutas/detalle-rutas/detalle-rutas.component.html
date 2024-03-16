@@ -1,4 +1,7 @@
-<div class="container">
+<div *ngIf="this.ruta != null; else templateDontFound" class="container">
     <app-mapa-ruta class="map-container"></app-mapa-ruta>
-    <div class="ruta-nombre" *ngIf="ruta">{{ ruta.name }}</div>
 </div>
+
+<ng-template #templateDontFound>
+    <app-error [message]="'rutas.dontExist' | translate"></app-error>
+</ng-template>
