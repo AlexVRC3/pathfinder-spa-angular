@@ -83,6 +83,7 @@ describe('ListRutasComponent', () => {
       expect(component.foundRuta).toBeTrue();
       expect(component.listRutas).toEqual(mockRutas);
     });*/
+    
     it('should unsubscribe from subscriptions onDestroy', () => {
       const fixture = TestBed.createComponent(ListRutasComponent);
       const component = fixture.componentInstance;

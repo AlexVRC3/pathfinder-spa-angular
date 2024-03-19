@@ -97,8 +97,13 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "codeCoverage": true,
-            "codeCoverageExclude": [ "**/*.spec.ts",
-            "**/node_modules/**"],
+            "codeCoverageExclude": [ 
+              "**/*.spec.ts",
+            "**/node_modules/**",
+            "**/*.e2e-spec.ts",
+            "**/*.po.ts",
+            "src/assets"
+          ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
