@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, OnDestroy,  } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { Ruta } from 'src/app/core/data/ruta.interface';
 import { RouteService } from 'src/app/core/services/route/route.services';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
@@ -20,6 +19,7 @@ export class DetalleRutasComponent implements OnDestroy {
               private readonly rutaService: RouteService, 
               private readonly navbarService: NavbarCommunicationService,
               private readonly router: Router) {
+    
     const id: number = this.route.snapshot.params['id'];
     this.suscriptionNavBarService = this.navbarService.$data().subscribe((input: string) => {
       if(input != null && input != '') {

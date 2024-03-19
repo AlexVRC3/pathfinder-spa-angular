@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
+import { Ruta } from '../../data/ruta.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -7,36 +8,32 @@ import { Loader } from '@googlemaps/js-api-loader';
 export default class GoogleMapService {
   
   map!: google.maps.Map;
-  startPoint: google.maps.LatLngLiteral = { lat: 51.233334, lng: 6.78333 }; 
-  endPoint: google.maps.LatLngLiteral = { lat: 51.3, lng: 6.9 }; 
   routeCoordinates: google.maps.LatLngLiteral[] = []; 
 
   constructor() {}
 
-  initMap(): void {
+  initMap(ruta: Ruta): void {
     let loader = new Loader({
       apiKey: 'AIzaSyC8QdyoZDAq0MLcuCQijg-HIpVtJ3uLCmY'
-    })
+    });
 
     loader.load().then(() => {
       const mapElement = document.getElementById("map");
       if (mapElement) {
         this.map = new google.maps.Map(mapElement, {
-          center: this.startPoint,
-          zoom: 6
+          zoom: 12 
         });
 
-        // Dibujar la ruta entre los puntos inicial y final
-        this.drawRoute();
-
+        this.drawRoute(ruta);
       } else {
         console.error("Elemento 'map' no encontrado en el DOM");
       }
     }).catch(error => {
       console.error("Error al cargar la API de Google Maps:", error);
-    })
+    });
   }
-  drawRoute() {
+
+  drawRoute(ruta: Ruta) {
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer({
       map: this.map,
@@ -44,8 +41,8 @@ export default class GoogleMapService {
     });
 
     const request = {
-      origin: this.startPoint,
-      destination: this.endPoint,
+      origin: { lat: ruta.origenLatitud, lng: ruta.origenLongitud },
+      destination: { lat: ruta.destinoLatitud, lng: ruta.destinoLongitud },
       travelMode: google.maps.TravelMode.WALKING
     };
 
@@ -62,6 +59,6 @@ export default class GoogleMapService {
         }
         }
     });
-  }
 
+  }
 }
