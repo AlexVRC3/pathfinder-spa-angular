@@ -1,5 +1,10 @@
-<div *ngIf="this.existRuta; else templateDontFound" class="container">
-    <app-mapa-ruta *ngIf="this.ruta != null" [rutaFromParent]= "ruta" class="map-container"></app-mapa-ruta>
+<div *ngIf="existRuta; else templateDontFound" class="container-detalles">
+    <div class="card">
+        <button class="arrow-button">
+            <img src="ruta_a_tu_imagen" alt="Flecha hacia atrás">
+          </button>
+        <app-mapa-ruta *ngIf="ruta != null" [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+    </div>
 </div>
 
 <ng-template #templateDontFound>
