@@ -1,5 +1,5 @@
-<div *ngIf="this.ruta != null; else templateDontFound" class="container">
-    <app-mapa-ruta [rutaFromParent]= "ruta" class="map-container"></app-mapa-ruta>
+<div *ngIf="this.existRuta; else templateDontFound" class="container">
+    <app-mapa-ruta *ngIf="this.ruta != null" [rutaFromParent]= "ruta" class="map-container"></app-mapa-ruta>
 </div>
 
 <ng-template #templateDontFound>
