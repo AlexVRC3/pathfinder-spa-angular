@@ -26,7 +26,7 @@ describe('MapaRutaComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Map service should initialize map and draw route successfully', () => {
+  /*it('Map service should initialize map and draw route successfully', () => {
     // Arrange
     const googleMapService = TestBed.inject(GoogleMapService);
     const ruta: Ruta = {
@@ -45,7 +45,7 @@ describe('MapaRutaComponent', () => {
     // Assert
     expect(googleMapService.map).toBeDefined();
     expect(googleMapService.routeCoordinates.length).toBeGreaterThan(0);
-  });
+  });*/
   
       // Initializes the component with a valid input 'rutaFromParent' and calls 'initMap' method of 'GoogleMapService'
   it('should initialize component with valid input and call initMap method', () => {

@@ -11,30 +11,40 @@
   background-color: #f8f1e4; /* Color marrón claro */
   padding: 20px;
   position: relative; /* Cambiado a relativo */
+  top: 20px;
+}
+
+.card-header {
+  background-color: #e6c17e; /* Color de fondo del encabezado */
+  color: #fff; /* Color del texto del encabezado */
+  padding: 10px; /* Espaciado interno del encabezado */
+  font-weight: bold; /* Negrita para el texto del encabezado */
+  text-align: center;
 }
 
 .map-container {
-  margin-top: 40px; /* Espacio para el botón */
-  width: calc(100% - 20px); /* Ajustar según sea necesario, teniendo en cuenta el relleno */
-  height: calc(100% - 60px); /* Altura menos espacio para el botón */
-  border: 2px solid #e6c17e; /* Agregar borde como el de la tarjeta */
+  margin-top: 25px; /* Espacio para el botón */
+  /*width: calc(100% - 20px); */
+  width: 100%;
+  height: calc(100% - 40px); 
+  border: 2px solid #e6c17e; 
 }
 
-
-#map {
-  width: 100%; /* Ajustar al 100% del contenedor */
-  height: 100%; /* Ajustar al 100% del contenedor */
-}
 .arrow-button {
   position: absolute;
-  top: 10px; /* Ajusta la posición vertical según tus necesidades */
-  left: 10px; /* Ajusta la posición horizontal según tus necesidades */
+  top: 20px; /* Ajusta la posición vertical según tus necesidades */
+  left: 20px; /* Ajusta la posición horizontal según tus necesidades */
   width: 40px; /* Ajusta el ancho del botón según tus necesidades */
   height: 40px; /* Ajusta la altura del botón según tus necesidades */
-  background-color: #ccc; /* Color de fondo del botón */
+  background-color: transparent; /* Fondo transparente */
   border: none;
-  border-radius: 5px; /* Esto crea un botón con esquinas ligeramente redondeadas */
   cursor: pointer;
+}
+
+.arrow-button img {
+  width: 100%; /* Ajusta el ancho de la imagen al 100% del botón */
+  height: 100%; /* Ajusta la altura de la imagen al 100% del botón */
+  object-fit: contain; /* Ajusta la imagen al tamaño del contenedor sin distorsión */
 }
 
 .arrow {

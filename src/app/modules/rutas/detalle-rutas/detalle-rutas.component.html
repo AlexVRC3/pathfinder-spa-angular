@@ -1,12 +1,16 @@
 <div *ngIf="existRuta; else templateDontFound" class="container-detalles">
     <div class="card">
-        <button class="arrow-button">
-            <img src="ruta_a_tu_imagen" alt="Flecha hacia atrás">
-          </button>
-        <app-mapa-ruta *ngIf="ruta != null" [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+      <div class="card-header">
+        {{ ruta?.name}}
+      </div>
+      <button class="arrow-button">
+        <img src="https://img.icons8.com/office/16/return.png" alt="Flecha hacia atrás">
+      </button>
+      <app-mapa-ruta *ngIf="ruta != null" [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
     </div>
-</div>
-
-<ng-template #templateDontFound>
+  </div>
+  
+  <ng-template #templateDontFound>
     <app-error [message]="'rutas.dontExist' | translate"></app-error>
-</ng-template>
+  </ng-template>
+  
