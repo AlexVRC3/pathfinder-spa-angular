@@ -6,6 +6,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorComponent } from "./components/error/error.component";
+import { RouterModule } from "@angular/router";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ErrorComponent } from "./components/error/error.component";
       FormsModule,
       ReactiveFormsModule,
       NgxSpinnerModule,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      RouterModule
     ],
     exports: [
         NavbarComponent,

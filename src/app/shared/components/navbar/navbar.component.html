@@ -1,7 +1,7 @@
 <nav class="navbar fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
-      <img class="logo" src="assets\svg\logoHeader.svg" alt="Your SVG Image" />
+      <img class="logo" [routerLink]="['/']"  src="assets\svg\logoHeader.svg" alt="Your SVG Image" />
     </a>
     <div clas="navbar-brand"></div>
     <form class="d-flex" [formGroup]="formNavBar" (ngSubmit)="submit()">
