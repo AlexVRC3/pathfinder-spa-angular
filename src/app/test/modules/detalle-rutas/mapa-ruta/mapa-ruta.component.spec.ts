@@ -16,36 +16,14 @@ describe('MapaRutaComponent', () => {
     .compileComponents();
   });
 
-  beforeEach(() => {
+  it('should create', () => {
     fixture = TestBed.createComponent(MapaRutaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  /*it('Map service should initialize map and draw route successfully', () => {
-    // Arrange
-    const googleMapService = TestBed.inject(GoogleMapService);
-    const ruta: Ruta = {
-      id: 1,
-      name: 'Test Route',
-      ubicacion: 'Test Location',
-      origenLatitud: 0,
-      origenLongitud: 0,
-      destinoLatitud: 1,
-      destinoLongitud: 1
-    };
-
-    // Act
-    googleMapService.initMap(ruta);
-
-    // Assert
-    expect(googleMapService.map).toBeDefined();
-    expect(googleMapService.routeCoordinates.length).toBeGreaterThan(0);
-  });*/
+ 
   
       // Initializes the component with a valid input 'rutaFromParent' and calls 'initMap' method of 'GoogleMapService'
   it('should initialize component with valid input and call initMap method', () => {
@@ -55,10 +33,10 @@ describe('MapaRutaComponent', () => {
           id: 1,
           name: 'Test Ruta',
           ubicacion: 'Test Ubicacion',
-          origenLatitud: 0,
-          origenLongitud: 0,
-          destinoLatitud: 0,
-          destinoLongitud: 0
+          origenLatitud: 40.6057,
+          origenLongitud: -4.17309,
+          destinoLatitud: 40.5999,
+          destinoLongitud: -4.15293
         };
         const unsubscribeSpy = spyOn(component['googleMapService'], 'initMap');
         component.ngOnInit();
@@ -67,6 +45,26 @@ describe('MapaRutaComponent', () => {
         expect(unsubscribeSpy).toHaveBeenCalledWith(component.rutaFromParent);
   });
 
-    
-
+  it('should initialize map successfully', (done) => {
+    const servicio = new GoogleMapService();
+    const ruta: Ruta = {
+      // Define los valores de la ruta según sea necesario
+      id: 1,
+          name: 'Test Ruta',
+          ubicacion: 'Test Ubicacion',
+          origenLatitud: 40.6057,
+          origenLongitud: -4.17309,
+          destinoLatitud: 40.5999,
+          destinoLongitud: -4.15293
+    };
+    servicio.initMap(ruta);
+  
+    // Espera un tiempo suficiente para que se cargue el mapa
+    setTimeout(() => {
+      expect(servicio.map).toBeDefined();
+      done();
+    }, 2000); // Ajusta el tiempo de espera según sea necesario
+  });
+  
+  
 });

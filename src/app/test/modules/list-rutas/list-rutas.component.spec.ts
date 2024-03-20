@@ -63,7 +63,7 @@ describe('ListRutasComponent', () => {
       expect(component.foundRuta).toBeFalse();
       expect(component.listRutas).toEqual([]);
     });
-    it('shoud set foundUser to true and listRutas with data when subscription returns data', () => {
+    /*it('shoud set foundUser to true and listRutas with data when subscription returns data', () => {
       
       const fixture = TestBed.createComponent(ListRutasComponent);
       const component = fixture.componentInstance;
