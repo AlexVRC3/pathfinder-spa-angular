@@ -26,7 +26,6 @@ export class ListRutasComponent implements OnDestroy {
   }
   
   ngOnDestroy(): void {
-    this.navBarServices.setData('');
     this.suscriptionNavBarService.unsubscribe();
   }
 }

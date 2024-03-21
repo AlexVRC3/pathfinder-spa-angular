@@ -7,10 +7,12 @@ import { Ruta } from '../../data/ruta.interface';
 })
 export default class GoogleMapService {
   
-  map!: google.maps.Map;
+  map: google.maps.Map;
   routeCoordinates: google.maps.LatLngLiteral[] = []; 
 
-  constructor() {}
+  constructor() {
+    this.map = {} as google.maps.Map;
+  }
 
   initMap(ruta: Ruta): void {
     let loader = new Loader({

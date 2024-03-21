@@ -13,7 +13,6 @@ import { NavbarCommunicationService } from 'src/app/shared/services/navbar.servi
 export class DetalleRutasComponent implements OnDestroy {
   public ruta: Ruta | null = null; 
   public existRuta: boolean = true;
-  private suscriptionNavBarService: Subscription;
   private suscriptionRutaService: Subscription;
   constructor(private readonly route: ActivatedRoute, 
               private readonly rutaService: RouteService, 
@@ -22,12 +21,6 @@ export class DetalleRutasComponent implements OnDestroy {
     
     const id: number = this.route.snapshot.params['id'];
     this.navbarService.setActiveSearch(false);
-    this.suscriptionNavBarService = this.navbarService.$data().subscribe((input: string) => {
-      if(input != null && input != '') {
-        this.router.navigate(['']);
-      }
-    });
-
     this.suscriptionRutaService = this.rutaService.getRuta(id)
                                               .subscribe((ruta: Ruta) => {
                                                   this.ruta = ruta;
@@ -36,7 +29,6 @@ export class DetalleRutasComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.suscriptionNavBarService.unsubscribe();
     this.suscriptionRutaService.unsubscribe();
   }
 
