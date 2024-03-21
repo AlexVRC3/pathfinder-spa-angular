@@ -21,6 +21,7 @@ export class DetalleRutasComponent implements OnDestroy {
               private readonly router: Router) {
     
     const id: number = this.route.snapshot.params['id'];
+    this.navbarService.setActiveSearch(false);
     this.suscriptionNavBarService = this.navbarService.$data().subscribe((input: string) => {
       if(input != null && input != '') {
         this.router.navigate(['']);

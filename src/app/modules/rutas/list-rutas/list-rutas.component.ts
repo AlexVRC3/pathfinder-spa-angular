@@ -14,6 +14,7 @@ export class ListRutasComponent implements OnDestroy {
   public foundRuta: boolean = true;
   public listRutas: Ruta[] = [];
   constructor(private readonly navBarServices: NavbarCommunicationService, private readonly rutaService: RouteService) { 
+    this.navBarServices.setActiveSearch(true);
     this.suscriptionNavBarService = this.navBarServices.$data().pipe(
       switchMap((input: string) => {
         return this.rutaService.getListRoute(input);
