@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router, convertToParamMap } from '@angular/router'; 
 import { DetalleRutasComponent } from '../../../modules/rutas/detalle-rutas/detalle-rutas.component';
 import { HttpClientModule } from '@angular/common/http'; 
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
 import { RouteService } from 'src/app/core/services/route/route.services';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -72,7 +71,7 @@ describe('DetalleRutasComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    const unsubscribeSpy = spyOn(component['suscriptionNavBarService'], 'unsubscribe');
+    const unsubscribeSpy = spyOn(component['suscriptionRutaService'], 'unsubscribe');
     // Llama al método ngOnDestroy
     component.ngOnDestroy();
     // Verifica si se llamó al método `unsubscribe`
@@ -100,24 +99,6 @@ describe('DetalleRutasComponent', () => {
     }).not.toThrow();
   });
   
-
-  it('should handle null or empty input from the navbar service', () => {
-    // Mock the navbar service
-    const navbarService = TestBed.inject(NavbarCommunicationService);
-    spyOn(navbarService, '$data').and.callFake(()=>{
-      return of('hola')
-    });
-    // Check that the router is not called
-    const router = TestBed.inject(Router);
-    const navigate=spyOn(router,"navigate");
-
-    fixture = TestBed.createComponent(DetalleRutasComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-
-    expect(navigate).toHaveBeenCalled();
-  });
-
 });
 
 

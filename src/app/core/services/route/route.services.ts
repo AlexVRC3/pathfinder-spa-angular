@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Ruta } from '../../data/ruta.interface';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import IRouteService from './route.interfaz';
