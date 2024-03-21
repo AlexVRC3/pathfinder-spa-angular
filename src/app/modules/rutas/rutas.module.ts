@@ -4,17 +4,26 @@ import { CommonModule } from '@angular/common';
 import { ListRutasComponent } from './list-rutas/list-rutas.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
+import { DetalleRutasComponent } from './detalle-rutas/detalle-rutas.component';
+import { MapaRutaComponent } from './detalle-rutas/mapa-ruta/mapa-ruta.component';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
-    ListRutasComponent
+    ListRutasComponent,
+    DetalleRutasComponent,
+    MapaRutaComponent
   ],
   imports: [
     CommonModule,
-    TranslateModule
+    TranslateModule,
+    RouterModule,
+    SharedModule
   ],
   exports:[
-    ListRutasComponent
+    ListRutasComponent,
+    DetalleRutasComponent
   ],
   providers: [NavbarCommunicationService]
 })

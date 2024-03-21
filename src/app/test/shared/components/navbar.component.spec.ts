@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
 import { By } from '@angular/platform-browser';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('NavbarComponent', () => {
@@ -11,7 +12,8 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule,
+      BrowserAnimationsModule, NoopAnimationsModule],
       declarations: [ NavbarComponent ]
     })
     .compileComponents();
