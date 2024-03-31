@@ -1,16 +1,27 @@
 <div *ngIf="existRuta; else templateDontFound" class="container-detalles">
-    <div class="card" *ngIf="ruta != null">
-      <div class="card-header">
-        {{ ruta.name}}
-      </div>
-      <button class="arrow-button" [routerLink]="['/']">
-        <img src="https://img.icons8.com/office/16/return.png" alt="Flecha hacia atrás">
-      </button>
-      <app-mapa-ruta  [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+  <div class="card" *ngIf="ruta != null">
+    <div class="card-header">
+      {{ ruta.name}}
     </div>
+    <button class="arrow-button" [routerLink]="['/']">
+      <img src="https://img.icons8.com/office/16/return.png" alt="Flecha hacia atrás">
+    </button>
+    <div class="header-content">
+      <div class="image-container">
+        <!-- Aquí puedes añadir la imagen con un enlace externo -->
+        <a href="https://picsum.photos/seed/picsum/1000/1000">
+          <img src="https://picsum.photos/seed/picsum/1000/1000" alt="Imagen de la ruta">
+        </a>
+      </div>
+      <div class="details-container">
+        <!-- Aquí puedes añadir la duración y distancia de la ruta -->
+        <p>Distancia total: {{ ruta.distanciaTotal }} km</p>
+      </div>
+    </div>
+    <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
   </div>
-  
-  <ng-template #templateDontFound>
-    <app-error [message]="'rutas.dontExist' | translate"></app-error>
-  </ng-template>
-  
+</div>
+
+<ng-template #templateDontFound>
+  <app-error [message]="'rutas.dontExist' | translate"></app-error>
+</ng-template>

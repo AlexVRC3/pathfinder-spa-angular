@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 80vh; 
+  margin-top: 20px;
 }
 
 .card {
@@ -22,11 +23,17 @@
   text-align: center;
 }
 
+.header-content {
+  display: flex;
+  align-items: flex-start; /* Alinear elementos arriba */
+}
+
 .map-container {
-  margin-top: 25px; 
-  width: 100%;
-  height: calc(100% - 40px); 
-  border: 2px solid #e6c17e; 
+  margin-top: 20px; 
+  /* width: 100%;
+  height: calc(100% - 40px);  */
+  width: 60%;
+  height: 50%;
 }
 
 .arrow-button {
@@ -54,3 +61,21 @@
   border-right: 10px solid #fff; 
 }
 
+.image-container {
+  width: 150px; /* Ancho deseado */
+  height: 150px; /* Altura deseada */
+  overflow: hidden; /* Evita que la imagen se desborde */
+  margin-top: 20px;
+}
+
+.image-container img {
+  width: 100%; /* La imagen ocupará todo el ancho del contenedor */
+  height: auto; /* La altura se ajustará automáticamente */
+  display: block; /* Evita espacio adicional debajo de la imagen */
+  border: 2px solid #e6c17e; 
+}
+
+.details-container {
+  margin-left: 20px; /* Añade un margen entre la imagen y el details-container */
+  margin-top: 20px;
+}
