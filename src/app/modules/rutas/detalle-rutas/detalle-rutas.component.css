@@ -79,3 +79,14 @@
   margin-left: 20px; /* Añade un margen entre la imagen y el details-container */
   margin-top: 20px;
 }
+
+.details-container p {
+  font-size: 16px; /* Tamaño de fuente deseado */
+  color: #333; /* Color de texto deseado */
+}
+
+.details-container p.distancia {
+  font-style: italic; /* Hacer el texto de distancia en cursiva */
+  font-weight: bold;
+  text-align: center;
+}
