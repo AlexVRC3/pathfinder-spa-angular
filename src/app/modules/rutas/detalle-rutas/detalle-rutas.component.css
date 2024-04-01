@@ -25,13 +25,11 @@
 
 .header-content {
   display: flex;
-  align-items: flex-start; /* Alinear elementos arriba */
+  align-items: flex-start; 
 }
 
 .map-container {
   margin-top: 20px; 
-  /* width: 100%;
-  height: calc(100% - 40px);  */
   width: 60%;
   height: 50%;
 }
@@ -62,31 +60,38 @@
 }
 
 .image-container {
-  width: 150px; /* Ancho deseado */
-  height: 150px; /* Altura deseada */
-  overflow: hidden; /* Evita que la imagen se desborde */
+  width: 170px; 
+  height: 170px; 
+  overflow: hidden; 
   margin-top: 20px;
-}
-
-.image-container img {
-  width: 100%; /* La imagen ocupará todo el ancho del contenedor */
-  height: auto; /* La altura se ajustará automáticamente */
-  display: block; /* Evita espacio adicional debajo de la imagen */
   border: 2px solid #e6c17e; 
 }
 
+.image-container img {
+  width: 100%; 
+  height: auto; 
+  display: block; 
+  
+}
+
 .details-container {
-  margin-left: 20px; /* Añade un margen entre la imagen y el details-container */
+  margin-left: 20px; 
   margin-top: 20px;
 }
 
 .details-container p {
-  font-size: 16px; /* Tamaño de fuente deseado */
-  color: #333; /* Color de texto deseado */
+  font-size: 16px; 
+  color: #333; 
 }
 
 .details-container p.distancia {
-  font-style: italic; /* Hacer el texto de distancia en cursiva */
+  font-style: italic; 
   font-weight: bold;
-  text-align: center;
+  text-align: left;
+}
+
+.details-container p.ubicacion{
+  font-style: italic; 
+  font-weight: bold;
+  text-align: left;
 }

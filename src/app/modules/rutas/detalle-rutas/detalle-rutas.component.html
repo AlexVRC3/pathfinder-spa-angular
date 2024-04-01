@@ -15,7 +15,8 @@
       </div>
       <div class="details-container">
         <!-- Aquí puedes añadir la duración y distancia de la ruta -->
-        <p class = "distancia">Distancia total: {{ ruta.distanciaTotal }} km</p>
+        <p class = "ubicacion">📍 {{ ruta.ubicacion }} </p>
+        <p class = "distancia"> Distancia total: {{ ruta.distanciaTotal }} km</p>
       </div>
     </div>
     <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
