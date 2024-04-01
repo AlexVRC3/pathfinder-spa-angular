@@ -44,7 +44,8 @@ describe('DetalleRutasComponent', () => {
         origenLatitud: 45.21313,
         origenLongitud: -1.13134,
         destinoLatitud: 6.32314,
-        destinoLongitud: 18.31342
+        destinoLongitud: 18.31342,
+        distanciaTotal: 135
       });
     });
 
@@ -61,7 +62,8 @@ describe('DetalleRutasComponent', () => {
       origenLatitud: 45.21313,
       origenLongitud: -1.13134,
       destinoLatitud: 6.32314,
-      destinoLongitud: 18.31342
+      destinoLongitud: 18.31342,
+      distanciaTotal: 135
     });
     
   })
