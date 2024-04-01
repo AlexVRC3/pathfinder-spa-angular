@@ -8,15 +8,22 @@
     </button>
     <div class="header-content">
       <div class="image-container">
-        <!-- Aquí puedes añadir la imagen con un enlace externo -->
         <a href="https://picsum.photos/seed/picsum/1000/1000">
           <img src="https://picsum.photos/seed/picsum/1000/1000" alt="Imagen de la ruta">
         </a>
       </div>
       <div class="details-container">
-        <!-- Aquí puedes añadir la duración y distancia de la ruta -->
-        <p class = "ubicacion">📍 {{ ruta.ubicacion }} </p>
-        <p class = "distancia"> Distancia total: {{ ruta.distanciaTotal }} km</p>
+        <p class="ubicacion">
+          <img width="20" height="20" src="https://img.icons8.com/pastel-glyph/64/marker--v1.png" alt="marker--v1"/> 
+          {{ ruta.ubicacion }} 
+        </p>
+        <p class="distancia">
+          <img class = "montaña" width="20" height="20" src="https://img.icons8.com/ios-filled/50/003064/trail.png" alt="trail"/>
+           {{ ruta.distanciaTotal }} km
+        </p>
+        <p class="duracion"> 
+          <img width="20" height="20" src="https://img.icons8.com/glyph-neue/64/stopwatch.png" alt="stopwatch"/>
+           {{ calcularDuracion(ruta.duracionTotal) }} </p>
       </div>
     </div>
     <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>

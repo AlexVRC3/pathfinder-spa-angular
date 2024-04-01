@@ -7,4 +7,5 @@ export interface Ruta {
     destinoLatitud: number;
     destinoLongitud: number;
     distanciaTotal: number;
+    duracionTotal: number;
 };

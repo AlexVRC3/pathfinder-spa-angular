@@ -46,7 +46,8 @@ describe('DetalleRutasComponent', () => {
         origenLongitud: -1.13134,
         destinoLatitud: 6.32314,
         destinoLongitud: 18.31342,
-        distanciaTotal: 135
+        distanciaTotal: 135,
+        duracionTotal:120
       });
     });
 
@@ -64,7 +65,8 @@ describe('DetalleRutasComponent', () => {
       origenLongitud: -1.13134,
       destinoLatitud: 6.32314,
       destinoLongitud: 18.31342,
-      distanciaTotal: 135
+      distanciaTotal: 135,
+      duracionTotal:120
     });
     
   })
@@ -108,7 +110,8 @@ describe('DetalleRutasComponent', () => {
         origenLongitud: -1.13134,
         destinoLatitud: 6.32314,
         destinoLongitud: 18.31342,
-        distanciaTotal: 135
+        distanciaTotal: 135,
+        duracionTotal:120
       });
     });
 
@@ -126,10 +129,11 @@ describe('DetalleRutasComponent', () => {
       origenLongitud: -1.13134,
       destinoLatitud: 6.32314,
       destinoLongitud: 18.31342,
-      distanciaTotal: 135
+      distanciaTotal: 135,
+      duracionTotal:120
     });
     // Define la distancia que esperas mostrar
-    const expectedDistance = 'Distancia total: 135 km';
+    const expectedDistance = '135 km';
       
     // Obtiene el elemento HTML que contiene el texto de la distancia
     const distanciaElement: HTMLElement = fixture.nativeElement.querySelector('.distancia');
@@ -138,6 +142,54 @@ describe('DetalleRutasComponent', () => {
     expect(distanciaElement.textContent!.trim()).toBe(expectedDistance);
     
   })
+  it('Deberia mostrar la duracion total de la ruta', () => {
+    //Completar 
+    let service=TestBed.inject(RouteService);    
+    // Espiar el método getRuta y proporcionar una implementación falsa
+    spyOn(service, "getRuta").and.callFake((_id: number) => {
+      // Simular la respuesta del servicio con un objeto de ruta
+      
+      return of({
+        id: 1,
+        name: "ruta1",
+        ubicacion: "El Escorial",
+        origenLatitud: 45.21313,
+        origenLongitud: -1.13134,
+        destinoLatitud: 6.32314,
+        destinoLongitud: 18.31342,
+        distanciaTotal: 135,
+        duracionTotal:120
+      });
+    });
+
+    fixture = TestBed.createComponent(DetalleRutasComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    
+   
+    expect(component.existRuta).toBeTrue();
+    expect(component.ruta).toEqual({
+      id: 1,
+      name: "ruta1",
+      ubicacion: "El Escorial",
+      origenLatitud: 45.21313,
+      origenLongitud: -1.13134,
+      destinoLatitud: 6.32314,
+      destinoLongitud: 18.31342,
+      distanciaTotal: 135,
+      duracionTotal:120
+    });
+    // Define la duración que esperas mostrar
+  const expectedDuration = '2 horas y 0 minutos';
+
+  // Obtiene el elemento HTML que contiene el texto de la duración
+  const duracionElement: HTMLElement = fixture.nativeElement.querySelector('.duracion');
+
+  // Verifica si el texto del elemento coincide con el texto esperado
+  expect(duracionElement.textContent!.trim()).toContain(expectedDuration);
+    
+  })
+
   it('should not throw an error if navbarService subscription is not defined when ngOnDestroy is called', () => {
     fixture = TestBed.createComponent(DetalleRutasComponent);
     component = fixture.componentInstance;

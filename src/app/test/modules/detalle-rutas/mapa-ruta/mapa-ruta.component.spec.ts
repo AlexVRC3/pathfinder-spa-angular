@@ -37,7 +37,8 @@ describe('MapaRutaComponent', () => {
           origenLongitud: -4.17309,
           destinoLatitud: 40.5999,
           destinoLongitud: -4.15293,
-          distanciaTotal: 135
+          distanciaTotal: 135,
+          duracionTotal: 120
         };
         const unsubscribeSpy = spyOn(component['googleMapService'], 'initMap');
         component.ngOnInit();
@@ -57,7 +58,8 @@ describe('MapaRutaComponent', () => {
           origenLongitud: -4.17309,
           destinoLatitud: 40.5999,
           destinoLongitud: -4.15293,
-          distanciaTotal: 135
+          distanciaTotal: 135,
+          duracionTotal: 120
     };
     servicio.initMap(ruta);
   
