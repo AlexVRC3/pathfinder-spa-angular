@@ -24,8 +24,6 @@ describe('MapaRutaComponent', () => {
   });
 
  
-  
-      // Initializes the component with a valid input 'rutaFromParent' and calls 'initMap' method of 'GoogleMapService'
   it('should initialize component with valid input and call initMap method', () => {
         const fixture = TestBed.createComponent(MapaRutaComponent);
         const component = fixture.componentInstance;
@@ -37,7 +35,8 @@ describe('MapaRutaComponent', () => {
           origenLongitud: -4.17309,
           destinoLatitud: 40.5999,
           destinoLongitud: -4.15293,
-          distanciaTotal: 135
+          distanciaTotal: 135,
+          duracionTotal: 120
         };
         const unsubscribeSpy = spyOn(component['googleMapService'], 'initMap');
         component.ngOnInit();
@@ -49,7 +48,7 @@ describe('MapaRutaComponent', () => {
   it('should initialize map successfully', (done) => {
     const servicio = new GoogleMapService();
     const ruta: Ruta = {
-      // Define los valores de la ruta según sea necesario
+      
       id: 1,
           name: 'Test Ruta',
           ubicacion: 'Test Ubicacion',
@@ -57,15 +56,15 @@ describe('MapaRutaComponent', () => {
           origenLongitud: -4.17309,
           destinoLatitud: 40.5999,
           destinoLongitud: -4.15293,
-          distanciaTotal: 135
+          distanciaTotal: 135,
+          duracionTotal: 120
     };
     servicio.initMap(ruta);
   
-    // Espera un tiempo suficiente para que se cargue el mapa
     setTimeout(() => {
       expect(servicio.map).toBeDefined();
       done();
-    }, 2000); // Ajusta el tiempo de espera según sea necesario
+    }, 2000); 
   });
   
   
