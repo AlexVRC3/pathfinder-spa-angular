@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 80vh; 
+  margin-top: 20px;
 }
 
 .card {
@@ -22,11 +23,15 @@
   text-align: center;
 }
 
+.header-content {
+  display: flex;
+  align-items: flex-start; 
+}
+
 .map-container {
-  margin-top: 25px; 
-  width: 100%;
-  height: calc(100% - 40px); 
-  border: 2px solid #e6c17e; 
+  margin-top: 20px; 
+  width: 60%;
+  height: 50%;
 }
 
 .arrow-button {
@@ -54,3 +59,39 @@
   border-right: 10px solid #fff; 
 }
 
+.image-container {
+  width: 170px; 
+  height: 170px; 
+  overflow: hidden; 
+  margin-top: 20px;
+  border: 2px solid #e6c17e; 
+}
+
+.image-container img {
+  width: 100%; 
+  height: auto; 
+  display: block; 
+  
+}
+
+.details-container {
+  margin-left: 20px; 
+  margin-top: 20px;
+}
+
+.details-container p {
+  font-size: 16px; 
+  color: #333; 
+}
+
+.details-container p.distancia {
+  font-style: italic; 
+  font-weight: bold;
+  text-align: left;
+}
+
+.details-container p.ubicacion{
+  font-style: italic; 
+  font-weight: bold;
+  text-align: left;
+}
