@@ -84,16 +84,16 @@
   font-weight: bold;
   color: #333;
   line-height: 1;
-  display: flex; /* Alinea verticalmente los elementos */
-  align-items: center; /* Centra verticalmente los elementos */
+  display: flex; 
+  align-items: center; 
 }
 
 .details-container p.distancia img,
 .details-container p.ubicacion img,
 .details-container p.duracion img {
-  margin-right: 10px; /* Añade un espacio entre el icono y el texto */
-  width: 22px; /* Ajusta el ancho del icono */
-  height: auto; /* Ajusta la altura del icono automáticamente */
+  margin-right: 10px; 
+  width: 22px; 
+  height: auto; 
 }
 
 
