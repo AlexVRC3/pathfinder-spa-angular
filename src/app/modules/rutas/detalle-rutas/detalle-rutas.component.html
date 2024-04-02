@@ -8,9 +8,7 @@
     </button>
     <div class="header-content">
       <div class="image-container">
-        <a href="https://picsum.photos/seed/picsum/1000/1000">
-          <img src="https://picsum.photos/seed/picsum/1000/1000" alt="Imagen de la ruta">
-        </a>
+          <img [src]="'data:image/jpeg;base64,' + ruta.image" [alt]="ruta.name">
       </div>
       <div class="details-container">
         <p class="ubicacion">
@@ -33,3 +31,5 @@
 <ng-template #templateDontFound>
   <app-error [message]="'rutas.dontExist' | translate"></app-error>
 </ng-template>
+
+
