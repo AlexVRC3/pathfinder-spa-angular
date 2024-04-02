@@ -31,6 +31,14 @@ export class DetalleRutasComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.suscriptionRutaService.unsubscribe();
   }
+  calcularDuracion(duracionTotal: number): string {
+    const horas = Math.floor(duracionTotal / 60); 
+    const minutos = duracionTotal % 60; 
+    const horasStr = horas === 1 ? 'hora' : 'horas';
+    const minutosStr = minutos === 1 ? 'minuto' : 'minutos';
+    return `${horas} ${horasStr} y ${minutos} ${minutosStr}`;
+  }
+  
 
 }
 

@@ -1,13 +1,15 @@
 
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClient, HttpClientModule, HttpParams } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
+import { Observable, of } from "rxjs";
+import { Ruta } from "src/app/core/data/ruta.interface";
+import EnvironmentService from "src/app/core/services/environment/env.service";
 import { RouteService } from "src/app/core/services/route/route.services";
 import { ListRutasComponent } from "src/app/modules/rutas/list-rutas/list-rutas.component";
 import { RutasModule } from "src/app/modules/rutas/rutas.module";
-import { of } from 'rxjs';
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 import { NavbarCommunicationService } from "src/app/shared/services/navbar.service";
-import { Ruta } from "src/app/core/data/ruta.interface";
+import { environment } from "src/environments/environment";
 
 
 describe('ListRutasComponent', () => {
@@ -47,53 +49,58 @@ describe('ListRutasComponent', () => {
       expect(component.listRutas).toBeTruthy();
       expect(component.listRutas).toEqual([]);
     });
-
-   /* it('should set foundRuta to false when subscription returns empty data', () => {
-      const fixture = TestBed.createComponent(ListRutasComponent);
-     
-      // Simula el servicio de ruta para devolver una lista vacía
-      routeServiceSpy.getListRoute.and.returnValue(of([]));
-      const component = fixture.componentInstance;
-      // Simula el servicio de comunicación del navbar para devolver datos vacíos
-      navbarCommunicationServiceSpy.setData(" ");
-      
-      fixture.detectChanges();
-  
-      
-      expect(component.foundRuta).toBeFalse();
-      expect(component.listRutas).toEqual([]);
-    });
-    /*it('shoud set foundUser to true and listRutas with data when subscription returns data', () => {
-      
-      const fixture = TestBed.createComponent(ListRutasComponent);
-      const component = fixture.componentInstance;
-
-      const mockRutas: Ruta[] = [
-        { id: 1, name: 'Ruta 1', ubicacion: 'Ubicación 1' },
-        { id: 2, name: 'Ruta 2', ubicacion: 'Ubicación 2' }
-      ];
-
-      const newData = "New input data";
-      navbarCommunicationServiceSpy.setData(newData);
-     
-      routeServiceSpy.getListRoute.and.returnValue(of(mockRutas));
-
-      fixture.detectChanges();//TODO: MIRAR
- 
-      expect(component.foundRuta).toBeTrue();
-      expect(component.listRutas).toEqual(mockRutas);
-    });*/
     
     it('should unsubscribe from subscriptions onDestroy', () => {
       const fixture = TestBed.createComponent(ListRutasComponent);
       const component = fixture.componentInstance;
 
-      // Espía la llamada al método `unsubscribe` del suscriptor
       const unsubscribeSpy = spyOn(component['suscriptionNavBarService'], 'unsubscribe');
-      // Llama al método ngOnDestroy
+   
       component.ngOnDestroy();
-      // Verifica si se llamó al método `unsubscribe`
+
       expect(unsubscribeSpy).toHaveBeenCalled();
     });
 
 });
+
+describe('RouteService', () => {
+  let routeService: RouteService;
+  let httpMock: jasmine.SpyObj<HttpClient>;
+  let envServiceMock: jasmine.SpyObj<EnvironmentService>;
+
+  beforeEach(() => {
+    httpMock = jasmine.createSpyObj('HttpClient', ['get']);
+    envServiceMock = jasmine.createSpyObj('EnvironmentService', ['getUrl']);
+    
+    TestBed.configureTestingModule({
+      providers: [
+        RouteService,
+        { provide: HttpClient, useValue: httpMock },
+        { provide: EnvironmentService, useValue: envServiceMock }
+      ]
+    });
+    routeService = TestBed.inject(RouteService);
+  });
+
+  it('should call http.get with correct parameters', () => {
+    const ubicacion = 'some_location';
+    const mockRutas: Ruta[] = []; 
+    
+    const mockUrl = 'mocked_url';
+    envServiceMock.getUrl.and.returnValue(mockUrl);
+
+    const mockResponse: Observable<Ruta[]> = of(mockRutas);
+    httpMock.get.and.returnValue(mockResponse);
+
+    routeService.getListRoute(ubicacion).subscribe((response) => {
+      expect(response).toEqual(mockRutas); 
+    });
+
+    expect(httpMock.get).toHaveBeenCalledWith(mockUrl, { params: jasmine.any(HttpParams) }); 
+    expect(envServiceMock.getUrl).toHaveBeenCalledWith(environment.PATH.RUTA.SEARCH); 
+  });
+  
+});
+
+
+

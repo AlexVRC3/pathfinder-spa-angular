@@ -3,55 +3,97 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh; /* Ajustar altura según sea necesario */
+  height: 80vh; 
+  margin-top: 20px;
 }
 
 .card {
   border: 2px solid #e6c17e;
-  background-color: #f8f1e4; /* Color marrón claro */
+  background-color: #f8f1e4; 
   padding: 20px;
-  position: relative; /* Cambiado a relativo */
+  position: relative; 
   top: 20px;
 }
 
 .card-header {
-  background-color: #e6c17e; /* Color de fondo del encabezado */
-  color: #fff; /* Color del texto del encabezado */
-  padding: 10px; /* Espaciado interno del encabezado */
-  font-weight: bold; /* Negrita para el texto del encabezado */
+  background-color: #e6c17e; 
+  color: #fff; 
+  padding: 10px; 
+  font-weight: bold; 
   text-align: center;
 }
 
+.header-content {
+  display: flex;
+  align-items: flex-start; 
+}
+
 .map-container {
-  margin-top: 25px; /* Espacio para el botón */
-  /*width: calc(100% - 20px); */
-  width: 100%;
-  height: calc(100% - 40px); 
-  border: 2px solid #e6c17e; 
+  margin-top: 20px; 
+  width: 60%;
+  height: 50%;
 }
 
 .arrow-button {
   position: absolute;
-  top: 20px; /* Ajusta la posición vertical según tus necesidades */
-  left: 20px; /* Ajusta la posición horizontal según tus necesidades */
-  width: 40px; /* Ajusta el ancho del botón según tus necesidades */
-  height: 40px; /* Ajusta la altura del botón según tus necesidades */
-  background-color: transparent; /* Fondo transparente */
+  top: 20px; 
+  left: 20px; 
+  width: 40px; 
+  height: 40px; 
+  background-color: transparent; 
   border: none;
   cursor: pointer;
 }
 
 .arrow-button img {
-  width: 100%; /* Ajusta el ancho de la imagen al 100% del botón */
-  height: 100%; /* Ajusta la altura de la imagen al 100% del botón */
-  object-fit: contain; /* Ajusta la imagen al tamaño del contenedor sin distorsión */
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
 }
 
 .arrow {
   width: 0;
   height: 0;
-  border-top: 10px solid transparent; /* Ajusta el tamaño de la flecha según tus necesidades */
-  border-bottom: 10px solid transparent; /* Ajusta el tamaño de la flecha según tus necesidades */
-  border-right: 10px solid #fff; /* Ajusta el tamaño de la flecha según tus necesidades */
+  border-top: 10px solid transparent; 
+  border-bottom: 10px solid transparent; 
+  border-right: 10px solid #fff; 
 }
+
+.image-container {
+  width: 170px; 
+  height: 170px; 
+  overflow: hidden; 
+  margin-top: 20px;
+  border: 2px solid #e6c17e; 
+}
+
+.image-container img {
+  width: 100%; 
+  height: auto; 
+  display: block; 
+  
+}
+
+.details-container {
+  margin-left: 20px; 
+  margin-top: 20px;
+}
+
+.details-container p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1;
+  display: flex; 
+  align-items: center; 
+}
+
+.details-container p.distancia img,
+.details-container p.ubicacion img,
+.details-container p.duracion img {
+  margin-right: 10px; 
+  width: 22px; 
+  height: auto; 
+}
+
 

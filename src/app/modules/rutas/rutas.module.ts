@@ -7,7 +7,6 @@ import { NavbarCommunicationService } from 'src/app/shared/services/navbar.servi
 import { DetalleRutasComponent } from './detalle-rutas/detalle-rutas.component';
 import { MapaRutaComponent } from './detalle-rutas/mapa-ruta/mapa-ruta.component';
 import { RouterModule } from '@angular/router';
-import { ErrorComponent } from 'src/app/shared/components/error/error.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({

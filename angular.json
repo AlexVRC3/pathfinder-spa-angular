@@ -99,12 +99,12 @@
             "codeCoverage": true,
             "codeCoverageExclude": [ 
               "**/*.spec.ts",
-            "**/node_modules/**",
-            "**/*.e2e-spec.ts",
-            "**/*.po.ts",
-            "src/assets",
-            "src/app/core/services/google/google-map.service.ts"
-          ],
+              "**/node_modules/**",
+              "**/*.e2e-spec.ts",
+              "**/*.po.ts",
+              "src/assets",
+              "src/app/core/services/google/google-map.service.ts"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

@@ -1,16 +1,35 @@
 <div *ngIf="existRuta; else templateDontFound" class="container-detalles">
-    <div class="card" *ngIf="ruta != null">
-      <div class="card-header">
-        {{ ruta.name}}
-      </div>
-      <button class="arrow-button" [routerLink]="['/']">
-        <img src="https://img.icons8.com/office/16/return.png" alt="Flecha hacia atrás">
-      </button>
-      <app-mapa-ruta  [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+  <div class="card" *ngIf="ruta != null">
+    <div class="card-header">
+      {{ ruta.name}}
     </div>
+    <button class="arrow-button" [routerLink]="['/']">
+      <img src="https://img.icons8.com/office/16/return.png" alt="Flecha hacia atrás">
+    </button>
+    <div class="header-content">
+      <div class="image-container">
+        <a href="https://picsum.photos/seed/picsum/1000/1000">
+          <img src="https://picsum.photos/seed/picsum/1000/1000" alt="Imagen de la ruta">
+        </a>
+      </div>
+      <div class="details-container">
+        <p class="ubicacion">
+          <img width="20" height="20" src="https://img.icons8.com/pastel-glyph/64/marker--v1.png" alt="marker--v1"/> 
+          {{ ruta.ubicacion }} 
+        </p>
+        <p class="distancia">
+          <img class = "montaña" width="20" height="20" src="https://img.icons8.com/ios-filled/50/003064/trail.png" alt="trail"/>
+           {{ ruta.distanciaTotal }} km
+        </p>
+        <p class="duracion"> 
+          <img width="20" height="20" src="https://img.icons8.com/glyph-neue/64/stopwatch.png" alt="stopwatch"/>
+           {{ calcularDuracion(ruta.duracionTotal) }} </p>
+      </div>
+    </div>
+    <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
   </div>
-  
-  <ng-template #templateDontFound>
-    <app-error [message]="'rutas.dontExist' | translate"></app-error>
-  </ng-template>
-  
+</div>
+
+<ng-template #templateDontFound>
+  <app-error [message]="'rutas.dontExist' | translate"></app-error>
+</ng-template>
