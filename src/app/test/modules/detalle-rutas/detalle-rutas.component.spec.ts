@@ -44,7 +44,8 @@ describe('DetalleRutasComponent', () => {
         destinoLatitud: 6.32314,
         destinoLongitud: 18.31342,
         distanciaTotal: 135,
-        duracionTotal:120
+        duracionTotal:120,
+        image: "alguna imagen"
       });
     });
 
@@ -63,7 +64,8 @@ describe('DetalleRutasComponent', () => {
       destinoLatitud: 6.32314,
       destinoLongitud: 18.31342,
       distanciaTotal: 135,
-      duracionTotal:120
+      duracionTotal:120,
+      image: "alguna imagen"
     });
     
   })
@@ -106,7 +108,8 @@ describe('DetalleRutasComponent', () => {
         destinoLatitud: 6.32314,
         destinoLongitud: 18.31342,
         distanciaTotal: 135,
-        duracionTotal:120
+        duracionTotal:120,
+        image: "alguna imagen"
       });
     });
 
@@ -125,7 +128,8 @@ describe('DetalleRutasComponent', () => {
       destinoLatitud: 6.32314,
       destinoLongitud: 18.31342,
       distanciaTotal: 135,
-      duracionTotal:120
+      duracionTotal:120,
+      image: "alguna imagen"
     });
 
     const expectedDistance = '135 km';
@@ -150,7 +154,8 @@ describe('DetalleRutasComponent', () => {
         destinoLatitud: 6.32314,
         destinoLongitud: 18.31342,
         distanciaTotal: 135,
-        duracionTotal:120
+        duracionTotal:120,
+        image: "alguna imagen"
       });
     });
 
@@ -169,7 +174,8 @@ describe('DetalleRutasComponent', () => {
       destinoLatitud: 6.32314,
       destinoLongitud: 18.31342,
       distanciaTotal: 135,
-      duracionTotal:120
+      duracionTotal:120,
+      image: "alguna imagen"
     });
 
   const expectedDuration = '2 horas y 0 minutos';

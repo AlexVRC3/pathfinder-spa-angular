@@ -12,6 +12,7 @@ import { NavbarCommunicationService } from 'src/app/shared/services/navbar.servi
 })
 export class DetalleRutasComponent implements OnDestroy {
   public ruta: Ruta | null = null; 
+  public rutaCompleta: string = '';
   public existRuta: boolean = true;
   private suscriptionRutaService: Subscription;
   constructor(private readonly route: ActivatedRoute, 
@@ -31,6 +32,7 @@ export class DetalleRutasComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.suscriptionRutaService.unsubscribe();
   }
+  
   calcularDuracion(duracionTotal: number): string {
     const horas = Math.floor(duracionTotal / 60); 
     const minutos = duracionTotal % 60; 
@@ -38,7 +40,5 @@ export class DetalleRutasComponent implements OnDestroy {
     const minutosStr = minutos === 1 ? 'minuto' : 'minutos';
     return `${horas} ${horasStr} y ${minutos} ${minutosStr}`;
   }
-  
-
 }
 

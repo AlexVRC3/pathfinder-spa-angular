@@ -5,7 +5,7 @@
         <a class="postcard__link" [routerLink]="['/ruta', r.id ]">
             <article class="postcard dark blue">
                 <div class="postcard__img">
-                    <img class="postcard__img" src="https://picsum.photos/seed/picsum/1000/1000" alt="Image Title"/>
+                   <img class="postcard__img" [src]="'data:image/jpeg;base64,' + r.image" [alt]="r.name">
                 </div>
                 <div class="postcard__text">
                     <h1 class="postcard__title blue">{{ r.name }}</h1>
