@@ -116,6 +116,11 @@ a, a:hover {
 .postcard:hover .postcard__bar {
   width: 100px;
 }
+
+.postcard__img img {
+  height: 100%;
+}
+
 @media screen and (min-width: 769px) {
   .postcard {
     flex-wrap: inherit;

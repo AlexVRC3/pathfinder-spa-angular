@@ -1,5 +1,6 @@
 {
     "rutas": {
-        "dontfound": "Ruta no encontrado, introduzca otra"
+        "dontfound": "No se encuentran rutas en la ubicación introducida, proporcione otra.",
+        "dontExist": "Esta ruta no existe."
     }
 }
