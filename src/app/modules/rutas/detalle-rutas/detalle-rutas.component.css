@@ -96,4 +96,8 @@
   height: auto; 
 }
 
-
+.btn-start-route {
+  background-color: #e6c17e;
+  color: #fff;
+  font-weight: bold;
+}
