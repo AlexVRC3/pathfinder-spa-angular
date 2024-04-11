@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StartRutasComponent } from '../../../modules/rutas/start-rutas/start-rutas.component';
+import { ActivatedRoute } from '@angular/router';
 
 describe('StartRutasComponent', () => {
   let component: StartRutasComponent;
@@ -8,7 +9,8 @@ describe('StartRutasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StartRutasComponent ]
+      declarations: [ StartRutasComponent ],
+      providers: [ActivatedRoute]
     })
     .compileComponents();
   });

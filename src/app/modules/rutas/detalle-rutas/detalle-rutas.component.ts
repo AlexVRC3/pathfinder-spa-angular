@@ -1,5 +1,5 @@
 import { Component, OnDestroy,  } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';

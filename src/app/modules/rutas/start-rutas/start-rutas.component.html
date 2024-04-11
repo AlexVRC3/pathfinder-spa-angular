@@ -1,1 +1,9 @@
-<p>start-rutas works!</p>
+<div class="card" *ngIf="ruta != undefined">
+  <div class="card-header">
+    {{ ruta.name }}
+  </div>
+  <button class="arrow-button" [routerLink]="['/ruta', ruta.id]" routerLinkActive="active">
+    <img src="assets\images\arrow-left.png" alt="Flecha hacia atrás">  
+  </button>
+  <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+</div>
