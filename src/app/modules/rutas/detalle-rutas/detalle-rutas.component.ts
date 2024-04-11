@@ -27,7 +27,7 @@ export class DetalleRutasComponent implements OnDestroy {
     this.navbarService.setActiveSearch(false);
 
     if(this.cookieService.check(COOKIE_ROUTE))  this.cookie = JSON.parse(this.cookieService.get(COOKIE_ROUTE));
-    else this.cookie = { nameRoute: '', init: false };
+    else this.cookie = { ruta : null, init: false };
   
     this.suscriptionRutaService = this.rutaService.getRuta(id)
                                               .subscribe((ruta: Ruta) => {
@@ -51,10 +51,14 @@ export class DetalleRutasComponent implements OnDestroy {
 
   startRoute(): void {
     if(this.ruta != null){
-      const start: StartRouteCookie = { nameRoute: this.ruta.name, init: true};
-      this.cookieService.delete(COOKIE_ROUTE)
-      this.cookieService.set(COOKIE_ROUTE, JSON.stringify(start));
+      let start: StartRouteCookie = { ruta: this.ruta, init: true };
+      if (start.ruta != null) {
+        start.ruta.image = "";
+      }
       
+      this.cookieService.delete(COOKIE_ROUTE);
+      this.cookieService.set(COOKIE_ROUTE, JSON.stringify(start));
+      console.log(this.cookieService.get(JSON.stringify(start)))
     }
   }
 

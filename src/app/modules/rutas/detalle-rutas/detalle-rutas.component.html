@@ -22,7 +22,7 @@
         <p class="duracion"> 
           <img width="20" height="20" src="https://img.icons8.com/glyph-neue/64/stopwatch.png" alt="stopwatch"/>
            {{ calcularDuracion(ruta.duracionTotal) }} </p>
-        <button class="btn btn-start-route"  [routerLink]="['../start' ,{ruta: ruta}]" (click)="startRoute()">Iniciar ruta</button>
+        <button class="btn btn-start-route"  [routerLink]="['../start']" (click)="startRoute()">Iniciar ruta</button>
       </div>
     </div>
     <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>

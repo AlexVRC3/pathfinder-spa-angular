@@ -1,6 +1,8 @@
+import { Ruta } from "../ruta.interface";
+
 export interface StartRouteCookie {
-    nameRoute: string;
     init: boolean;
+    ruta: Ruta | null;
 }
 
 export const COOKIE_ROUTE: string = "start-route";

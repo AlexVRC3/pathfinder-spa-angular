@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
 import { Ruta } from 'src/app/core/data/ruta.interface';
 
 @Component({
@@ -7,13 +9,18 @@ import { Ruta } from 'src/app/core/data/ruta.interface';
   templateUrl: './start-rutas.component.html',
   styleUrls: ['./start-rutas.component.css']
 })
-export class StartRutasComponent implements OnInit {
-  ruta: Ruta | undefined;
+export class StartRutasComponent {
+  ruta: Ruta | null;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor( private readonly router: Router, private readonly serviceCookie: CookieService) { 
+    if (!this.serviceCookie.check(COOKIE_ROUTE)) 
+      this.router.navigate(['/']);
 
-  ngOnInit(): void {
-    // Accede a los datos de la ruta pasados a través del enrutamiento
-    this.ruta = this.route.snapshot.params.ruta;
+    const data: StartRouteCookie = JSON.parse(this.serviceCookie.get(COOKIE_ROUTE));
+    if (data.ruta === null) 
+      this.router.navigate(['/']);
+
+    this.ruta = data.ruta;
   }
+
 }
