@@ -25,7 +25,8 @@ import { StartRutasComponent } from './start-rutas/start-rutas.component';
   ],
   exports:[
     ListRutasComponent,
-    DetalleRutasComponent
+    DetalleRutasComponent,
+    StartRutasComponent
   ],
   providers: [NavbarCommunicationService]
 })

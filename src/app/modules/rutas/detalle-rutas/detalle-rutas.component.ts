@@ -54,6 +54,7 @@ export class DetalleRutasComponent implements OnDestroy {
       const start: StartRouteCookie = { nameRoute: this.ruta.name, init: true};
       this.cookieService.delete(COOKIE_ROUTE)
       this.cookieService.set(COOKIE_ROUTE, JSON.stringify(start));
+      
     }
   }
 
