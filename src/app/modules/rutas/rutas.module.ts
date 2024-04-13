@@ -9,13 +9,15 @@ import { MapaRutaComponent } from './detalle-rutas/mapa-ruta/mapa-ruta.component
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StartRutasComponent } from './start-rutas/start-rutas.component';
+import { ModalComponent } from './start-rutas/modal/modal.component';
 
 @NgModule({
   declarations: [
     ListRutasComponent,
     DetalleRutasComponent,
     MapaRutaComponent,
-    StartRutasComponent
+    StartRutasComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,

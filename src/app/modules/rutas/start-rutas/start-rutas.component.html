@@ -3,9 +3,14 @@
     {{ ruta.name }}
   </div>
 
-  <button class="arrow-button" [routerLink]="['/ruta', ruta.id]" routerLinkActive="active">
+  <button (click)="openModal()" class="arrow-button">
     <img src="assets\images\arrow-left.png" alt="Flecha hacia atrás">  
   </button>
+
+  <div class="" *ngIf="modalSwitch == true">
+    <app-modal></app-modal>
+  </div>
   
   <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+  
 </div>
