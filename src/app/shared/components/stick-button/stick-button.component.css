@@ -1,0 +1,13 @@
+.btn-stick {
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 999999;
+    padding: 15px;
+    border-radius: 30%; 
+    font-size: 16px;
+    background-color: #333D29; 
+    color: white; 
+    border: none;
+    outline: none;
+}

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalsComponent } from '../../../shared/components/modals/modals.component';
+import { StickButtonComponent } from '../../../shared/components/stick-button/stick-button.component';
 
-describe('ModalsComponent', () => {
-  let component: ModalsComponent;
-  let fixture: ComponentFixture<ModalsComponent>;
+describe('StickButtonComponent', () => {
+  let component: StickButtonComponent;
+  let fixture: ComponentFixture<StickButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalsComponent ]
+      declarations: [ StickButtonComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalsComponent);
+    fixture = TestBed.createComponent(StickButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

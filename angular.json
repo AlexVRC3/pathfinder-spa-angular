@@ -30,7 +30,8 @@
               "src/logo.svg",
               "src/assets",
               "src/svg/logoHeader.svg",
-              "src/assets/images/mountain-trail.jpg"
+              "src/assets/images/mountain-trail.jpg",
+              "src/assets/images"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

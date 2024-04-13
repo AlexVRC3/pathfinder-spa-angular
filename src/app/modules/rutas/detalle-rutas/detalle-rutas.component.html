@@ -22,15 +22,24 @@
         <p class="duracion"> 
           <img width="20" height="20" src="https://img.icons8.com/glyph-neue/64/stopwatch.png" alt="stopwatch"/>
            {{ calcularDuracion(ruta.duracionTotal) }} </p>
-        <button class="btn btn-start-route"  [routerLink]="['../start']" (click)="startRoute()">Iniciar ruta</button>
+
+        <button *ngIf="!this.cookie.init || (this.cookie != null && this.cookie.ruta?.id != this.ruta.id);  else btnEndRoute" 
+                class="btn btn-start-route"  
+                (click)="startRoute()">
+                Iniciar ruta
+          </button>     
+        <ng-template #btnEndRoute>
+          <button class="btn btn-start-route" (click)="this.endRoute()">Finalizar ruta</button>
+        </ng-template>      
+       
       </div>
     </div>
     <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+    <app-modal *ngIf="this.showModal" [ruta]="ruta"></app-modal>
   </div>
 </div>
 
 <ng-template #templateDontFound>
   <app-error [message]="'rutas.dontExist' | translate"></app-error>
 </ng-template>
-
 
