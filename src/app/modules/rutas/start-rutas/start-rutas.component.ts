@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
 import { Ruta } from 'src/app/core/data/ruta.interface';
-import { SwitchService } from 'src/app/core/services/modal/switch.service';
 import { StickButtonCommunicationService } from 'src/app/shared/services/stick-button.service';
+import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.component';
 
 @Component({
   selector: 'app-start-rutas',
   templateUrl: './start-rutas.component.html',
   styleUrls: ['./start-rutas.component.css']
 })
-export class StartRutasComponent {
+export class StartRutasComponent implements AfterViewInit{
   public modalSwitch: boolean = false;
   public ruta: Ruta | null;
+  @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; // Referencia del componente hijo
 
   constructor( private readonly router: Router, private readonly serviceCookie: CookieService, private readonly stickButtonCommunicationService: StickButtonCommunicationService) { 
     if (!this.serviceCookie.check(COOKIE_ROUTE)) 
@@ -35,6 +36,22 @@ export class StartRutasComponent {
                  distanciaTotal: 0,
                  duracionTotal: 0
                 };
+   
+
   }
  
+  ngAfterViewInit(): void {
+    if (this.mapaRutaComponent){
+      this.mapaRutaComponent.iniciarRuta();
+      console.log("hola");
+    }
+    else{
+      console.log("hola voy mal");
+    }
+  }
+
+  finalizar() : void{
+    if (this.mapaRutaComponent)
+      this.mapaRutaComponent.finalizar();
+  }
 }

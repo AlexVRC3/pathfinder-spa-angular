@@ -19,4 +19,11 @@ export class MapaRutaComponent implements OnInit {
   ngOnInit(): void {
     this.googleMapService.initMap(this.rutaFromParent);
   }
+
+  iniciarRuta(): void {
+    this.googleMapService.iniciarRuta(this.rutaFromParent);
+  }
+  finalizar():void{
+    this.googleMapService.finalizar();
+  }
 }

@@ -11,4 +11,11 @@
 
   <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
   <app-modal *ngIf="modalSwitch"></app-modal>
+
+   <!-- Barra de información debajo del mapa -->
+   <div class="info-bar">
+    <div class="route-info">
+      <button class="finish-button"  (click)="finalizar()">Finalizar ruta</button>
+  </div>
+
 </div>

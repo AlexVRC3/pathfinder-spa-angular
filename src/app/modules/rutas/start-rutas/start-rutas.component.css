@@ -53,3 +53,27 @@
   border: 2px solid #e6c17e; 
 }
 
+
+.route-info {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  justify-content: space-between; /* Alinear los elementos horizontalmente */
+  flex-wrap: wrap;
+}
+
+
+.finish-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+}
+
+.finish-button:hover {
+  background-color: #0056b3;
+}
+
