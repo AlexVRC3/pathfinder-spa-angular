@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { Subscription } from 'rxjs';
 import { COOKIE_ROUTE, RutaCookie, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
 import { Ruta } from 'src/app/core/data/ruta.interface';
 import { SwitchService } from 'src/app/core/services/modal/switch.service';

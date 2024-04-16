@@ -14,7 +14,7 @@ import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.componen
 export class StartRutasComponent implements AfterViewInit{
   public modalSwitch: boolean = false;
   public ruta: Ruta | null;
-  @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; // Referencia del componente hijo
+  @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
 
   constructor( private readonly router: Router, private readonly serviceCookie: CookieService, private readonly stickButtonCommunicationService: StickButtonCommunicationService) { 
     if (!this.serviceCookie.check(COOKIE_ROUTE)) 
@@ -43,10 +43,6 @@ export class StartRutasComponent implements AfterViewInit{
   ngAfterViewInit(): void {
     if (this.mapaRutaComponent){
       this.mapaRutaComponent.iniciarRuta();
-      console.log("hola");
-    }
-    else{
-      console.log("hola voy mal");
     }
   }
 

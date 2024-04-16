@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StartRutasComponent } from '../../../modules/rutas/start-rutas/start-rutas.component';
-import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('StartRutasComponent', () => {
   let component: StartRutasComponent;
@@ -10,7 +9,7 @@ describe('StartRutasComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ StartRutasComponent ],
-      providers: [ActivatedRoute]
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   });
@@ -21,7 +20,7 @@ describe('StartRutasComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  //  it('should create', () => {
+  //     expect(component).toBeTruthy();
+  //   });
 });

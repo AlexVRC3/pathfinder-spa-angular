@@ -12,6 +12,7 @@ export default class GoogleMapService {
   userMarker: google.maps.Marker | null = null; // Marcador de la posición del usuario
   loader!: Loader;
   terminado:boolean = false;
+  startLocation!: google.maps.LatLng;
 
   constructor() {
     this.map = {} as google.maps.Map;
@@ -55,6 +56,7 @@ export default class GoogleMapService {
         directionsRenderer.setDirections(result);
         
         if(result != null){
+          this.startLocation = result.routes[0].legs[0].start_location;
           this.routeCoordinates = result.routes[0].overview_path.map((path: any) => {
             return { lat: path.lat(), lng: path.lng() };
           });
@@ -67,14 +69,18 @@ export default class GoogleMapService {
   }
 
   iniciarRuta(ruta: Ruta) {
-    this.terminado=true;
+    this.terminado=false;
     if(this.userMarker!=null)
       this.userMarker=null;
     this.loader.load().then(() => {
-
-      let position: google.maps.LatLngLiteral = {lat: ruta.origenLatitud - 0.00002, lng: ruta.origenLongitud + 0.00002};
+      google.maps.event.addListenerOnce(this.map, 'idle', () => {
+      //let position: google.maps.LatLngLiteral = {lat: ruta.origenLatitud - 0.00002, lng: ruta.origenLongitud + 0.00002};
+      let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
+      this.map.setZoom(15); 
+      this.map.panTo(position);
       this.initUserMarker(position);
       this.simulateMovementAlongRoute(this.routeCoordinates, 1000); // Intervalo de 1000 ms (1 segundo)
+      });
   });
   }
   
@@ -98,7 +104,7 @@ export default class GoogleMapService {
       const newPosition = routeCoordinates[index];//posicionActual()
       previousUserPositions.push(newPosition);
       this.updateUserMarker(newPosition);
-     this.drawUserPath(previousUserPositions);
+      this.drawUserPath(previousUserPositions);
       index++;
       setTimeout(moveMarker, interval);
     }
