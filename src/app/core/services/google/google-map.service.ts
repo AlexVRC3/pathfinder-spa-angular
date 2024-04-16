@@ -73,18 +73,20 @@ export default class GoogleMapService {
   }
 
   iniciarRuta(ruta: Ruta) {
+    console.log("voy a hacer un marcador");
     this.terminado=false;
-    if(this.userMarker!=null)
-      this.userMarker=null;
-    this.loader.load().then(() => {
-      google.maps.event.addListenerOnce(this.map, 'idle', () => {
-      let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
-      this.map.setZoom(15); 
-      this.map.panTo(position);
-      this.initUserMarker(position);
-      this.simulateMovementAlongRoute(this.routeCoordinates, 1000); 
-      });
-  });
+    if(this.userMarker===null){
+      this.loader.load().then(() => {
+        google.maps.event.addListenerOnce(this.map, 'idle', () => {
+        let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
+        this.map.setZoom(15); 
+        this.map.panTo(position);
+        this.initUserMarker(position);
+        this.simulateMovementAlongRoute(this.routeCoordinates, 1000); 
+        });
+    });
+    }
+    
   }
   
   initUserMarker(currentPos: google.maps.LatLngLiteral) {

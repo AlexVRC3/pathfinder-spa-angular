@@ -13,10 +13,12 @@ import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.componen
 })
 export class StartRutasComponent implements AfterViewInit{
   public modalSwitch: boolean = false;
+  private  iniciada: boolean;
   public ruta!: Ruta | null;
   @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
 
   constructor( private readonly router: Router, private readonly serviceCookie: CookieService, private readonly stickButtonCommunicationService: StickButtonCommunicationService) { 
+    this.iniciada=false;
     if (!this.serviceCookie.check(COOKIE_ROUTE)) 
       this.router.navigate(['/']);
 
@@ -39,14 +41,12 @@ export class StartRutasComponent implements AfterViewInit{
     }
   }
 
-  // ngOnInit(): void {
-  //   if (this.mapaRutaComponent){
-  //     this.mapaRutaComponent.iniciarRuta();
-  //   }
-  // }
 
   ngAfterViewInit(): void {
-    if (this.mapaRutaComponent){
+    if (this.mapaRutaComponent && !this.iniciada){
+      console.log("ngafter");
+      console.log(this.iniciada);
+      this.iniciada=true;
       this.mapaRutaComponent.iniciarRuta();
     }
   }
@@ -54,5 +54,9 @@ export class StartRutasComponent implements AfterViewInit{
   finalizar() : void{
     if (this.mapaRutaComponent)
       this.mapaRutaComponent.finalizar();
+      this.stickButtonCommunicationService.setActiveSticky(false);
+      this.serviceCookie.delete(COOKIE_ROUTE);
+      this.iniciada=false;
+      this.router.navigate(['ruta/' + this.ruta!.id]);
   }
 }
