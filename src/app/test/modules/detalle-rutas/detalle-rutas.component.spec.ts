@@ -178,7 +178,7 @@ describe('DetalleRutasComponent', () => {
       image: "alguna imagen"
     });
 
-  const expectedDuration = '2 horas y 0 minutos';
+  const expectedDuration = '2 horas';
 
   const duracionElement: HTMLElement = fixture.nativeElement.querySelector('.duracion');
 

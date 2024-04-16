@@ -1,4 +1,4 @@
-import { Component, OnDestroy,  } from '@angular/core';
+import { Component, OnDestroy, ViewChild,  } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
@@ -48,13 +48,21 @@ export class DetalleRutasComponent implements OnDestroy {
     this.suscriptionRutaService.unsubscribe();
     this.subscriptionSwitch.unsubscribe();
   }
-  
+
+
   calcularDuracion(duracionTotal: number): string {
-    const horas = Math.floor(duracionTotal / 60); 
-    const minutos = duracionTotal % 60; 
+    const horas = Math.floor(duracionTotal / 60);
+    const minutos = Math.round(duracionTotal % 60);
     const horasStr = horas === 1 ? 'hora' : 'horas';
     const minutosStr = minutos === 1 ? 'minuto' : 'minutos';
-    return `${horas} ${horasStr} y ${minutos} ${minutosStr}`;
+  
+    if (horas === 0) {
+      return `${minutos} ${minutosStr}`;
+    } else if (minutos === 0) {
+      return `${horas} ${horasStr}`;
+    } else {
+      return `${horas} ${horasStr} y ${minutos} ${minutosStr}`;
+    }
   }
 
   startRoute(): void {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component,ViewChild } from '@angular/core';
+import {AfterViewInit, Component,OnInit,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
@@ -13,7 +13,7 @@ import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.componen
 })
 export class StartRutasComponent implements AfterViewInit{
   public modalSwitch: boolean = false;
-  public ruta: Ruta | null;
+  public ruta!: Ruta | null;
   @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
 
   constructor( private readonly router: Router, private readonly serviceCookie: CookieService, private readonly stickButtonCommunicationService: StickButtonCommunicationService) { 
@@ -23,23 +23,28 @@ export class StartRutasComponent implements AfterViewInit{
     const data: StartRouteCookie = JSON.parse(this.serviceCookie.get(COOKIE_ROUTE));
     if (data.ruta === null) 
       this.router.navigate(['/']);
-
+    else {
     this.stickButtonCommunicationService.setActiveSticky(true);
     this.ruta = { id: data.ruta!.id, 
-                 name: data.ruta!.name,
-                 ubicacion: data.ruta!.ubicacion,
-                 origenLatitud: data.ruta!.origenLatitud,
-                 origenLongitud: data.ruta!.origenLongitud,
-                 destinoLatitud: data.ruta!.destinoLatitud,
-                 destinoLongitud: data.ruta!.destinoLongitud,
-                 image: '',
-                 distanciaTotal: 0,
-                 duracionTotal: 0
-                };
-   
-
+                   name: data.ruta!.name,
+                   ubicacion: data.ruta!.ubicacion,
+                   origenLatitud: data.ruta!.origenLatitud,
+                   origenLongitud: data.ruta!.origenLongitud,
+                   destinoLatitud: data.ruta!.destinoLatitud,
+                   destinoLongitud: data.ruta!.destinoLongitud,
+                   image: '',
+                   distanciaTotal: 0,
+                   duracionTotal: 0
+                  };
+    }
   }
- 
+
+  // ngOnInit(): void {
+  //   if (this.mapaRutaComponent){
+  //     this.mapaRutaComponent.iniciarRuta();
+  //   }
+  // }
+
   ngAfterViewInit(): void {
     if (this.mapaRutaComponent){
       this.mapaRutaComponent.iniciarRuta();

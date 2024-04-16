@@ -26,4 +26,5 @@ export class MapaRutaComponent implements OnInit {
   finalizar():void{
     this.googleMapService.finalizar();
   }
+
 }

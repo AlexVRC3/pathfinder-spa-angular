@@ -68,6 +68,12 @@ describe('MapaRutaComponent', () => {
       done();
     }, 2000); 
   });
-  
+  it('should call finalizar on mapaRutaComponent when finalizar is called', () => {
+    const finalizar = spyOn(component['googleMapService'], 'finalizar');
+
+    component.finalizar();
+
+    expect(finalizar).toHaveBeenCalled();
+  });
   
 });
