@@ -5,8 +5,8 @@
     {{ ruta.name }}
   </div>
 
-  <button [routerLink]="['../' + ruta.id]" class="arrow-button">
-    <img src="assets\images\arrow-left.png" alt="Flecha hacia atrás">  
+  <button  class="arrow-button">
+    <img src="assets\images\arrow-left.png" (click)="back()" alt="Flecha hacia atrás">  
   </button>
 
   <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>

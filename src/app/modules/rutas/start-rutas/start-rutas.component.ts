@@ -5,6 +5,7 @@ import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-c
 import { Ruta } from 'src/app/core/data/ruta.interface';
 import { StickButtonCommunicationService } from 'src/app/shared/services/stick-button.service';
 import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.component';
+import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
 
 @Component({
   selector: 'app-start-rutas',
@@ -17,7 +18,12 @@ export class StartRutasComponent implements AfterViewInit{
   public ruta!: Ruta | null;
   @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
 
-  constructor( private readonly router: Router, private readonly serviceCookie: CookieService, private readonly stickButtonCommunicationService: StickButtonCommunicationService) { 
+  constructor( private readonly router: Router, 
+    private readonly serviceCookie: CookieService, 
+    private readonly stickButtonCommunicationService: StickButtonCommunicationService,
+    private readonly navbarService: NavbarCommunicationService,) { 
+
+    this.navbarService.setActiveSearch(false);
     this.iniciada=false;
     if (!this.serviceCookie.check(COOKIE_ROUTE)) 
       this.router.navigate(['/']);
@@ -58,5 +64,9 @@ export class StartRutasComponent implements AfterViewInit{
       this.serviceCookie.delete(COOKIE_ROUTE);
       this.iniciada=false;
       this.router.navigate(['ruta/' + this.ruta!.id]);
+  }
+  back() : void {
+    //this.stickButtonCommunicationService.setActiveSticky(true);
+    this.router.navigate(['ruta/' + this.ruta!.id]);
   }
 }

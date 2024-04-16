@@ -75,12 +75,17 @@ export default class GoogleMapService {
   iniciarRuta(ruta: Ruta) {
     console.log("voy a hacer un marcador");
     this.terminado=false;
-    if(this.userMarker===null){
+    if(this.userMarker!=null){
+      this.userMarker?.setIcon({
+        url: 'assets/images/ubi-usuario.png',
+        scaledSize: new google.maps.Size(20, 20)
+        });
+    }
+    if(this.userMarker==null){
       this.loader.load().then(() => {
         google.maps.event.addListenerOnce(this.map, 'idle', () => {
         let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
         this.map.setZoom(15); 
-        this.map.panTo(position);
         this.initUserMarker(position);
         this.simulateMovementAlongRoute(this.routeCoordinates, 1000); 
         });
@@ -90,13 +95,17 @@ export default class GoogleMapService {
   }
   
   initUserMarker(currentPos: google.maps.LatLngLiteral) {
+    if(this.userMarker!=null){
+      this.userMarker.setMap(null);
+      this.userMarker=null;
+    }
     this.userMarker = new google.maps.Marker({
       position: currentPos,
       map: this.map,
       title: 'Posición actual',
       icon: {
-        url: 'https://img.icons8.com/stickers/100/full-stop.png',
-        scaledSize: new google.maps.Size(25, 25)
+        url: 'assets/images/ubi-usuario.png',
+        scaledSize: new google.maps.Size(20, 20)
       }
     });
   }
@@ -104,11 +113,12 @@ export default class GoogleMapService {
   simulateMovementAlongRoute(routeCoordinates: google.maps.LatLngLiteral[], interval: number) {
   let index = 0;
   let previousUserPositions : google.maps.LatLngLiteral[] = []; 
-  const moveMarker = () => {
+  const moveMarker = async () => {
     if (index < routeCoordinates.length && !this.terminado) {
-      const newPosition = routeCoordinates[index];//posicionActual()
+      const newPosition = routeCoordinates[index];
+      //const newPosition = await this.posicionActual();
       previousUserPositions.push(newPosition);
-      this.updateUserMarker(newPosition);
+      this.initUserMarker(newPosition);
       this.drawUserPath(previousUserPositions);
       index++;
       setTimeout(moveMarker, interval);
@@ -152,5 +162,6 @@ posicionActual(): Promise<google.maps.LatLngLiteral> {
 
 finalizar():void{
   this.terminado=true;
+  this.userMarker=null;
 }
 }

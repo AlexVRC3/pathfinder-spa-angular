@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MapaRutaComponent } from '../../../../modules/rutas/detalle-rutas/mapa-ruta/mapa-ruta.component';
 import GoogleMapService from 'src/app/core/services/google/google-map.service';
 import { Ruta } from 'src/app/core/data/ruta.interface';
