@@ -4,7 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { StartRutasComponent } from '../../../modules/rutas/start-rutas/start-rutas.component';
 import { StickButtonCommunicationService } from 'src/app/shared/services/stick-button.service';
 import { MapaRutaComponent } from 'src/app/modules/rutas/detalle-rutas/mapa-ruta/mapa-ruta.component';
-import { of } from 'rxjs';
+import GoogleMapService from 'src/app/core/services/google/google-map.service';
 
 describe('StartRutasComponent', () => {
   let component: StartRutasComponent;
@@ -71,17 +71,21 @@ describe('StartRutasComponent', () => {
 
   it('should call iniciarRuta on mapaRutaComponent after view init', () => {
     const iniciarRutaSpy = spyOn(component.mapaRutaComponent, 'iniciarRuta');
-
+    component["iniciada"] = false;
     component.ngAfterViewInit();
 
     expect(iniciarRutaSpy).toHaveBeenCalled();
   });
 
   it('should call finalizar on mapaRutaComponent when finalizar is called', () => {
+   
+    component.ruta = null;
+    component.mapaRutaComponent= new MapaRutaComponent(new GoogleMapService());
     const finalizarSpy = spyOn(component.mapaRutaComponent, 'finalizar');
-
     component.finalizar();
 
     expect(finalizarSpy).toHaveBeenCalled();
   });
+  
+
 });

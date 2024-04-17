@@ -84,11 +84,7 @@ export class DetalleRutasComponent implements OnDestroy {
     }
   }
 
-  endRoute(): void {
-    this.cookieService.delete(COOKIE_ROUTE);
-    this.cookie = { ruta : null, init: false };
-    this.stickButtonCommunicationService.setActiveSticky(false);
-  }
+
 
 }
 
