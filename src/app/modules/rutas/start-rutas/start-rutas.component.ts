@@ -6,7 +6,6 @@ import { Ruta } from 'src/app/core/data/ruta.interface';
 import { StickButtonCommunicationService } from 'src/app/shared/services/stick-button.service';
 import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.component';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
-import { SwitchService } from 'src/app/core/services/modal/switch.service';
 
 @Component({
   selector: 'app-start-rutas',
@@ -22,8 +21,7 @@ export class StartRutasComponent implements AfterViewInit{
   constructor( private readonly router: Router, 
     private readonly serviceCookie: CookieService, 
     private readonly stickButtonCommunicationService: StickButtonCommunicationService,
-    private readonly navbarService: NavbarCommunicationService,
-  private readonly switchService: SwitchService) { 
+    private readonly navbarService: NavbarCommunicationService) { 
     this.navbarService.setActiveSearch(false);
     this.iniciada=false;
     if (!this.serviceCookie.check(COOKIE_ROUTE)) 
@@ -53,7 +51,7 @@ export class StartRutasComponent implements AfterViewInit{
     if (this.mapaRutaComponent && !this.iniciada){
       console.log("ngafter");
       console.log(this.iniciada);
-      //this.iniciada=true;
+      this.iniciada=true;
       this.mapaRutaComponent.iniciarRuta();
     }
   }
