@@ -15,11 +15,11 @@
           <img width="20" height="20" src="https://img.icons8.com/pastel-glyph/64/marker--v1.png" alt="marker--v1"/> 
           {{ ruta.ubicacion }} 
         </p>
-        <p class="distancia" *ngIf="this.ruta.distanciaTotal != -1">
+        <p class="distancia" *ngIf="this.ruta.distanciaTotal !== 0">
           <img class = "montaña" width="20" height="20" src="https://img.icons8.com/ios-filled/50/003064/trail.png" alt="trail"/>
           {{ ruta.distanciaTotal % 1 === 0 ? ruta.distanciaTotal : (ruta.distanciaTotal | number:'1.1-1') }} km
         </p>
-        <p class="duracion"  *ngIf="this.ruta?.duracionTotal != -1"> 
+        <p class="duracion"  *ngIf="this.ruta.duracionTotal !==  0"> 
           <img width="20" height="20" src="https://img.icons8.com/glyph-neue/64/stopwatch.png" alt="stopwatch"/>
            {{ calcularDuracion(ruta.duracionTotal)}} </p>
 
