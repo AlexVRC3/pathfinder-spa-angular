@@ -39,6 +39,8 @@ export class DetalleRutasComponent implements OnDestroy {
     this.suscriptionRutaService = this.rutaService.getRuta(id)
                                               .subscribe((ruta: Ruta) => {
                                                   this.ruta = ruta;
+                                                  this.ruta.duracionTotal = -1;
+                                                  this.ruta.distanciaTotal = -1;
                                                   this.existRuta = this.ruta != null;
                                               });
     this.subscriptionSwitch = this.modalService.$modal.subscribe((showModal: boolean) => this.showModal = showModal);
