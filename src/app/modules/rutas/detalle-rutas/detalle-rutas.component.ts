@@ -31,11 +31,16 @@ export class DetalleRutasComponent implements OnDestroy {
               private readonly stickButtonCommunicationService: StickButtonCommunicationService) {
     
     const id: number = this.route.snapshot.params['id'];
-    this.navbarService.setActiveSearch(false);
+   
 
     if(this.cookieService.check(COOKIE_ROUTE))  this.cookie = JSON.parse(this.cookieService.get(COOKIE_ROUTE));
     else this.cookie = { ruta : null, init: false };
-    this.stickButtonCommunicationService.setActiveSticky(true);
+
+    this.navbarService.setActiveSearch(false);
+    
+    if (this.cookie.init) 
+        this.stickButtonCommunicationService.setActiveSticky(true);
+    
     this.suscriptionRutaService = this.rutaService.getRuta(id)
                                               .subscribe((ruta: Ruta) => {
                                                   this.ruta = ruta;

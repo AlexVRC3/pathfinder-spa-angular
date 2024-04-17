@@ -57,12 +57,14 @@ export class StartRutasComponent implements AfterViewInit{
   }
 
   finalizar() : void{
-    if (this.mapaRutaComponent)
+    if (this.mapaRutaComponent){
+      console.log("aaaa")
       this.mapaRutaComponent.finalizar();
       this.stickButtonCommunicationService.setActiveSticky(false);
       this.serviceCookie.delete(COOKIE_ROUTE);
       this.iniciada=false;
       this.router.navigate(['ruta/' + this.ruta!.id]);
+    }
   }
   back() : void {
     this.router.navigate(['ruta/' + this.ruta!.id]);
