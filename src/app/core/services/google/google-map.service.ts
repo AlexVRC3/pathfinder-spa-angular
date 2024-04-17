@@ -80,6 +80,7 @@ export default class GoogleMapService {
         url: 'assets/images/ubi-usuario.png',
         scaledSize: new google.maps.Size(20, 20)
         });
+        this.simulateMovementAlongRoute(this.routeCoordinates, 1000); 
     }
     if(this.userMarker==null){
       this.loader.load().then(() => {

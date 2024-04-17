@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CookieService } from 'ngx-cookie-service';
 import { StickButtonCommunicationService } from '../../../shared/services/stick-button.service';
-import { of } from 'rxjs';
-import { COOKIE_ROUTE } from 'src/app/core/data/cookie/start-cookie.interface';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('StickButtonComponent', () => {
   let component: StickButtonComponent;
@@ -16,7 +15,7 @@ describe('StickButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ StickButtonComponent ],
-      imports: [ RouterTestingModule ],
+      imports: [ RouterTestingModule, BrowserAnimationsModule ],
       providers: [ CookieService, StickButtonCommunicationService ]
     })
     .compileComponents();

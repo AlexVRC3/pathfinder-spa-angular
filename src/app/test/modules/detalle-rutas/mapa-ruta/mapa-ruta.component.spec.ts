@@ -68,6 +68,11 @@ describe('MapaRutaComponent', () => {
     }, 2000); 
   });
   it('should call finalizar on mapaRutaComponent when finalizar is called', () => {
+    const fixture = TestBed.createComponent(MapaRutaComponent);
+    const component = fixture.componentInstance;
+    component['googleMapService']=new GoogleMapService();
+    fixture.detectChanges();
+
     const finalizar = spyOn(component['googleMapService'], 'finalizar');
 
     component.finalizar();

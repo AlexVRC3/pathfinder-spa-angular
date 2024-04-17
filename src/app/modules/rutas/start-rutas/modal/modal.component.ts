@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_ROUTE, RutaCookie, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
@@ -28,5 +28,6 @@ export class ModalComponent{
       this.cookieService.delete(COOKIE_ROUTE);
       this.cookieService.set(COOKIE_ROUTE, JSON.stringify(start));
       this.router.navigate(['/ruta/start']);
+
   }
 }

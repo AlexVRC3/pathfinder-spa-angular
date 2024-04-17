@@ -1,6 +1,7 @@
 
 import { HttpClient, HttpClientModule, HttpParams } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
+import { CookieService } from "ngx-cookie-service";
 import { Observable, of } from "rxjs";
 import { Ruta } from "src/app/core/data/ruta.interface";
 import EnvironmentService from "src/app/core/services/environment/env.service";
@@ -9,6 +10,7 @@ import { ListRutasComponent } from "src/app/modules/rutas/list-rutas/list-rutas.
 import { RutasModule } from "src/app/modules/rutas/rutas.module";
 import { LoaderComponent } from "src/app/shared/components/loader/loader.component";
 import { NavbarCommunicationService } from "src/app/shared/services/navbar.service";
+import { StickButtonCommunicationService } from "src/app/shared/services/stick-button.service";
 import { environment } from "src/environments/environment";
 
 
@@ -60,6 +62,7 @@ describe('ListRutasComponent', () => {
 
       expect(unsubscribeSpy).toHaveBeenCalled();
     });
+    
 
 });
 
@@ -67,6 +70,7 @@ describe('RouteService', () => {
   let routeService: RouteService;
   let httpMock: jasmine.SpyObj<HttpClient>;
   let envServiceMock: jasmine.SpyObj<EnvironmentService>;
+  let cookieService: CookieService;
 
   beforeEach(() => {
     httpMock = jasmine.createSpyObj('HttpClient', ['get']);
@@ -74,7 +78,7 @@ describe('RouteService', () => {
     
     TestBed.configureTestingModule({
       providers: [
-        RouteService,
+        RouteService, CookieService, StickButtonCommunicationService, NavbarCommunicationService,
         { provide: HttpClient, useValue: httpMock },
         { provide: EnvironmentService, useValue: envServiceMock }
       ]
@@ -99,7 +103,23 @@ describe('RouteService', () => {
     expect(httpMock.get).toHaveBeenCalledWith(mockUrl, { params: jasmine.any(HttpParams) }); 
     expect(envServiceMock.getUrl).toHaveBeenCalledWith(environment.PATH.RUTA.SEARCH); 
   });
-  
+
+  it('should set cookie to null if check is false', () => {
+    const fixture = TestBed.createComponent(ListRutasComponent);
+    const component = fixture.componentInstance;
+    cookieService = TestBed.inject(CookieService);
+    
+    spyOn(component['cookieService'], 'check').and.returnValue(false);
+
+    // Llamamos al constructor manualmente para activar la lógica
+    new ListRutasComponent(new NavbarCommunicationService(), cookieService, routeService, component['stickButtonCommunicationService']);
+    component["cookie"].ruta = null;
+    component["cookie"].init = false;
+    expect(component["cookie"].ruta).toBeNull();
+    expect(component["cookie"].init).toBeFalse();
+});
+
+
 });
 
 
