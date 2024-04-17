@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { Observable, Subject } from 'rxjs';
 export class StickButtonCommunicationService {
   private _activeIconStickySubject: Subject<boolean> = new Subject<boolean>();
   
-  setActiveSticky(active: boolean): void{
+  setActiveSticky(active: boolean): void {
     this._activeIconStickySubject.next(active);
   }
 

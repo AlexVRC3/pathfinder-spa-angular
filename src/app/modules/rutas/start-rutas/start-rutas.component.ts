@@ -21,8 +21,7 @@ export class StartRutasComponent implements AfterViewInit{
   constructor( private readonly router: Router, 
     private readonly serviceCookie: CookieService, 
     private readonly stickButtonCommunicationService: StickButtonCommunicationService,
-    private readonly navbarService: NavbarCommunicationService,) { 
-
+    private readonly navbarService: NavbarCommunicationService) { 
     this.navbarService.setActiveSearch(false);
     this.iniciada=false;
     if (!this.serviceCookie.check(COOKIE_ROUTE)) 
@@ -32,7 +31,7 @@ export class StartRutasComponent implements AfterViewInit{
     if (data.ruta === null) 
       this.router.navigate(['/']);
     else {
-    this.stickButtonCommunicationService.setActiveSticky(true);
+    this.stickButtonCommunicationService.setActiveSticky(false);
     this.ruta = { id: data.ruta!.id, 
                    name: data.ruta!.name,
                    ubicacion: data.ruta!.ubicacion,
@@ -66,7 +65,6 @@ export class StartRutasComponent implements AfterViewInit{
       this.router.navigate(['ruta/' + this.ruta!.id]);
   }
   back() : void {
-    //this.stickButtonCommunicationService.setActiveSticky(true);
     this.router.navigate(['ruta/' + this.ruta!.id]);
   }
 }

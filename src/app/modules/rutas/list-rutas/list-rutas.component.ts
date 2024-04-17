@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { Ruta } from 'src/app/core/data/ruta.interface';
 import { RouteService } from 'src/app/core/services/route/route.services';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
+import { StickButtonCommunicationService } from 'src/app/shared/services/stick-button.service';
 @Component({
   selector: 'app-list-rutas',
   templateUrl: './list-rutas.component.html',
@@ -13,8 +14,9 @@ export class ListRutasComponent implements OnDestroy {
   private suscriptionNavBarService: Subscription;
   public foundRuta: boolean = true;
   public listRutas: Ruta[] = [];
-  constructor(private readonly navBarServices: NavbarCommunicationService, private readonly rutaService: RouteService) { 
+  constructor(private readonly navBarServices: NavbarCommunicationService, private readonly rutaService: RouteService, private readonly stickButtonCommunicationService: StickButtonCommunicationService) { 
     this.navBarServices.setActiveSearch(true);
+    this.stickButtonCommunicationService.setActiveSticky(true);
     this.suscriptionNavBarService = this.navBarServices.$data().pipe(
       switchMap((input: string) => {
         return this.rutaService.getListRoute(input);

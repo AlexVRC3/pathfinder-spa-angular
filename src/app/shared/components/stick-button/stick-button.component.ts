@@ -38,6 +38,7 @@ export class StickButtonComponent implements OnDestroy {
     this.router.navigate(['/ruta/start']);
     this.stickButtonCommsService.setActiveSticky(true);
   }
+  
 
   ngOnDestroy(): void {
     this.subscriptionStickService.unsubscribe();

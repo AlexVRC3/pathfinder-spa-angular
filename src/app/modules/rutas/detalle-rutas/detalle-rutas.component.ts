@@ -35,7 +35,7 @@ export class DetalleRutasComponent implements OnDestroy {
 
     if(this.cookieService.check(COOKIE_ROUTE))  this.cookie = JSON.parse(this.cookieService.get(COOKIE_ROUTE));
     else this.cookie = { ruta : null, init: false };
-  
+    this.stickButtonCommunicationService.setActiveSticky(true);
     this.suscriptionRutaService = this.rutaService.getRuta(id)
                                               .subscribe((ruta: Ruta) => {
                                                   this.ruta = ruta;
