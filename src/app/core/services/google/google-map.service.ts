@@ -13,7 +13,7 @@ export default class GoogleMapService {
   loader!: Loader;
   terminado:boolean = false;
   startLocation!: google.maps.LatLng;
-
+  id: number=-1;
   constructor() {
     this.map = {} as google.maps.Map;
   }
@@ -76,13 +76,17 @@ export default class GoogleMapService {
     console.log("voy a hacer un marcador");
     this.terminado=false;
     if(this.userMarker!=null){
-      this.userMarker?.setIcon({
+      this.loader.load().then(() => {
+        google.maps.event.addListenerOnce(this.map, 'idle', () => {
+        this.userMarker!.setIcon({
         url: 'assets/images/ubi-usuario.png',
         scaledSize: new google.maps.Size(20, 20)
         });
-        this.simulateMovementAlongRoute(this.routeCoordinates, 1000); 
+      });
+    });
+        
     }
-    if(this.userMarker==null){
+    else{
       this.loader.load().then(() => {
         google.maps.event.addListenerOnce(this.map, 'idle', () => {
         let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
@@ -114,7 +118,8 @@ export default class GoogleMapService {
   simulateMovementAlongRoute(routeCoordinates: google.maps.LatLngLiteral[], interval: number) {
   let index = 0;
   let previousUserPositions : google.maps.LatLngLiteral[] = []; 
-  const moveMarker = async () => {
+  
+  const moveMarker = () => {
     if (index < routeCoordinates.length && !this.terminado) {
       const newPosition = routeCoordinates[index];
       //const newPosition = await this.posicionActual();

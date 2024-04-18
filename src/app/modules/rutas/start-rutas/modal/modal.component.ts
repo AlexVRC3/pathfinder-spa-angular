@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_ROUTE, RutaCookie, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
 import { Ruta } from 'src/app/core/data/ruta.interface';
+import GoogleMapService from 'src/app/core/services/google/google-map.service';
 import { SwitchService } from 'src/app/core/services/modal/switch.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { SwitchService } from 'src/app/core/services/modal/switch.service';
 export class ModalComponent{
   public nameRutaCookie: string = '';
   @Input() public ruta!: Ruta;
-  constructor(private modalService: SwitchService, private readonly cookieService: CookieService, private readonly router: Router) {
+  constructor(private modalService: SwitchService, private readonly cookieService: CookieService, private readonly router: Router,private googleMapService: GoogleMapService) {
     this.nameRutaCookie = (JSON.parse(cookieService.get(COOKIE_ROUTE)) as StartRouteCookie).ruta!.name;
   }
 
@@ -27,6 +28,7 @@ export class ModalComponent{
       const start: StartRouteCookie = { ruta: buildRutaCookie, init: true };
       this.cookieService.delete(COOKIE_ROUTE);
       this.cookieService.set(COOKIE_ROUTE, JSON.stringify(start));
+      this.googleMapService.finalizar();
       this.router.navigate(['/ruta/start']);
 
   }
