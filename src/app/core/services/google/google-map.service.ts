@@ -73,7 +73,6 @@ export default class GoogleMapService {
   }
 
   iniciarRuta(ruta: Ruta) {
-    console.log("voy a hacer un marcador");
     this.terminado=false;
     if(this.userMarker!=null){
       this.loader.load().then(() => {
@@ -119,15 +118,23 @@ export default class GoogleMapService {
   let index = 0;
   let previousUserPositions : google.maps.LatLngLiteral[] = []; 
   
-  const moveMarker = () => {
-    if (index < routeCoordinates.length && !this.terminado) {
+  const moveMarker = async () => {
+    if (  !this.terminado) {
       const newPosition = routeCoordinates[index];
       //const newPosition = await this.posicionActual();
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
       this.drawUserPath(previousUserPositions);
       index++;
-      setTimeout(moveMarker, interval);
+      if(!this.ubicacionEnRango(newPosition,routeCoordinates[routeCoordinates.length-1],10)){
+        setTimeout(moveMarker, interval);
+        
+      }
+      else{
+        console.log("terminé");
+        this.terminado = true;
+      }
+        
     }
   };
   moveMarker();
@@ -170,4 +177,28 @@ finalizar():void{
   this.terminado=true;
   this.userMarker=null;
 }
+
+// Calcular la distancia entre dos puntos geográficos utilizando la fórmula del haversine
+calcularDistancia(punto1: google.maps.LatLngLiteral, punto2: google.maps.LatLngLiteral): number {
+  const radioTierra = 6371e3; // Radio medio de la Tierra en metros
+  const lat1 = punto1.lat * Math.PI / 180; // Convertir latitud a radianes
+  const lat2 = punto2.lat * Math.PI / 180;
+  const deltaLat = (punto2.lat - punto1.lat) * Math.PI / 180;
+  const deltaLng = (punto2.lng - punto1.lng) * Math.PI / 180;
+
+  const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+            Math.cos(lat1) * Math.cos(lat2) *
+            Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return radioTierra * c; // Distancia en metros
+}
+
+
+// Verificar si la ubicación del usuario está dentro del rango de finalización
+ ubicacionEnRango(ubicacionUsuario: google.maps.LatLngLiteral, destinoFinal: google.maps.LatLngLiteral, rango: number): boolean {
+  const distancia = this.calcularDistancia(ubicacionUsuario, destinoFinal);
+  return distancia <= rango;
+}
+
 }
