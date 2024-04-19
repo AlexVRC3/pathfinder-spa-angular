@@ -131,7 +131,7 @@ export default class GoogleMapService {
         
       }
       else{
-        console.log("terminé");
+        // Logica del modal
         this.terminado = true;
       }
         

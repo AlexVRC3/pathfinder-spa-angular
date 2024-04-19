@@ -111,7 +111,6 @@ describe('RouteService', () => {
     
     spyOn(component['cookieService'], 'check').and.returnValue(false);
 
-    // Llamamos al constructor manualmente para activar la lógica
     new ListRutasComponent(new NavbarCommunicationService(), cookieService, routeService, component['stickButtonCommunicationService']);
     component["cookie"].ruta = null;
     component["cookie"].init = false;

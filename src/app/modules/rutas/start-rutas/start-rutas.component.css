@@ -58,7 +58,7 @@
   display: flex;
   align-items: center;
   margin-top: 10px;
-  justify-content: space-between; /* Alinear los elementos horizontalmente */
+  justify-content: space-between; 
   flex-wrap: wrap;
 }
 

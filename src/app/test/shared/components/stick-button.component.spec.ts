@@ -25,12 +25,10 @@ describe('StickButtonComponent', () => {
     fixture = TestBed.createComponent(StickButtonComponent);
     component = fixture.componentInstance;
   
-    // Mock CookieService
     cookieService = TestBed.inject(CookieService);
     spyOn(cookieService, 'check').and.returnValue(true);
     spyOn(cookieService, 'get').and.returnValue('{"init": true}');
   
-    // Mock StickButtonCommunicationService
     stickButtonCommsService = TestBed.inject(StickButtonCommunicationService);
     fixture.detectChanges();
   });

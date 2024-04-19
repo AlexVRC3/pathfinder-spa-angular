@@ -104,8 +104,7 @@
   border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
 .btn-start-route:disabled {
-  /* Estilos personalizados para el botón desactivado */
-  opacity: 1; /* Mantener la opacidad completa */
-  cursor: not-allowed; /* Cambiar el cursor */
-  /* Otros estilos de desactivación personalizados según tus preferencias */
+  opacity: 1; 
+  cursor: not-allowed; 
+  
 }

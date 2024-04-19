@@ -1,4 +1,4 @@
-import {AfterViewInit, Component,OnInit,ViewChild } from '@angular/core';
+import {AfterViewInit, Component,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';

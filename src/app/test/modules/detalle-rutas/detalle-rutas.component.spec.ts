@@ -245,14 +245,6 @@ it('should show modal if route is already initiated', () => {
   expect(component.showModal).toBeTruthy();
 });
 
-// it('should unsubscribe from modalService subscription on component destroy', () => {
-//     const unsubscribeSpy = spyOn(component['subscriptionSwitch'], 'unsubscribe');
-
-//     component.ngOnDestroy();
-
-//     expect(unsubscribeSpy).toHaveBeenCalled();
-// });
-
 it('should unsubscribe from rutaService subscription on component destroy', () => {
     const unsubscribeSpy = spyOn(component['suscriptionRutaService'], 'unsubscribe');
 
