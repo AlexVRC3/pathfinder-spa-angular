@@ -8,12 +8,18 @@ import { Ruta } from '../../data/ruta.interface';
 export default class GoogleMapService {
   
   map: google.maps.Map;
+  //ruta real
   routeCoordinates: google.maps.LatLngLiteral[] = []; 
+  startLocation!: google.maps.LatLng;
+  // camino hasta el inicio de la ruta
+  routeCoordinatesToRoute: google.maps.LatLngLiteral[] = []; 
+  startLocationToRoute!: google.maps.LatLng;
   userMarker: google.maps.Marker | null = null; 
   loader!: Loader;
-  terminado:boolean = false;
-  startLocation!: google.maps.LatLng;
+  terminado:boolean = true;
+  
   id: number=-1;
+  pos: google.maps.LatLngLiteral| null=null;
   constructor() {
     this.map = {} as google.maps.Map;
   }
@@ -29,7 +35,18 @@ export default class GoogleMapService {
         this.map = new google.maps.Map(mapElement, {
           zoom: 12 
         });
-        this.drawRoute(ruta);
+        this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
+         
+          this.pos=posicion;
+          this.drawRoute(ruta);
+          if(this.userMarker!=null){
+            
+            this.userMarker.setMap(this.map);
+            this.userMarker.setPosition(posicion)
+            if(!this.ubicacionEnRango(posicion,this.routeCoordinates[0],10))
+              this.drawRouteToInitPoint(posicion,this.routeCoordinates[0]);        
+          }
+      });
       } else {
         console.error("Elemento 'map' no encontrado en el DOM");
       }
@@ -72,30 +89,37 @@ export default class GoogleMapService {
 
   }
 
-  iniciarRuta(ruta: Ruta) {
+iniciarRuta(ruta: Ruta) {
+    let newPosition: google.maps.LatLngLiteral; // Define newPosition fuera de la función
     this.terminado=false;
-    if(this.userMarker!=null){
-      this.loader.load().then(() => {
-        google.maps.event.addListenerOnce(this.map, 'idle', () => {
-        this.userMarker!.setIcon({
-        url: 'assets/images/ubi-usuario.png',
-        scaledSize: new google.maps.Size(20, 20)
-        });
+    this.loader.load().then(() => {
+     this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
+        newPosition = posicion;
+          // Hacer cualquier otra cosa con la nueva posición aquí, ya que newPosition está definida dentro del mismo ámbito
+        
+       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10)){
+         this.drawRouteToInitPoint(this.pos!,this.routeCoordinates[0]);
+          console.log("ubicacion no está en rango");
+       }
+       //this.map.setZoom(15);                  
+       google.maps.event.addListenerOnce(this.map, 'idle', () => {
+        if(this.userMarker!=null){
+            this.map.setCenter(newPosition);
+            this.userMarker!.setIcon({
+            url: 'assets/images/ubi-usuario.png',
+            scaledSize: new google.maps.Size(20, 20)
+            });
+        }
+        else{
+            //let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
+            this.initUserMarker(this.pos!);
+            this.map.setCenter(this.pos!);
+            this.simulateMovementAlongRoute(this.routeCoordinates, 2000); 
+
+        }
       });
     });
-        
-    }
-    else{
-      this.loader.load().then(() => {
-        google.maps.event.addListenerOnce(this.map, 'idle', () => {
-        let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
-        this.map.setZoom(15); 
-        this.initUserMarker(position);
-        this.simulateMovementAlongRoute(this.routeCoordinates, 1000); 
-        });
-    });
-    }
-    
+});
   }
   
   initUserMarker(currentPos: google.maps.LatLngLiteral) {
@@ -120,8 +144,8 @@ export default class GoogleMapService {
   
   const moveMarker = async () => {
     if (  !this.terminado) {
-      const newPosition = routeCoordinates[index];
-      //const newPosition = await this.posicionActual();
+      //const newPosition = routeCoordinates[index];
+      const newPosition = await this.posicionActual();
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
       this.drawUserPath(previousUserPositions);
@@ -158,7 +182,7 @@ updateUserMarker(position: google.maps.LatLngLiteral) {
 }
 posicionActual(): Promise<google.maps.LatLngLiteral> {
   return new Promise((resolve, reject) => {
-    navigator.geolocation.watchPosition(
+    navigator.geolocation.getCurrentPosition(
       (position: GeolocationPosition) => {
         const currentPos: google.maps.LatLngLiteral = {
           lat: position.coords.latitude,
@@ -201,4 +225,43 @@ calcularDistancia(punto1: google.maps.LatLngLiteral, punto2: google.maps.LatLngL
   return distancia <= rango;
 }
 
+drawRouteToInitPoint(ubicacionUsuario: google.maps.LatLngLiteral, puntoInicial: google.maps.LatLngLiteral){
+  
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer({
+    map: this.map,
+    suppressMarkers: true,
+    polylineOptions: {
+      strokeColor: '#ff0000', // Cambia el color de la línea a rojo
+      strokeOpacity: 0.7, // Opacidad similar a la del DirectionsRenderer por defecto
+      strokeWeight: 6, // Grosor similar al del DirectionsRenderer por defecto
+      geodesic: true // Seguir curvas de la Tierra como en el DirectionsRenderer por defecto
+    }
+  });
+
+  const request = {
+    origin: { lat: ubicacionUsuario.lat, lng: ubicacionUsuario.lng },
+    destination: { lat: puntoInicial.lat, lng: puntoInicial.lng },
+    travelMode: google.maps.TravelMode.WALKING
+  };
+
+  directionsService.route(request, (result, status) => {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsRenderer.setDirections(result);
+      
+      if(result != null){
+        this.startLocationToRoute = result.routes[0].legs[0].start_location;
+        this.routeCoordinatesToRoute = result.routes[0].overview_path.map((path: any) => {
+          return { lat: path.lat(), lng: path.lng() };
+        });
+      } else {
+        console.error("Error al obtener la ruta:", status);
+      }
+      }
+  });
 }
+
+}
+
+
+
