@@ -10,6 +10,7 @@ export const RUTAS_ROUTES: Routes = [
             {path: '', component: ListRutasComponent },
             {path: 'start', component: StartRutasComponent, canActivate: [ AuthInitGuard ] },
             {path: ':id', component: DetalleRutasComponent },
+            { path: '**', component: ListRutasComponent },
         ] 
     },
     { path: '**', component: ListRutasComponent }

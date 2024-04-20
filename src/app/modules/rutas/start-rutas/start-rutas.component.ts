@@ -13,13 +13,13 @@ import { NavbarCommunicationService } from 'src/app/shared/services/navbar.servi
   styleUrls: ['./start-rutas.component.css']
 })
 export class StartRutasComponent implements AfterViewInit{
-
+  public hasCompleteUserToShowModal: boolean = false;
   public modalSwitch: boolean = false;
-  private  iniciada: boolean;
+  private iniciada: boolean;
   public ruta!: Ruta | null;
   @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
 
-  constructor( private readonly router: Router, 
+  constructor(private readonly router: Router, 
     private readonly serviceCookie: CookieService, 
     private readonly stickButtonCommunicationService: StickButtonCommunicationService,
     private readonly navbarService: NavbarCommunicationService) { 
@@ -55,16 +55,21 @@ export class StartRutasComponent implements AfterViewInit{
     }
   }
 
-  finalizar() : void{
-    if (this.mapaRutaComponent){
+  finalizar(hasPressedBtnModalEndRoute?: boolean) : void{
+    if (this.mapaRutaComponent || (hasPressedBtnModalEndRoute != null && hasPressedBtnModalEndRoute) ){
       this.mapaRutaComponent.finalizar();
       this.stickButtonCommunicationService.setActiveSticky(false);
       this.serviceCookie.delete(COOKIE_ROUTE);
-      this.iniciada=false;
+      this.iniciada = false;
       if(this.ruta)
         this.router.navigate(['ruta/' + this.ruta!.id]);
     }
   }
+
+  handleActiveBtnModalSuccess(hasCompleteRouteUser: boolean): void {
+    this.hasCompleteUserToShowModal = hasCompleteRouteUser;
+  }
+
   back() : void {
     if(this.ruta)
       this.router.navigate(['ruta/' + this.ruta!.id]);

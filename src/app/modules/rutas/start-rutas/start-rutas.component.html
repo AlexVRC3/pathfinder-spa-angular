@@ -7,8 +7,9 @@
     <img src="assets\images\arrow-left.png" (click)="back()" alt="Flecha hacia atrás">  
   </button>
 
-  <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
-  <app-modal *ngIf="modalSwitch"></app-modal>
+  <app-mapa-ruta (hasCompleteRouteUser)="this.handleActiveBtnModalSuccess($event)" [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+  <app-modal *ngIf="this.modalSwitch"></app-modal>
+  <app-modal-end-route-complete *ngIf="this.hasCompleteUserToShowModal" (hasPressedBtn)="this.finalizar($event)"></app-modal-end-route-complete>
 
    <!-- Barra de información debajo del mapa -->
    

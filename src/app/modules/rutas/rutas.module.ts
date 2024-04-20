@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StartRutasComponent } from './start-rutas/start-rutas.component';
 import { ModalComponent } from './start-rutas/modal/modal.component';
+import { ModalEndRouteCompleteComponent } from './start-rutas/modal-end-route-complete/modal-end-route-complete.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ModalComponent } from './start-rutas/modal/modal.component';
     DetalleRutasComponent,
     MapaRutaComponent,
     StartRutasComponent,
-    ModalComponent
+    ModalComponent,
+    ModalEndRouteCompleteComponent
   ],
   imports: [
     CommonModule,

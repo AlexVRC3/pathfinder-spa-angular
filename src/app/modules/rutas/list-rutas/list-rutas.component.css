@@ -31,6 +31,7 @@ a, a:hover {
 }
 .postcard.dark {
   background-color: #656D4A;
+  z-index: 0;
 }
 .postcard.light {
   background-color: #e1e5ea;

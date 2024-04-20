@@ -1,5 +1,6 @@
 .navbar{
     background-color: #333D29;
+    z-index: 1;
 }
 
 .btn-outline-success {

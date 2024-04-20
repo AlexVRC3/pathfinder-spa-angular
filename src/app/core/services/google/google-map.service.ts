@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Ruta } from '../../data/ruta.interface';
 
@@ -17,16 +17,18 @@ export default class GoogleMapService {
   userMarker: google.maps.Marker | null = null; 
   loader!: Loader;
   terminado:boolean = true;
-  
   id: number=-1;
   pos: google.maps.LatLngLiteral| null=null;
+  private $userCompleteRoute: EventEmitter<boolean>;
+  
   constructor() {
     this.map = {} as google.maps.Map;
+    this.$userCompleteRoute =  new EventEmitter<boolean>(false);
   }
 
   initMap(ruta: Ruta): void {
      this.loader = new Loader({
-      apiKey: 'AIzaSyC8QdyoZDAq0MLcuCQijg-HIpVtJ3uLCmY'
+      apiKey: 'AIzaSyC8QdyoZDAq0MLcuCQijg-HIpVtJ3uLCmYxs'
     });
 
     this.loader.load().then(() => {
@@ -137,9 +139,8 @@ iniciarRuta(ruta: Ruta) {
   simulateMovementAlongRoute(routeCoordinates: google.maps.LatLngLiteral[], interval: number) {
   let index = 0;
   let previousUserPositions : google.maps.LatLngLiteral[] = []; 
-  
   const moveMarker = async () => {
-    if (  !this.terminado) {
+    if (!this.terminado) {
       //const newPosition = routeCoordinates[index];
       const newPosition = await this.posicionActual();
       previousUserPositions.push(newPosition);
@@ -153,6 +154,7 @@ iniciarRuta(ruta: Ruta) {
       else{
         // Logica del modal
         this.terminado = true;
+        this.$userCompleteRoute.emit(this.terminado); //Finalizado real
       }
         
     }
@@ -261,6 +263,13 @@ centrar() {
   this.map.setCenter(this.pos!);
   this.map.setZoom(17);
 }
+
+ public userEndRouteEmmiter(): EventEmitter<boolean>{
+  return this.$userCompleteRoute;
+ }
+ public destroyEndRouteEmitter(): void {
+    this.$userCompleteRoute.emit(false);
+ }
 
 }
 
