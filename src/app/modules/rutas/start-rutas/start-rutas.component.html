@@ -1,11 +1,9 @@
-
-
 <div class="card" *ngIf="ruta">
   <div class="card-header">
     {{ ruta.name }}
   </div>
 
-  <button  class="arrow-button">
+  <button class="arrow-button">
     <img src="assets\images\arrow-left.png" (click)="back()" alt="Flecha hacia atrás">  
   </button>
 
@@ -13,9 +11,11 @@
   <app-modal *ngIf="modalSwitch"></app-modal>
 
    <!-- Barra de información debajo del mapa -->
-   <div class="info-bar">
+   
     <div class="route-info">
-      <button class="finish-button"  (click)="finalizar()">Finalizar ruta</button>
-  </div>
-
+      <button class="finish-button" (click)="finalizar()">Finalizar ruta</button>
+      <button class="center-button" (click)="centrar()">
+        <img src="assets\images\gps.png" title="Centrar posición">
+      </button>
+    </div>
 </div>

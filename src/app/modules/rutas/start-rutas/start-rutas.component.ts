@@ -13,6 +13,7 @@ import { NavbarCommunicationService } from 'src/app/shared/services/navbar.servi
   styleUrls: ['./start-rutas.component.css']
 })
 export class StartRutasComponent implements AfterViewInit{
+
   public modalSwitch: boolean = false;
   private  iniciada: boolean;
   public ruta!: Ruta | null;
@@ -49,8 +50,6 @@ export class StartRutasComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     if (this.mapaRutaComponent && !this.iniciada){
-      console.log("ngafter");
-      console.log(this.iniciada);
       this.iniciada=true;
       this.mapaRutaComponent.iniciarRuta();
     }
@@ -70,4 +69,8 @@ export class StartRutasComponent implements AfterViewInit{
     if(this.ruta)
       this.router.navigate(['ruta/' + this.ruta!.id]);
   }
+
+  centrar() {
+    this.mapaRutaComponent["googleMapService"].centrar();
+    }
 }

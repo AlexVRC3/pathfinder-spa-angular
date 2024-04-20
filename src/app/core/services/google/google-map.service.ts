@@ -33,7 +33,7 @@ export default class GoogleMapService {
       const mapElement = document.getElementById("map");
       if (mapElement) {
         this.map = new google.maps.Map(mapElement, {
-          zoom: 12 
+          zoom: 12
         });
         this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
          
@@ -95,16 +95,13 @@ iniciarRuta(ruta: Ruta) {
     this.loader.load().then(() => {
      this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
         newPosition = posicion;
-          // Hacer cualquier otra cosa con la nueva posición aquí, ya que newPosition está definida dentro del mismo ámbito
         
-       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10)){
+       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10))
          this.drawRouteToInitPoint(this.pos!,this.routeCoordinates[0]);
-          console.log("ubicacion no está en rango");
-       }
-       //this.map.setZoom(15);                  
+                     
        google.maps.event.addListenerOnce(this.map, 'idle', () => {
+        this.map.setCenter(newPosition);
         if(this.userMarker!=null){
-            this.map.setCenter(newPosition);
             this.userMarker!.setIcon({
             url: 'assets/images/ubi-usuario.png',
             scaledSize: new google.maps.Size(20, 20)
@@ -112,10 +109,9 @@ iniciarRuta(ruta: Ruta) {
         }
         else{
             //let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
-            this.initUserMarker(this.pos!);
-            this.map.setCenter(this.pos!);
+            this.initUserMarker(newPosition);
+            //this.initUserMarker(position);
             this.simulateMovementAlongRoute(this.routeCoordinates, 2000); 
-
         }
       });
     });
@@ -168,9 +164,9 @@ drawUserPath(previousUserPositions: google.maps.LatLngLiteral[]) {
     const path = new google.maps.Polyline({
       path: previousUserPositions,
       geodesic: true,
-      strokeColor: "red",
-      strokeOpacity: 1.0,
-      strokeWeight: 2
+      strokeColor: "#FFD700",
+      strokeOpacity: 1.3,
+      strokeWeight: 6
     });
     path.setMap(this.map);
   }
@@ -232,10 +228,10 @@ drawRouteToInitPoint(ubicacionUsuario: google.maps.LatLngLiteral, puntoInicial: 
     map: this.map,
     suppressMarkers: true,
     polylineOptions: {
-      strokeColor: '#ff0000', // Cambia el color de la línea a rojo
-      strokeOpacity: 0.7, // Opacidad similar a la del DirectionsRenderer por defecto
-      strokeWeight: 6, // Grosor similar al del DirectionsRenderer por defecto
-      geodesic: true // Seguir curvas de la Tierra como en el DirectionsRenderer por defecto
+      strokeColor: '#800080', //Verde
+      strokeOpacity: 0.5, 
+      strokeWeight: 6, 
+      geodesic: true 
     }
   });
 
@@ -259,6 +255,11 @@ drawRouteToInitPoint(ubicacionUsuario: google.maps.LatLngLiteral, puntoInicial: 
       }
       }
   });
+}
+
+centrar() {
+  this.map.setCenter(this.pos!);
+  this.map.setZoom(17);
 }
 
 }
