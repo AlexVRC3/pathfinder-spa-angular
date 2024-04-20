@@ -28,7 +28,7 @@ export default class GoogleMapService {
 
   initMap(ruta: Ruta): void {
      this.loader = new Loader({
-      apiKey: 'AIzaSyC8QdyoZDAq0MLcuCQijg-HIpVtJ3uLCmYxs'
+      apiKey: 'AIzaSyC8QdyoZDAq0MLcuCQijg-HIpVtJ3uLCmY'
     });
 
     this.loader.load().then(() => {
