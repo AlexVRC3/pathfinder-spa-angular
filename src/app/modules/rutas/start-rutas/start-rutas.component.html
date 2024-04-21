@@ -1,0 +1,22 @@
+<div class="card" *ngIf="ruta">
+  <div class="card-header">
+    {{ ruta.name }}
+  </div>
+
+  <button class="arrow-button">
+    <img src="assets\images\arrow-left.png" (click)="back()" alt="Flecha hacia atrás">  
+  </button>
+
+  <app-mapa-ruta (hasCompleteRouteUser)="this.handleActiveBtnModalSuccess($event)" [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+  <app-modal *ngIf="this.modalSwitch"></app-modal>
+  <app-modal-end-route-complete *ngIf="this.hasCompleteUserToShowModal" (hasPressedBtn)="this.finalizar($event)"></app-modal-end-route-complete>
+
+   <!-- Barra de información debajo del mapa -->
+   
+    <div class="route-info">
+      <button class="finish-button" (click)="finalizar()">Finalizar ruta</button>
+      <button class="center-button" (click)="centrar()">
+        <img src="assets\images\gps.png" title="Centrar posición">
+      </button>
+    </div>
+</div>

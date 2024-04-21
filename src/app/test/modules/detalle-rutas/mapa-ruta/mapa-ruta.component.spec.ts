@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MapaRutaComponent } from '../../../../modules/rutas/detalle-rutas/mapa-ruta/mapa-ruta.component';
 import GoogleMapService from 'src/app/core/services/google/google-map.service';
 import { Ruta } from 'src/app/core/data/ruta.interface';
@@ -68,6 +67,17 @@ describe('MapaRutaComponent', () => {
       done();
     }, 2000); 
   });
-  
+  it('should call finalizar on mapaRutaComponent when finalizar is called', () => {
+    const fixture = TestBed.createComponent(MapaRutaComponent);
+    const component = fixture.componentInstance;
+    component['googleMapService']=new GoogleMapService();
+    fixture.detectChanges();
+
+    const finalizar = spyOn(component['googleMapService'], 'finalizar');
+
+    component.finalizar();
+
+    expect(finalizar).toHaveBeenCalled();
+  });
   
 });

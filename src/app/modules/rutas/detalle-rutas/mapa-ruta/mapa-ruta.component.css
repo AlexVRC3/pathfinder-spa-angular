@@ -1,5 +1,10 @@
-.full{
-    width: 45vw;
-    height: 45vh;
-    border: 2px solid #e6c17e; 
-}
+#map {
+    height: 100%;
+  }
+  
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }

@@ -6,30 +6,42 @@
     <button class="arrow-button" [routerLink]="['/']">
       <img src="assets\images\arrow-left.png" alt="Flecha hacia atrás">  
     </button>
-    <div class="header-content">
+    <div class="header-content"  >
       <div class="image-container">
           <img [src]="'data:image/jpeg;base64,' + ruta.image" [alt]="ruta.name">
       </div>
       <div class="details-container">
-        <p class="ubicacion">
+        <p class="ubicacion" >
           <img width="20" height="20" src="https://img.icons8.com/pastel-glyph/64/marker--v1.png" alt="marker--v1"/> 
           {{ ruta.ubicacion }} 
         </p>
-        <p class="distancia">
+        <p class="distancia" *ngIf="this.ruta.distanciaTotal !== 0">
           <img class = "montaña" width="20" height="20" src="https://img.icons8.com/ios-filled/50/003064/trail.png" alt="trail"/>
-           {{ ruta.distanciaTotal }} km
+          {{ ruta.distanciaTotal % 1 === 0 ? ruta.distanciaTotal : (ruta.distanciaTotal | number:'1.1-1') }} km
         </p>
-        <p class="duracion"> 
+        <p class="duracion"  *ngIf="this.ruta.duracionTotal !==  0"> 
           <img width="20" height="20" src="https://img.icons8.com/glyph-neue/64/stopwatch.png" alt="stopwatch"/>
-           {{ calcularDuracion(ruta.duracionTotal) }} </p>
+           {{ calcularDuracion(ruta.duracionTotal)}} </p>
+
+        <button *ngIf="!this.cookie.init || (this.cookie != null && this.cookie.ruta?.id != this.ruta.id);  else btnEndRoute" 
+                class="btn btn-start-route"  
+                (click)="startRoute()">
+                Iniciar ruta
+          </button>     
+        <ng-template #btnEndRoute>
+          <button class="btn btn-start-route disabled" aria-disabled="true"> Ruta en curso</button>
+        </ng-template>      
+       
       </div>
     </div>
-    <app-mapa-ruta [rutaFromParent]="ruta" class="map-container"></app-mapa-ruta>
+    <app-mapa-ruta [rutaFromParent]="ruta" class="map-container" ></app-mapa-ruta>
+    <app-modal *ngIf="this.showModal" [ruta]="ruta"></app-modal>
   </div>
 </div>
 
 <ng-template #templateDontFound>
   <app-error [message]="'rutas.dontExist' | translate"></app-error>
 </ng-template>
+
 
 

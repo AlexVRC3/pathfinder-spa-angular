@@ -7,13 +7,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorComponent } from "./components/error/error.component";
 import { RouterModule } from "@angular/router";
+import { StickButtonComponent } from './components/stick-button/stick-button.component';
 
 
 @NgModule({
     declarations: [
         NavbarComponent,
         LoaderComponent,
-        ErrorComponent
+        ErrorComponent,
+        StickButtonComponent,
     ],
     imports: [
       CommonModule,
@@ -26,7 +28,8 @@ import { RouterModule } from "@angular/router";
     exports: [
         NavbarComponent,
         LoaderComponent,
-        ErrorComponent
+        ErrorComponent,
+        StickButtonComponent
     ],
     providers: []
   })

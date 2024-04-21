@@ -8,12 +8,18 @@ import { DetalleRutasComponent } from './detalle-rutas/detalle-rutas.component';
 import { MapaRutaComponent } from './detalle-rutas/mapa-ruta/mapa-ruta.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { StartRutasComponent } from './start-rutas/start-rutas.component';
+import { ModalComponent } from './start-rutas/modal/modal.component';
+import { ModalEndRouteCompleteComponent } from './start-rutas/modal-end-route-complete/modal-end-route-complete.component';
 
 @NgModule({
   declarations: [
     ListRutasComponent,
     DetalleRutasComponent,
-    MapaRutaComponent
+    MapaRutaComponent,
+    StartRutasComponent,
+    ModalComponent,
+    ModalEndRouteCompleteComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +29,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   exports:[
     ListRutasComponent,
-    DetalleRutasComponent
+    DetalleRutasComponent,
+    StartRutasComponent
   ],
   providers: [NavbarCommunicationService]
 })
