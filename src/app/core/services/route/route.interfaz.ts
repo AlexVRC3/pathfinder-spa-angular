@@ -1,7 +1,8 @@
 import { Observable } from "rxjs";
 import { Ruta } from "../../data/ruta.interface";
+import { Filter } from "../../data/filters/filter.const";
 
 export default interface IRouteService {
-    getListRoute(ubicacion: string): Observable<Ruta[]>;
+    getListRoute(filter: Filter): Observable<Ruta[]>;
     getRuta(id: number): Observable<Ruta>;
 }

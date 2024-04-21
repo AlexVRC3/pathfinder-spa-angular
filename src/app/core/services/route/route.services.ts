@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import IRouteService from './route.interfaz';
 import EnvironmentService from '../environment/env.service';
 import { environment } from 'src/environments/environment';
+import { Filter } from '../../data/filters/filter.const';
 
 
 @Injectable({
@@ -19,10 +20,12 @@ export class RouteService implements IRouteService {
     return this.http.get<Ruta>(url);
   }
 
-  getListRoute(ubicacion: string): Observable<Ruta[]> {
+  getListRoute(filter: Filter): Observable<Ruta[]> {
     const url: string = this.envService.getUrl(this.RUTA.SEARCH);
+    console.log(filter)
     const params: HttpParams = new HttpParams()
-                                    .set('ubicacion', ubicacion);
+                                    .set('ubicacion', filter.search)
+                                    .set('distanciaTotal', filter.distance);
     return this.http.get<Ruta[]>(url, { params });
   }
 

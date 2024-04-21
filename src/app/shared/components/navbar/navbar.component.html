@@ -4,6 +4,25 @@
       <img width="110" height="45" class="d-inline-block align-text-top" [routerLink]="['/']"  src="assets\images\logo-header.png" alt="Pathfind logo" />
     </a>
     <form *ngIf="this.enableSearch" [@triggerFade] class="d-flex" [formGroup]="formNavBar" (ngSubmit)="submit()">
+        <select formControlName="filterType" name="Filtro" aria-label=".form-select-sm example">
+          <option value="filter-empty" selected>-</option>
+          <option value="filter-distancia">
+            Distancia
+          </option>
+        </select>
+        <div  #filterDiv *ngIf="this.formNavBar.get('filterType')?.value === 'filter-distancia'" [@triggerFade] class="div-filter-distance position-absolute top-0 end-0 mt-4em" >
+          <div class="div-sum txt-filter">
+            <input class="m-right btn-count" value="-" type="button" (click)="this.count(-1)"/>
+              {{ this.formNavBar.get('distanceFilter')?.value }} km
+            <input class="m-left btn-count" value="+" type="button" (click)="this.count(+1)"/>
+          </div>
+          <br>
+          <div class="d-flex txt-filter align-items-center">
+            1
+            <input type="range" class="m-left form-range m-right"  min="1" [max]="this.FILTER_DISTANCE" formControlName="distanceFilter">
+            {{ this.FILTER_DISTANCE }}
+          </div> 
+        </div>
       <input
         class="form-control me-2"
         type="search"
@@ -14,4 +33,6 @@
       <button class="btn btn-outline-success">Buscar</button>
     </form>
   </div>
+ 
+
 </nav>

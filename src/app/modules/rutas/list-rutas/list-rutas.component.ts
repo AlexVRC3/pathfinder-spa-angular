@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
+import { Filter } from 'src/app/core/data/filters/filter.const';
 import { Ruta } from 'src/app/core/data/ruta.interface';
 import { RouteService } from 'src/app/core/services/route/route.services';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
@@ -27,7 +28,7 @@ export class ListRutasComponent implements OnDestroy {
 
     this.navBarServices.setActiveSearch(true);
     this.suscriptionNavBarService = this.navBarServices.$data().pipe(
-      switchMap((input: string) => {
+      switchMap((input: Filter) => {
         return this.rutaService.getListRoute(input);
       })
     ).subscribe((data: Ruta[]) => {
