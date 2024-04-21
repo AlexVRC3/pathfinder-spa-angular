@@ -20,6 +20,8 @@ export default class GoogleMapService {
   id: number=-1;
   pos: google.maps.LatLngLiteral| null=null;
   private $userCompleteRoute: EventEmitter<boolean>;
+  tiempoEstimado: number = -1;
+  distanciaEstimada: number = -1;
   
   constructor() {
     this.map = {} as google.maps.Map;
@@ -116,8 +118,9 @@ iniciarRuta(ruta: Ruta) {
             this.simulateMovementAlongRoute(this.routeCoordinates, 2000); 
         }
       });
+      });
     });
-});
+    
   }
   
   initUserMarker(currentPos: google.maps.LatLngLiteral) {
@@ -143,18 +146,20 @@ iniciarRuta(ruta: Ruta) {
     if (!this.terminado) {
       //const newPosition = routeCoordinates[index];
       const newPosition = await this.posicionActual();
+     // this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
       this.drawUserPath(previousUserPositions);
       index++;
       if(!this.ubicacionEnRango(newPosition,routeCoordinates[routeCoordinates.length-1],10)){
         setTimeout(moveMarker, interval);
-        
       }
       else{
         // Logica del modal
         this.terminado = true;
         this.$userCompleteRoute.emit(this.terminado); //Finalizado real
+        this.tiempoEstimado = 0;
+        this.distanciaEstimada = 0;
       }
         
     }
@@ -198,6 +203,40 @@ posicionActual(): Promise<google.maps.LatLngLiteral> {
 finalizar():void{
   this.terminado=true;
   this.userMarker=null;
+  this.tiempoEstimado = -1;
+  this.distanciaEstimada = -1;
+}
+
+
+// Método para calcular el tiempo estimado restante para llegar al destino
+calcularPos_TiempoRestante(newPosition: google.maps.LatLngLiteral, routeCoordinates: google.maps.LatLngLiteral[]): void {
+  const directionsService = new google.maps.DirectionsService();
+  const request = {
+    origin: newPosition,
+    destination: routeCoordinates[routeCoordinates.length-1  ] ,
+    travelMode: google.maps.TravelMode.WALKING
+  };
+  const request2 = {
+    origin:routeCoordinates[0],
+    destination:newPosition,
+    travelMode: google.maps.TravelMode.WALKING
+  };
+let tiempoRestanteMinutos : number;
+  directionsService.route(request, (result, status) => {
+    if (status == google.maps.DirectionsStatus.OK) {
+      
+      if(result != null){
+        if(result.routes[0].legs[0].duration)
+           this.tiempoEstimado = result.routes[0].legs[0].duration.value / 60;
+        if(result.routes[0].legs[0].distance)
+          this.distanciaEstimada= result.routes[0].legs[0].distance.value /1000;
+      } else {
+        console.error("Error al obtener la ruta:", status);
+      }
+      }
+  });
+
+
 }
 
 // Calcular la distancia entre dos puntos geográficos utilizando la fórmula del haversine
@@ -270,6 +309,7 @@ centrar() {
  public destroyEndRouteEmitter(): void {
     this.$userCompleteRoute.emit(false);
  }
+
 
 }
 

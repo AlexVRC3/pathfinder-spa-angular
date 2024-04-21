@@ -6,6 +6,7 @@ import { Ruta } from 'src/app/core/data/ruta.interface';
 import { StickButtonCommunicationService } from 'src/app/shared/services/stick-button.service';
 import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.component';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
+import GoogleMapService from 'src/app/core/services/google/google-map.service';
 
 @Component({
   selector: 'app-start-rutas',
@@ -18,11 +19,14 @@ export class StartRutasComponent implements AfterViewInit{
   private iniciada: boolean;
   public ruta!: Ruta | null;
   @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
+  tiempoEstimado: number = -1;
+  distanciaRestante: number=-1;
 
   constructor(private readonly router: Router, 
     private readonly serviceCookie: CookieService, 
     private readonly stickButtonCommunicationService: StickButtonCommunicationService,
-    private readonly navbarService: NavbarCommunicationService) { 
+    private readonly navbarService: NavbarCommunicationService,
+  private readonly googleMapsService: GoogleMapService) { 
     this.navbarService.setActiveSearch(false);
     this.iniciada=false;
     if (!this.serviceCookie.check(COOKIE_ROUTE)) 
@@ -50,8 +54,34 @@ export class StartRutasComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     if (this.mapaRutaComponent && !this.iniciada){
-      this.iniciada=true;
+      this.iniciada = true;
       this.mapaRutaComponent.iniciarRuta();
+      let actualizar=()=>{
+       
+        if(!this.googleMapsService.terminado){
+          this.tiempoEstimado = this.googleMapsService.tiempoEstimado;
+          this.distanciaRestante=this.googleMapsService.distanciaEstimada;
+          setTimeout(actualizar,1000)
+        }
+        
+      };
+      actualizar();
+    }
+  }
+  
+  calcularDuracion(duracionTotal: number): string {
+    const horas = Math.floor(duracionTotal / 60);
+    const minutos = Math.floor(duracionTotal % 60);
+    const segundos = Math.floor((duracionTotal - (horas * 60 + minutos)) * 60);
+  
+    const horasStr = horas < 10 ? '0' + horas : horas.toString();
+    const minutosStr = minutos < 10 ? '0' + minutos : minutos.toString();
+    const segundosStr = segundos < 10 ? '0' + segundos : segundos.toString();
+  
+    if (horas === 0) {
+      return `${minutosStr}:${segundosStr}`;
+    } else {
+      return `${horasStr}:${minutosStr}:${segundosStr}`;
     }
   }
 
@@ -78,4 +108,5 @@ export class StartRutasComponent implements AfterViewInit{
   centrar() {
     this.mapaRutaComponent["googleMapService"].centrar();
     }
+  
 }
