@@ -65,7 +65,7 @@
 .route-info {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Alinea los elementos a la izq */
+  justify-content: center; /* Alinea los elementos a la izq */
   margin-top: 15px;
   flex-direction: row; /* Asegura que los elementos estén en línea horizontal */
 }
@@ -119,6 +119,17 @@
 }
 
 .distancia-estimada{
+  margin-left: 20px;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1;
+  display: flex; 
+  align-items: center; 
+}
+
+.timer{
   margin-left: 20px;
   margin-top: 15px;
   font-size: 16px;

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component,ViewChild } from '@angular/core';
+import {AfterViewInit, Component,OnDestroy,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
@@ -13,7 +13,7 @@ import GoogleMapService from 'src/app/core/services/google/google-map.service';
   templateUrl: './start-rutas.component.html',
   styleUrls: ['./start-rutas.component.css']
 })
-export class StartRutasComponent implements AfterViewInit{
+export class StartRutasComponent implements AfterViewInit, OnDestroy{
   public hasCompleteUserToShowModal: boolean = false;
   public modalSwitch: boolean = false;
   private iniciada: boolean;
@@ -21,6 +21,8 @@ export class StartRutasComponent implements AfterViewInit{
   @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
   tiempoEstimado: number = -1;
   distanciaRestante: number=-1;
+  intervalo: any;
+  tiempoTranscurrido: number = -1;
 
   constructor(private readonly router: Router, 
     private readonly serviceCookie: CookieService, 
@@ -50,12 +52,16 @@ export class StartRutasComponent implements AfterViewInit{
                   };
     }
   }
+  ngOnDestroy(): void {
+   clearInterval(this.intervalo); 
+  }
 
 
   ngAfterViewInit(): void {
     if (this.mapaRutaComponent && !this.iniciada){
       this.iniciada = true;
       this.mapaRutaComponent.iniciarRuta();
+      this.timer();
       let actualizar=()=>{
        
         if(!this.googleMapsService.terminado){
@@ -85,6 +91,23 @@ export class StartRutasComponent implements AfterViewInit{
     }
   }
 
+  formatoTiempo(segundos: number): string {
+    const horas = Math.floor(segundos / 3600);
+    const minutos = Math.floor((segundos % 3600) / 60);
+    const segundosRestantes = segundos % 60;
+  
+    let tiempoFormateado = '';
+  
+    if (horas > 0) {
+      tiempoFormateado += horas.toString().padStart(2, '0') + ':';
+    }
+  
+    tiempoFormateado += minutos.toString().padStart(2, '0') + ':';
+    tiempoFormateado += segundosRestantes.toString().padStart(2, '0');
+  
+    return tiempoFormateado;
+  }
+
   finalizar(hasPressedBtnModalEndRoute?: boolean) : void{
     if (this.mapaRutaComponent || (hasPressedBtnModalEndRoute != null && hasPressedBtnModalEndRoute) ){
       this.mapaRutaComponent.finalizar();
@@ -107,6 +130,14 @@ export class StartRutasComponent implements AfterViewInit{
 
   centrar() {
     this.mapaRutaComponent["googleMapService"].centrar();
+  }
+
+  timer(): void {
+      let contador = 0;
+      const intervalo = setInterval(() => {
+        contador++;
+        this.tiempoTranscurrido = contador;
+      }, 1000); // Intervalo de 1 segundo
     }
-  
+    
 }
