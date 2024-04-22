@@ -18,5 +18,19 @@
       <button class="center-button" (click)="centrar()">
         <img src="assets\images\gps.png" title="Centrar posición">
       </button>
+      <div class ="route-info" *ngIf="tiempoEstimado !== -1 && distanciaRestante !== -1">
+      <p class="tiempo-estimado" *ngIf="tiempoEstimado !== -1">{{ "Tiempo estimado : " + calcularDuracion(tiempoEstimado) }}</p>
+      <p class="tiempo-estimado" *ngIf="tiempoEstimado === -1">Tiempo estimado: --:--</p>
+      <div class="distancia-estimada" *ngIf="distanciaRestante !== -1">
+        <p>{{ "Distancia recorrida: " + distanciaRestante + " " + unidadDistancia }}</p>
+        <button class="unidad-button" (click)="toggleUnidadDistancia()">
+          <img src="assets\images\metro.png" alt="Unidad de medida" title="Cambiar unidad de medida">
+        </button>
+      </div>
+      <p class="distancia-estimada" *ngIf="distanciaRestante === -1">Distancia recorrida: --km</p>
+      <p class="timer" *ngIf="tiempoTranscurrido !== -1">{{ "Tiempo transcurrido: " + formatoTiempo(tiempoTranscurrido)}}</p>
+      <p class="timer" *ngIf="tiempoTranscurrido === -1">Tiempo transcurrido: --:--</p>
     </div>
+    <p *ngIf="!(tiempoEstimado !== -1 && distanciaRestante !== -1)" class="warning-message">Dirígete al inicio de la ruta</p>
+  </div>
 </div>

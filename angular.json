@@ -104,7 +104,8 @@
               "**/*.e2e-spec.ts",
               "**/*.po.ts",
               "src/assets",
-              "src/app/core/services/google/google-map.service.ts"
+              "src/app/core/services/google/google-map.service.ts",
+              "src/app/modules/rutas/start-rutas/modal-end-route-complete/**"
             ],
             "assets": [
               "src/favicon.ico",
