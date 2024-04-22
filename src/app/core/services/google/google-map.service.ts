@@ -22,7 +22,8 @@ export default class GoogleMapService {
   private $userCompleteRoute: EventEmitter<boolean>;
   tiempoEstimado: number = -1;
   distanciaEstimada: number = -1;
-  posinicial: google.maps.LatLngLiteral | null=null;
+  //posinicial: google.maps.LatLngLiteral | null=null;
+  iniciada: boolean =false;
   
   constructor() {
     this.map = {} as google.maps.Map;
@@ -99,12 +100,16 @@ iniciarRuta(ruta: Ruta) {
     this.terminado=false;
     this.loader.load().then(() => {
      this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
-       //let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
+      //let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
       newPosition = posicion;
-        if(this.posinicial==null)
-          this.posinicial=posicion
-       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10))
-         this.drawRouteToInitPoint(this.pos!,this.routeCoordinates[0]);
+       
+       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10)&&!this.iniciada){
+        this.drawRouteToInitPoint(this.pos!,this.routeCoordinates[0]);
+       }
+       else{
+        this.iniciada=true;
+       }
+         
                      
        google.maps.event.addListenerOnce(this.map, 'idle', () => {
         this.map.setCenter(newPosition);
@@ -117,7 +122,7 @@ iniciarRuta(ruta: Ruta) {
         else{
            
             this.initUserMarker(newPosition);
-           // this.initUserMarker(position);
+            //this.initUserMarker(position);
             this.simulateMovementAlongRoute(this.routeCoordinates, 2000); 
         }
       });
@@ -146,9 +151,9 @@ iniciarRuta(ruta: Ruta) {
   let previousUserPositions : google.maps.LatLngLiteral[] = []; 
   const moveMarker = async () => {
     if (!this.terminado) {
-      const newPosition = routeCoordinates[index];
-      //const newPosition = await this.posicionActual();
-      this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
+      //const newPosition = routeCoordinates[index];
+      const newPosition = await this.posicionActual();
+      if(this.iniciada)this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
       this.drawUserPath(previousUserPositions);
@@ -162,6 +167,8 @@ iniciarRuta(ruta: Ruta) {
         this.$userCompleteRoute.emit(this.terminado); //Finalizado real
         this.tiempoEstimado = 0;
         this.distanciaEstimada = 0;
+        this.iniciada=false;
+        
       }
         
     }
@@ -209,7 +216,8 @@ finalizar():void{
   this.userMarker=null;
   this.tiempoEstimado = -1;
   this.distanciaEstimada = -1;
-  this.posinicial=null;
+ this.iniciada=false;
+ 
 }
 
 
@@ -222,7 +230,7 @@ calcularPos_TiempoRestante(newPosition: google.maps.LatLngLiteral, routeCoordina
     travelMode: google.maps.TravelMode.WALKING
   };
   const request2 = {
-    origin:this.posinicial!,
+    origin:routeCoordinates[0],
     destination:newPosition,
     travelMode: google.maps.TravelMode.WALKING
   };

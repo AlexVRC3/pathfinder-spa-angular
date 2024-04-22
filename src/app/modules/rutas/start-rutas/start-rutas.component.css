@@ -65,15 +65,13 @@
 .route-info {
   display: flex;
   align-items: center;
-  justify-content: center; /* Alinea los elementos a la izq */
-  margin-top: 15px;
-  flex-direction: row; /* Asegura que los elementos estén en línea horizontal */
+  justify-content: center; 
+  margin-top: 10px;
+  flex-direction: row; 
 }
 
 
 .finish-button {
-  /* background-color: #007bff;
-  color: white; */
   background-color: #e6c17e;
   font-weight: bold;
   color: #fff;
@@ -82,6 +80,7 @@
   padding: 10px 20px;
   cursor: pointer;
   border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  margin-top: 5px;
 }
 
 .finish-button:hover {
@@ -99,6 +98,7 @@
   border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
   border-radius: 10px;
   margin-left: 20px;
+  margin-top: 5px;
 }
 
  .center-button img {
@@ -160,3 +160,13 @@
   object-fit: contain;
   color: white;
 } 
+.warning-message{
+  margin-left: 20px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1;
+  display: flex; 
+  align-items: center; 
+}

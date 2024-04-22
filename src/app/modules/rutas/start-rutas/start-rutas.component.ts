@@ -64,6 +64,7 @@ unidadDistancia: string="km";
       this.iniciada = true;
       this.mapaRutaComponent.iniciarRuta();
       this.timer();
+      
       let actualizar=()=>{
        
         if(!this.googleMapsService.terminado){
@@ -143,7 +144,7 @@ unidadDistancia: string="km";
   timer(): void {
       let contador = 0;
       const intervalo = setInterval(() => {
-        contador++;
+        if(this.distanciaRestante!=-1 && this.tiempoEstimado!=-1)contador++;
         this.tiempoTranscurrido = contador;
       }, 1000); // Intervalo de 1 segundo
     }
