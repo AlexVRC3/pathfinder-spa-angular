@@ -86,6 +86,65 @@ describe('StartRutasComponent', () => {
 
     expect(finalizarSpy).toHaveBeenCalled();
   });
+
+  it('should calculate duration correctly', () => {
+    const duration = 75; // Duration in minutes
+    const expectedDuration = '01:15:00'; // Expected duration in hh:mm:ss format
+    const result = component.calcularDuracion(duration);
+    expect(result).toEqual(expectedDuration);
+  });
+
+  it('should navigate back to the previous route', () => {
+    component.ruta = {
+      id: 1,
+          name: 'Test Ruta',
+          ubicacion: 'Test Ubicacion',
+          origenLatitud: 40.6057,
+          origenLongitud: -4.17309,
+          destinoLatitud: 40.5999,
+          destinoLongitud: -4.15293,
+          distanciaTotal: 135,
+          duracionTotal: 120,
+          image: "alguna imagen"}
+
+    spyOn(component['router'], 'navigate');
+    component.back();
+    expect(component['router'].navigate).toHaveBeenCalledWith(['ruta/' + component.ruta.id]); // Replace '1' with the correct ID
+  });
+
+  it('should center the map', () => {
+    spyOn(component.mapaRutaComponent['googleMapService'], 'centrar');
+    component.centrar();
+    expect(component.mapaRutaComponent['googleMapService'].centrar).toHaveBeenCalled();
+  });
+
+  it('should format time correctly for 40 seconds', () => {
+    const seconds = 40;
+    const expectedTime = '00:40'; // Expected time in hh:mm:ss format
+    const result = component.formatoTiempo(seconds);
+    expect(result).toEqual(expectedTime);
+  });
+  
+  it('should format time correctly for 3800 seconds', () => {
+    const seconds = 3800;
+    const expectedTime = '01:03:20'; // Expected time in hh:mm:ss format
+    const result = component.formatoTiempo(seconds);
+    expect(result).toEqual(expectedTime);
+  });
+  
+  it('should format time correctly for 3600 seconds', () => {
+    const seconds = 3600;
+    const expectedTime = '01:00:00'; // Expected time in hh:mm:ss format
+    const result = component.formatoTiempo(seconds);
+    expect(result).toEqual(expectedTime);
+  });
+  
+  it('should format time correctly for 65 seconds', () => {
+    const seconds = 65;
+    const expectedTime = '01:05'; // Expected time in hh:mm:ss format
+    const result = component.formatoTiempo(seconds);
+    expect(result).toEqual(expectedTime);
+  });
   
 
 });

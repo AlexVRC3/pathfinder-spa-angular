@@ -40,6 +40,10 @@ yarn-error.log
 testem.log
 /typings
 /.vscode
+/public
+/.firebase
+public/*
+.firebase/*
 
 # System Files
 .DS_Store
