@@ -20,7 +20,7 @@
       </button>
       <p class="tiempo-estimado" *ngIf="tiempoEstimado !== -1">{{ "Tiempo estimado : " + calcularDuracion(tiempoEstimado) }}</p>
       <p class="tiempo-estimado" *ngIf="tiempoEstimado === -1">Tiempo estimado: --:--</p>
-      <p class="distancia-estimada" *ngIf="distanciaRestante !== -1">{{ "Distancia estimada: " + distanciaRestante + "km"}}</p>
+      <p class="distancia-estimada" *ngIf="distanciaRestante !== -1" (click)="toggleUnidadDistancia()">{{ "Distancia estimada: " + distanciaRestante + unidadDistancia }}</p>
       <p class="distancia-estimada" *ngIf="distanciaRestante === -1">Distancia estimada: --km</p>
       <p class="timer"*ngIf="tiempoTranscurrido !== -1">{{ "Tiempo transcurrido: " + formatoTiempo(tiempoTranscurrido)}}</p>
       <p class="timer"  *ngIf="tiempoTranscurrido === -1">Tiempo transcurrido: --:--</p>

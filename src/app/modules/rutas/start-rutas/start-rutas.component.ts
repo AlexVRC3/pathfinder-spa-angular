@@ -14,6 +14,8 @@ import GoogleMapService from 'src/app/core/services/google/google-map.service';
   styleUrls: ['./start-rutas.component.css']
 })
 export class StartRutasComponent implements AfterViewInit, OnDestroy{
+unidadDistancia: string="km";
+
   public hasCompleteUserToShowModal: boolean = false;
   public modalSwitch: boolean = false;
   private iniciada: boolean;
@@ -66,7 +68,13 @@ export class StartRutasComponent implements AfterViewInit, OnDestroy{
        
         if(!this.googleMapsService.terminado){
           this.tiempoEstimado = this.googleMapsService.tiempoEstimado;
-          this.distanciaRestante=this.googleMapsService.distanciaEstimada;
+          if (this.unidadDistancia === 'km') {
+            // Convertir distancia de kilómetros a metros si la unidad actual es km
+            this.distanciaRestante = this.googleMapsService.distanciaEstimada ;
+          } else {
+            // Convertir distancia de metros a kilómetros si la unidad actual es metros
+            this.distanciaRestante = this.googleMapsService.distanciaEstimada * 1000;
+          } 
           setTimeout(actualizar,1000)
         }
         
@@ -139,5 +147,15 @@ export class StartRutasComponent implements AfterViewInit, OnDestroy{
         this.tiempoTranscurrido = contador;
       }, 1000); // Intervalo de 1 segundo
     }
-    
+    toggleUnidadDistancia() {
+      if (this.unidadDistancia === 'km') {
+        // Convertir distancia de kilómetros a metros si la unidad actual es km
+        this.distanciaRestante = this.distanciaRestante * 1000;
+        this.unidadDistancia = 'metros';
+      } else {
+        // Convertir distancia de metros a kilómetros si la unidad actual es metros
+        this.distanciaRestante = this.distanciaRestante / 1000;
+        this.unidadDistancia = 'km';
+      }
+    }
 }

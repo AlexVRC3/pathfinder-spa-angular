@@ -22,6 +22,7 @@ export default class GoogleMapService {
   private $userCompleteRoute: EventEmitter<boolean>;
   tiempoEstimado: number = -1;
   distanciaEstimada: number = -1;
+  posinicial: google.maps.LatLngLiteral | null=null;
   
   constructor() {
     this.map = {} as google.maps.Map;
@@ -98,8 +99,10 @@ iniciarRuta(ruta: Ruta) {
     this.terminado=false;
     this.loader.load().then(() => {
      this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
-        newPosition = posicion;
-        
+       //let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
+      newPosition = posicion;
+        if(this.posinicial==null)
+          this.posinicial=posicion
        if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10))
          this.drawRouteToInitPoint(this.pos!,this.routeCoordinates[0]);
                      
@@ -112,15 +115,14 @@ iniciarRuta(ruta: Ruta) {
             });
         }
         else{
-            //let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
+           
             this.initUserMarker(newPosition);
-            //this.initUserMarker(position);
+           // this.initUserMarker(position);
             this.simulateMovementAlongRoute(this.routeCoordinates, 2000); 
         }
       });
-      });
+     });
     });
-    
   }
   
   initUserMarker(currentPos: google.maps.LatLngLiteral) {
@@ -144,9 +146,9 @@ iniciarRuta(ruta: Ruta) {
   let previousUserPositions : google.maps.LatLngLiteral[] = []; 
   const moveMarker = async () => {
     if (!this.terminado) {
-      //const newPosition = routeCoordinates[index];
-      const newPosition = await this.posicionActual();
-     // this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
+      const newPosition = routeCoordinates[index];
+      //const newPosition = await this.posicionActual();
+      this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
       this.drawUserPath(previousUserPositions);
@@ -195,6 +197,8 @@ posicionActual(): Promise<google.maps.LatLngLiteral> {
       },
       (error: GeolocationPositionError) => {
         reject(error);
+      }, {
+        enableHighAccuracy: true
       }
     );
   });
@@ -205,6 +209,7 @@ finalizar():void{
   this.userMarker=null;
   this.tiempoEstimado = -1;
   this.distanciaEstimada = -1;
+  this.posinicial=null;
 }
 
 
@@ -217,7 +222,7 @@ calcularPos_TiempoRestante(newPosition: google.maps.LatLngLiteral, routeCoordina
     travelMode: google.maps.TravelMode.WALKING
   };
   const request2 = {
-    origin:routeCoordinates[0],
+    origin:this.posinicial!,
     destination:newPosition,
     travelMode: google.maps.TravelMode.WALKING
   };
@@ -228,15 +233,25 @@ let tiempoRestanteMinutos : number;
       if(result != null){
         if(result.routes[0].legs[0].duration)
            this.tiempoEstimado = result.routes[0].legs[0].duration.value / 60;
-        if(result.routes[0].legs[0].distance)
-          this.distanciaEstimada= result.routes[0].legs[0].distance.value /1000;
+        
       } else {
         console.error("Error al obtener la ruta:", status);
       }
       }
   });
 
-
+  directionsService.route(request2, (result, status) => {
+    if (status == google.maps.DirectionsStatus.OK) {
+      if(result != null){
+        if(result.routes[0].legs[0].distance)
+          this.distanciaEstimada= result.routes[0].legs[0].distance.value /1000;
+        
+      } else {
+        console.error("Error al obtener la ruta:", status);
+      }
+     
+    }
+  });
 }
 
 // Calcular la distancia entre dos puntos geográficos utilizando la fórmula del haversine
