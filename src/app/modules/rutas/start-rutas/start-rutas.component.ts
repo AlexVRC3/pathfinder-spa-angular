@@ -7,6 +7,7 @@ import { StickButtonCommunicationService } from 'src/app/shared/services/stick-b
 import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.component';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
 import GoogleMapService from 'src/app/core/services/google/google-map.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-start-rutas',
@@ -20,11 +21,16 @@ unidadDistancia: string="km";
   public modalSwitch: boolean = false;
   private iniciada: boolean;
   public ruta!: Ruta | null;
-  @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
+  private tiempoEstimadoSubscription: Subscription | undefined ;
+  private distanciaRestanteSubscription: Subscription | undefined ;
+  private iniciadaSubscription: Subscription | undefined ;
   tiempoEstimado: number = -1;
   distanciaRestante: number=-1;
   intervalo: any;
   tiempoTranscurrido: number = -1;
+
+  @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
+ 
 
   constructor(private readonly router: Router, 
     private readonly serviceCookie: CookieService, 
@@ -52,10 +58,32 @@ unidadDistancia: string="km";
                    distanciaTotal: 0,
                    duracionTotal: 0
                   };
+                  
+    this.tiempoEstimadoSubscription = this.googleMapsService.tiempoEstimado$.subscribe(tiempo => {
+      this.tiempoEstimado = tiempo;
+    });
+
+    this.distanciaRestanteSubscription = this.googleMapsService.distanciaEstimada$.subscribe(distancia => {
+      this.distanciaRestante = distancia;
+    });
+
+    this.iniciadaSubscription = this.googleMapsService.iniciada$.subscribe(iniciada => {
+      this.iniciada = iniciada;
+    });
     }
   }
   ngOnDestroy(): void {
-   clearInterval(this.intervalo); 
+    clearInterval(this.intervalo); 
+    if (this.tiempoEstimadoSubscription) {
+      this.tiempoEstimadoSubscription.unsubscribe();
+    }
+    if (this.distanciaRestanteSubscription) {
+      this.distanciaRestanteSubscription.unsubscribe();
+    }
+    if (this.iniciadaSubscription) {
+      this.iniciadaSubscription.unsubscribe();
+    }
+
   }
 
 
@@ -64,23 +92,6 @@ unidadDistancia: string="km";
       this.iniciada = true;
       this.mapaRutaComponent.iniciarRuta();
       this.timer();
-      
-      let actualizar=()=>{
-       
-        if(!this.googleMapsService.terminado){
-          this.tiempoEstimado = this.googleMapsService.tiempoEstimado;
-          if (this.unidadDistancia === 'km') {
-            // Convertir distancia de kilómetros a metros si la unidad actual es km
-            this.distanciaRestante = this.googleMapsService.distanciaEstimada ;
-          } else {
-            // Convertir distancia de metros a kilómetros si la unidad actual es metros
-            this.distanciaRestante = this.googleMapsService.distanciaEstimada * 1000;
-          } 
-          setTimeout(actualizar,1000)
-        }
-        
-      };
-      actualizar();
     }
   }
   

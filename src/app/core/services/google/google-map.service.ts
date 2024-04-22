@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Ruta } from '../../data/ruta.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,18 @@ export default class GoogleMapService {
   id: number=-1;
   pos: google.maps.LatLngLiteral| null=null;
   private $userCompleteRoute: EventEmitter<boolean>;
+  private tiempoEstimadoSubject: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  private distanciaEstimadaSubject: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  private iniciadaSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  // Propiedades observables
   tiempoEstimado: number = -1;
   distanciaEstimada: number = -1;
-  //posinicial: google.maps.LatLngLiteral | null=null;
   iniciada: boolean =false;
-  
+
+  tiempoEstimado$: Observable<number> = this.tiempoEstimadoSubject.asObservable();
+  distanciaEstimada$: Observable<number> = this.distanciaEstimadaSubject.asObservable();
+  iniciada$: Observable<boolean> = this.iniciadaSubject.asObservable();
+
   constructor() {
     this.map = {} as google.maps.Map;
     this.$userCompleteRoute =  new EventEmitter<boolean>(false);
@@ -99,8 +107,8 @@ iniciarRuta(ruta: Ruta) {
     let newPosition: google.maps.LatLngLiteral; // Define newPosition fuera de la función
     this.terminado=false;
     this.loader.load().then(() => {
-     this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
-      //let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
+    // this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
+      let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
       newPosition = posicion;
        
        if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10)&&!this.iniciada){
@@ -108,6 +116,7 @@ iniciarRuta(ruta: Ruta) {
        }
        else{
         this.iniciada=true;
+        this.actualizarIniciada(this.iniciada);
        }
          
                      
@@ -126,7 +135,7 @@ iniciarRuta(ruta: Ruta) {
             this.simulateMovementAlongRoute(this.routeCoordinates, 2000); 
         }
       });
-     });
+    // });
     });
   }
   
@@ -151,8 +160,8 @@ iniciarRuta(ruta: Ruta) {
   let previousUserPositions : google.maps.LatLngLiteral[] = []; 
   const moveMarker = async () => {
     if (!this.terminado) {
-      //const newPosition = routeCoordinates[index];
-      const newPosition = await this.posicionActual();
+      const newPosition = routeCoordinates[index];
+    //  const newPosition = await this.posicionActual();
       if(this.iniciada)this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
@@ -165,9 +174,12 @@ iniciarRuta(ruta: Ruta) {
         // Logica del modal
         this.terminado = true;
         this.$userCompleteRoute.emit(this.terminado); //Finalizado real
-        this.tiempoEstimado = 0;
-        this.distanciaEstimada = 0;
-        this.iniciada=false;
+        this.tiempoEstimado=-1;
+        this.actualizarTiempoEstimado(this.tiempoEstimado);
+        this.distanciaEstimada = -1;
+        this.actualizarDistanciaEstimada(this.distanciaEstimada);
+       this.iniciada=false;
+       this.actualizarIniciada(this.iniciada);
         
       }
         
@@ -215,8 +227,11 @@ finalizar():void{
   this.terminado=true;
   this.userMarker=null;
   this.tiempoEstimado = -1;
+  this.actualizarTiempoEstimado(this.tiempoEstimado);
   this.distanciaEstimada = -1;
+  this.actualizarDistanciaEstimada(this.distanciaEstimada);
  this.iniciada=false;
+ this.actualizarIniciada(this.iniciada);
  
 }
 
@@ -241,7 +256,8 @@ let tiempoRestanteMinutos : number;
       if(result != null){
         if(result.routes[0].legs[0].duration)
            this.tiempoEstimado = result.routes[0].legs[0].duration.value / 60;
-        
+        this.actualizarTiempoEstimado(this.tiempoEstimado);
+       
       } else {
         console.error("Error al obtener la ruta:", status);
       }
@@ -253,7 +269,7 @@ let tiempoRestanteMinutos : number;
       if(result != null){
         if(result.routes[0].legs[0].distance)
           this.distanciaEstimada= result.routes[0].legs[0].distance.value /1000;
-        
+        this.actualizarDistanciaEstimada(this.distanciaEstimada);
       } else {
         console.error("Error al obtener la ruta:", status);
       }
@@ -332,7 +348,18 @@ centrar() {
  public destroyEndRouteEmitter(): void {
     this.$userCompleteRoute.emit(false);
  }
+ // Métodos para actualizar los valores
+  actualizarTiempoEstimado(tiempo: number): void {
+    this.tiempoEstimadoSubject.next(tiempo);
+  }
 
+  actualizarDistanciaEstimada(distancia: number): void {
+    this.distanciaEstimadaSubject.next(distancia);
+  }
+
+  actualizarIniciada(iniciada: boolean): void {
+    this.iniciadaSubject.next(iniciada);
+  }
 
 }
 
