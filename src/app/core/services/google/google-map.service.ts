@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Ruta } from '../../data/ruta.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,18 @@ export default class GoogleMapService {
   id: number=-1;
   pos: google.maps.LatLngLiteral| null=null;
   private $userCompleteRoute: EventEmitter<boolean>;
-  
+  private tiempoEstimadoSubject: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  private distanciaEstimadaSubject: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  private iniciadaSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  // Propiedades observables
+  tiempoEstimado: number = -1;
+  distanciaEstimada: number = -1;
+  iniciada: boolean =false;
+
+  tiempoEstimado$: Observable<number> = this.tiempoEstimadoSubject.asObservable();
+  distanciaEstimada$: Observable<number> = this.distanciaEstimadaSubject.asObservable();
+  iniciada$: Observable<boolean> = this.iniciadaSubject.asObservable();
+
   constructor() {
     this.map = {} as google.maps.Map;
     this.$userCompleteRoute =  new EventEmitter<boolean>(false);
@@ -96,10 +108,17 @@ iniciarRuta(ruta: Ruta) {
     this.terminado=false;
     this.loader.load().then(() => {
      this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
-        newPosition = posicion;
-        
-       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10))
-         this.drawRouteToInitPoint(this.pos!,this.routeCoordinates[0]);
+      //let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
+      newPosition = posicion;
+       
+       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10)&&!this.iniciada){
+        this.drawRouteToInitPoint(this.pos!,this.routeCoordinates[0]);
+       }
+       else{
+        this.iniciada=true;
+        this.actualizarIniciada(this.iniciada);
+       }
+         
                      
        google.maps.event.addListenerOnce(this.map, 'idle', () => {
         this.map.setCenter(newPosition);
@@ -110,14 +129,14 @@ iniciarRuta(ruta: Ruta) {
             });
         }
         else{
-            //let position: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};
+           
             this.initUserMarker(newPosition);
             //this.initUserMarker(position);
             this.simulateMovementAlongRoute(this.routeCoordinates, 2000); 
         }
       });
+     });
     });
-});
   }
   
   initUserMarker(currentPos: google.maps.LatLngLiteral) {
@@ -143,18 +162,25 @@ iniciarRuta(ruta: Ruta) {
     if (!this.terminado) {
       //const newPosition = routeCoordinates[index];
       const newPosition = await this.posicionActual();
+      if(this.iniciada)this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
       this.drawUserPath(previousUserPositions);
       index++;
       if(!this.ubicacionEnRango(newPosition,routeCoordinates[routeCoordinates.length-1],10)){
         setTimeout(moveMarker, interval);
-        
       }
       else{
         // Logica del modal
         this.terminado = true;
         this.$userCompleteRoute.emit(this.terminado); //Finalizado real
+        this.tiempoEstimado=-1;
+        this.actualizarTiempoEstimado(this.tiempoEstimado);
+        this.distanciaEstimada = -1;
+        this.actualizarDistanciaEstimada(this.distanciaEstimada);
+       this.iniciada=false;
+       this.actualizarIniciada(this.iniciada);
+        
       }
         
     }
@@ -190,6 +216,8 @@ posicionActual(): Promise<google.maps.LatLngLiteral> {
       },
       (error: GeolocationPositionError) => {
         reject(error);
+      }, {
+        enableHighAccuracy: true
       }
     );
   });
@@ -198,6 +226,56 @@ posicionActual(): Promise<google.maps.LatLngLiteral> {
 finalizar():void{
   this.terminado=true;
   this.userMarker=null;
+  this.tiempoEstimado = -1;
+  this.actualizarTiempoEstimado(this.tiempoEstimado);
+  this.distanciaEstimada = -1;
+  this.actualizarDistanciaEstimada(this.distanciaEstimada);
+ this.iniciada=false;
+ this.actualizarIniciada(this.iniciada);
+ 
+}
+
+
+// Método para calcular el tiempo estimado restante para llegar al destino
+calcularPos_TiempoRestante(newPosition: google.maps.LatLngLiteral, routeCoordinates: google.maps.LatLngLiteral[]): void {
+  const directionsService = new google.maps.DirectionsService();
+  const request = {
+    origin: newPosition,
+    destination: routeCoordinates[routeCoordinates.length-1  ] ,
+    travelMode: google.maps.TravelMode.WALKING
+  };
+  const request2 = {
+    origin:routeCoordinates[0],
+    destination:newPosition,
+    travelMode: google.maps.TravelMode.WALKING
+  };
+let tiempoRestanteMinutos : number;
+  directionsService.route(request, (result, status) => {
+    if (status == google.maps.DirectionsStatus.OK) {
+      
+      if(result != null){
+        if(result.routes[0].legs[0].duration)
+           this.tiempoEstimado = result.routes[0].legs[0].duration.value / 60;
+        this.actualizarTiempoEstimado(this.tiempoEstimado);
+       
+      } else {
+        console.error("Error al obtener la ruta:", status);
+      }
+      }
+  });
+
+  directionsService.route(request2, (result, status) => {
+    if (status == google.maps.DirectionsStatus.OK) {
+      if(result != null){
+        if(result.routes[0].legs[0].distance)
+          this.distanciaEstimada= result.routes[0].legs[0].distance.value /1000;
+        this.actualizarDistanciaEstimada(this.distanciaEstimada);
+      } else {
+        console.error("Error al obtener la ruta:", status);
+      }
+     
+    }
+  });
 }
 
 // Calcular la distancia entre dos puntos geográficos utilizando la fórmula del haversine
@@ -270,6 +348,18 @@ centrar() {
  public destroyEndRouteEmitter(): void {
     this.$userCompleteRoute.emit(false);
  }
+ // Métodos para actualizar los valores
+  actualizarTiempoEstimado(tiempo: number): void {
+    this.tiempoEstimadoSubject.next(tiempo);
+  }
+
+  actualizarDistanciaEstimada(distancia: number): void {
+    this.distanciaEstimadaSubject.next(distancia);
+  }
+
+  actualizarIniciada(iniciada: boolean): void {
+    this.iniciadaSubject.next(iniciada);
+  }
 
 }
 

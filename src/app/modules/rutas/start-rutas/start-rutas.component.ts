@@ -1,4 +1,4 @@
-import {AfterViewInit, Component,ViewChild } from '@angular/core';
+import {AfterViewInit, Component,OnDestroy,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_ROUTE, StartRouteCookie } from 'src/app/core/data/cookie/start-cookie.interface';
@@ -6,23 +6,37 @@ import { Ruta } from 'src/app/core/data/ruta.interface';
 import { StickButtonCommunicationService } from 'src/app/shared/services/stick-button.service';
 import { MapaRutaComponent } from '../detalle-rutas/mapa-ruta/mapa-ruta.component';
 import { NavbarCommunicationService } from 'src/app/shared/services/navbar.service';
+import GoogleMapService from 'src/app/core/services/google/google-map.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-start-rutas',
   templateUrl: './start-rutas.component.html',
   styleUrls: ['./start-rutas.component.css']
 })
-export class StartRutasComponent implements AfterViewInit{
+export class StartRutasComponent implements AfterViewInit, OnDestroy{
+unidadDistancia: string="km";
+
   public hasCompleteUserToShowModal: boolean = false;
   public modalSwitch: boolean = false;
   private iniciada: boolean;
   public ruta!: Ruta | null;
+  private tiempoEstimadoSubscription: Subscription | undefined ;
+  private distanciaRestanteSubscription: Subscription | undefined ;
+  private iniciadaSubscription: Subscription | undefined ;
+  tiempoEstimado: number = -1;
+  distanciaRestante: number=-1;
+  intervalo: any;
+  tiempoTranscurrido: number = -1;
+
   @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
+ 
 
   constructor(private readonly router: Router, 
     private readonly serviceCookie: CookieService, 
     private readonly stickButtonCommunicationService: StickButtonCommunicationService,
-    private readonly navbarService: NavbarCommunicationService) { 
+    private readonly navbarService: NavbarCommunicationService,
+  private readonly googleMapsService: GoogleMapService) { 
     this.navbarService.setActiveSearch(false);
     this.iniciada=false;
     if (!this.serviceCookie.check(COOKIE_ROUTE)) 
@@ -44,15 +58,74 @@ export class StartRutasComponent implements AfterViewInit{
                    distanciaTotal: 0,
                    duracionTotal: 0
                   };
+                  
+    this.tiempoEstimadoSubscription = this.googleMapsService.tiempoEstimado$.subscribe(tiempo => {
+      this.tiempoEstimado = tiempo;
+    });
+
+    this.distanciaRestanteSubscription = this.googleMapsService.distanciaEstimada$.subscribe(distancia => {
+      this.distanciaRestante = distancia;
+    });
+
+    this.iniciadaSubscription = this.googleMapsService.iniciada$.subscribe(iniciada => {
+      this.iniciada = iniciada;
+    });
     }
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.intervalo); 
+    if (this.tiempoEstimadoSubscription) {
+      this.tiempoEstimadoSubscription.unsubscribe();
+    }
+    if (this.distanciaRestanteSubscription) {
+      this.distanciaRestanteSubscription.unsubscribe();
+    }
+    if (this.iniciadaSubscription) {
+      this.iniciadaSubscription.unsubscribe();
+    }
+
   }
 
 
   ngAfterViewInit(): void {
     if (this.mapaRutaComponent && !this.iniciada){
-      this.iniciada=true;
+      this.iniciada = true;
       this.mapaRutaComponent.iniciarRuta();
+      this.timer();
     }
+  }
+  
+  calcularDuracion(duracionTotal: number): string {
+    const horas = Math.floor(duracionTotal / 60);
+    const minutos = Math.floor(duracionTotal % 60);
+    const segundos = Math.floor((duracionTotal - (horas * 60 + minutos)) * 60);
+  
+    const horasStr = horas < 10 ? '0' + horas : horas.toString();
+    const minutosStr = minutos < 10 ? '0' + minutos : minutos.toString();
+    const segundosStr = segundos < 10 ? '0' + segundos : segundos.toString();
+  
+    if (horas === 0) {
+      return `${minutosStr}:${segundosStr}`;
+    } else {
+      return `${horasStr}:${minutosStr}:${segundosStr}`;
+    }
+  }
+
+  formatoTiempo(segundos: number): string {
+    const horas = Math.floor(segundos / 3600);
+    const minutos = Math.floor((segundos % 3600) / 60);
+    const segundosRestantes = segundos % 60;
+  
+    let tiempoFormateado = '';
+  
+    if (horas > 0) {
+      tiempoFormateado += horas.toString().padStart(2, '0') + ':';
+    }
+  
+    tiempoFormateado += minutos.toString().padStart(2, '0') + ':';
+    tiempoFormateado += segundosRestantes.toString().padStart(2, '0');
+  
+    return tiempoFormateado;
   }
 
   finalizar(hasPressedBtnModalEndRoute?: boolean) : void{
@@ -77,5 +150,24 @@ export class StartRutasComponent implements AfterViewInit{
 
   centrar() {
     this.mapaRutaComponent["googleMapService"].centrar();
+  }
+
+  timer(): void {
+      let contador = 0;
+      const intervalo = setInterval(() => {
+        if(this.distanciaRestante!=-1 && this.tiempoEstimado!=-1)contador++;
+        this.tiempoTranscurrido = contador;
+      }, 1000); // Intervalo de 1 segundo
+    }
+    toggleUnidadDistancia() {
+      if (this.unidadDistancia === 'km') {
+        // Convertir distancia de kilómetros a metros si la unidad actual es km
+        this.distanciaRestante = this.distanciaRestante * 1000;
+        this.unidadDistancia = 'm';
+      } else {
+        // Convertir distancia de metros a kilómetros si la unidad actual es metros
+        this.distanciaRestante = this.distanciaRestante / 1000;
+        this.unidadDistancia = 'km';
+      }
     }
 }
