@@ -151,7 +151,7 @@ unidadDistancia: string="km";
       if (this.unidadDistancia === 'km') {
         // Convertir distancia de kilómetros a metros si la unidad actual es km
         this.distanciaRestante = this.distanciaRestante * 1000;
-        this.unidadDistancia = 'metros';
+        this.unidadDistancia = 'm';
       } else {
         // Convertir distancia de metros a kilómetros si la unidad actual es metros
         this.distanciaRestante = this.distanciaRestante / 1000;
