@@ -1,9 +1,9 @@
 export const environment = {
   production: false,
   URL_API: {
-    PROTOCOL: 'https://',
-    PORT: 0,
-    HOST: 'pathfinder2.eu-north-1.elasticbeanstalk.com'
+    PROTOCOL: 'http://',
+    PORT: 8080,
+    HOST: 'localhost'
   },
   PATH: {
     CONTEXT: '',
