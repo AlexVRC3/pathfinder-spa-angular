@@ -13,13 +13,16 @@
 
    <!-- Barra de información debajo del mapa -->
    
-    <div class="route-info">
-      <button class="finish-button" (click)="finalizar()">Finalizar ruta</button>
-      <button class="center-button" (click)="centrar()">
-        <img src="assets\images\gps.png" title="Centrar posición">
-      </button>
-      <div class= "datos" *ngIf="tiempoEstimado !== -1 && distanciaRestante !== -1">
-      <p class="tiempo-estimado" *ngIf="tiempoEstimado !== -1">{{ "Tiempo estimado : " + calcularDuracion(tiempoEstimado) }}</p>
+    <div class="route-info row">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-xl-3">
+        <button class="finish-button btn-movil" (click)="finalizar()">Finalizar ruta</button>
+        <button class="center-button btn-movil" (click)="centrar()">
+          <img src="assets\images\gps.png" title="Centrar posición">
+        </button>
+      </div>
+      
+      <div class= "datos col-xs-12 col-sm-12 col-md-8 col-xl-9" *ngIf="(tiempoEstimado !== -1 && distanciaRestante !== -1)">
+      <p class="tiempo-estimado" *ngIf="tiempoEstimado !== -1">{{ "Tiempo estimado: " + calcularDuracion(tiempoEstimado) }}</p>
       <p class="tiempo-estimado" *ngIf="tiempoEstimado === -1">Tiempo estimado: --:--</p>
       <div class="distancia-estimada" *ngIf="distanciaRestante !== -1">
         <p>{{ "Distancia recorrida: " + distanciaRestante + " " + unidadDistancia }}</p>
@@ -28,9 +31,13 @@
         </button>
       </div>
       <p class="distancia-estimada" *ngIf="distanciaRestante === -1">Distancia recorrida: --km</p>
-      <p class="timer" *ngIf="tiempoTranscurrido !== -1">{{ "Tiempo transcurrido: " + formatoTiempo(tiempoTranscurrido)}}</p>
-      <p class="timer" *ngIf="tiempoTranscurrido === -1">Tiempo transcurrido: --:--</p>
+      <p class="timer" *ngIf=" tiempoTranscurrido !== -1">{{ "Tiempo transcurrido: " + formatoTiempo(tiempoTranscurrido)}}</p>
+      <p class="timer" *ngIf=" tiempoTranscurrido === -1">Tiempo transcurrido: --:--</p>
     </div>
-    <p *ngIf="!(tiempoEstimado !== -1 && distanciaRestante !== -1)" class="warning-message">Dirígete al inicio de la ruta</p>
+    <div class="txt-center col-xs-12 col-sm-12 col-md-4 col-xl-3">
+      <p *ngIf="!(tiempoEstimado !== -1 && distanciaRestante !== -1)" class="warning-message">
+        Dirígete al inicio de la ruta
+      </p>
+    </div>
   </div>
 </div>

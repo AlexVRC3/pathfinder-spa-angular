@@ -111,7 +111,6 @@
   color: white;
 } 
 .tiempo-estimado{
-  margin-left: 20px;
   margin-top: 15px;
   font-size: 16px;
   font-weight: bold;
@@ -164,7 +163,9 @@
   color: white;
 } 
 .warning-message{
-  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   font-size: 16px;
   font-weight: bold;
@@ -176,32 +177,40 @@
 
 /* Agregamos estilos específicos para dispositivos móviles usando media queries */
 @media (max-width: 767px) {
+
+  .finish-button {
+    font-size: 0.65em;
+    padding: 0.75em;
+  }
+
+  .center-button{
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
+  }
+
+  .unidad-button {
+    width: 40px;
+    height: 3.25em;
+  }
+
+  .distancia-estimada, .timer, .tiempo-estimado {
+    font-size: 0.7em;
+  }
   .card {
     margin-bottom: 10px;
     width: 85%;
     position: relative;
   }
-
   .route-info {
-    flex-direction: column-reverse; /* Cambiamos la dirección de los elementos para mostrarlos uno encima del otro */
     align-items: center; /* Alineamos los elementos a la izquierda */
     margin-top: 5px; /* Reducimos el margen superior */
     text-align: center;
   }
-  .datos{
-    flex-direction: column-reverse;
-  }
-
-  .finish-button,
-  .center-button {
-    --bs-btn-padding-y: 0.22rem;
-    --bs-btn-padding-x: 0.22rem;
-    --bs-btn-font-size: 0.700rem;
-    --bs-border-radius-sm: 0.25rem;
-  }
-
+ 
   .warning-message {
     margin-top: 10px; /* Ajustamos el margen superior del mensaje de advertencia */
+    font-size: 10px;
   }
 
   .route-info{

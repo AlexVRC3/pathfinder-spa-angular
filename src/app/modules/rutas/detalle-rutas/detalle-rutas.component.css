@@ -73,9 +73,24 @@
   border-radius: 10px;
 }
 
+@media(max-width: 364px) {
+  .image-container{
+    width: 23vw;
+    height: 150px;
+  }
+  .ubicacion, .distancia, .duracion {
+    font-size: 0.55em !important;
+  }
+  .btn-movil {
+    --bs-btn-padding-y: 0.17rem;
+    --bs-btn-padding-x: 0.17rem;
+    --bs-btn-font-size: 0.7rem;
+    --bs-border-radius-sm: 0.15rem;
+  }
+}
 
 /* Media query para dispositivos móviles */
-@media (max-width: 767px) {
+@media (min-width: 365px) and (max-width: 767px) {
   .image-container {
     width: 105px;
     height: 150px;
