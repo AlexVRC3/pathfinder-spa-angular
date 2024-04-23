@@ -82,20 +82,20 @@
   }
 
   .ubicacion, .distancia, .duracion {
-    font-size: 0.65em !important;
+    font-size: 0.85em !important;
   }
 
   .btn-movil {
     --bs-btn-padding-y: 0.22rem;
     --bs-btn-padding-x: 0.22rem;
-    --bs-btn-font-size: 0.700rem;
+    --bs-btn-font-size: 0.9rem;
     --bs-border-radius-sm: 0.25rem;
   }
 
   .card {
     margin-bottom: 10px;
+    width: 90%;
   }
-
 
 }
 

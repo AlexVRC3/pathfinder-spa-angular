@@ -18,7 +18,7 @@
       <button class="center-button" (click)="centrar()">
         <img src="assets\images\gps.png" title="Centrar posición">
       </button>
-      <div class ="route-info" *ngIf="tiempoEstimado !== -1 && distanciaRestante !== -1">
+      <div class= "datos" *ngIf="tiempoEstimado !== -1 && distanciaRestante !== -1">
       <p class="tiempo-estimado" *ngIf="tiempoEstimado !== -1">{{ "Tiempo estimado : " + calcularDuracion(tiempoEstimado) }}</p>
       <p class="tiempo-estimado" *ngIf="tiempoEstimado === -1">Tiempo estimado: --:--</p>
       <div class="distancia-estimada" *ngIf="distanciaRestante !== -1">
