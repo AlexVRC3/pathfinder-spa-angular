@@ -36,3 +36,11 @@
     border-color: #906b43;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+  .navbar .form-control {
+    font-size: 0.60em;
+    width: 35vw;
+  }
+}
