@@ -15,8 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./start-rutas.component.css']
 })
 export class StartRutasComponent implements AfterViewInit, OnDestroy{
-unidadDistancia: string="km";
-
+  
   public hasCompleteUserToShowModal: boolean = false;
   public modalSwitch: boolean = false;
   private iniciada: boolean;
@@ -28,6 +27,7 @@ unidadDistancia: string="km";
   distanciaRestante: number=-1;
   intervalo: any;
   tiempoTranscurrido: number = -1;
+  unidadDistancia: string="km";
 
   @ViewChild(MapaRutaComponent) mapaRutaComponent!: MapaRutaComponent; 
  
@@ -65,6 +65,10 @@ unidadDistancia: string="km";
 
     this.distanciaRestanteSubscription = this.googleMapsService.distanciaEstimada$.subscribe(distancia => {
       this.distanciaRestante = distancia;
+      if (this.unidadDistancia === 'm') {
+        // Convertir distancia de kilómetros a metros si la unidad actual es km
+        this.distanciaRestante = Math.round(this.distanciaRestante * 1000 * 1000) / 1000; // Redondear a 3 decimales
+      } 
     });
 
     this.iniciadaSubscription = this.googleMapsService.iniciada$.subscribe(iniciada => {
@@ -162,12 +166,13 @@ unidadDistancia: string="km";
     toggleUnidadDistancia() {
       if (this.unidadDistancia === 'km') {
         // Convertir distancia de kilómetros a metros si la unidad actual es km
-        this.distanciaRestante = this.distanciaRestante * 1000;
+        this.distanciaRestante = Math.round(this.distanciaRestante * 1000 * 1000) / 1000; // Redondear a 3 decimales
         this.unidadDistancia = 'm';
       } else {
         // Convertir distancia de metros a kilómetros si la unidad actual es metros
-        this.distanciaRestante = this.distanciaRestante / 1000;
+        this.distanciaRestante = Math.round(this.distanciaRestante / 1000 * 1000) / 1000; // Redondear a 3 decimales
         this.unidadDistancia = 'km';
       }
     }
+    
 }

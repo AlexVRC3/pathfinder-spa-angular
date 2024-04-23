@@ -107,8 +107,8 @@ iniciarRuta(ruta: Ruta) {
     let newPosition: google.maps.LatLngLiteral; // Define newPosition fuera de la función
     this.terminado=false;
     this.loader.load().then(() => {
-    // this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
-      let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
+     this.posicionActual().then((posicion: google.maps.LatLngLiteral) => {
+      //let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
       newPosition = posicion;
        
        if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10)&&!this.iniciada){
@@ -131,12 +131,11 @@ iniciarRuta(ruta: Ruta) {
         else{
            
             this.initUserMarker(newPosition);
-            //this.initUserMarker(posicion);
             this.simulateMovementAlongRoute(this.routeCoordinates, 2000); 
         }
       });
      });
-    //});
+    });
   }
   
   initUserMarker(currentPos: google.maps.LatLngLiteral) {
@@ -160,8 +159,8 @@ iniciarRuta(ruta: Ruta) {
   let previousUserPositions : google.maps.LatLngLiteral[] = []; 
   const moveMarker = async () => {
     if (!this.terminado) {
-      const newPosition = routeCoordinates[index];
-      //const newPosition = await this.posicionActual();
+      //const newPosition = routeCoordinates[index];
+      const newPosition = await this.posicionActual();
       if(this.iniciada)this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
