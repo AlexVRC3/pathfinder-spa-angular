@@ -18,6 +18,8 @@
   top: 20px;
 }
 
+
+
 .card-header {
   position: relative;
   margin-left: 55px;
@@ -42,6 +44,13 @@
   height: 45vh;
   border: 2px solid #e6c17e; 
 } 
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+  .map-container {
+    font-size: 0.60em;
+    width: 100%;
+  }
+}
 
 .image-container {
   width: 170px; 
@@ -49,8 +58,9 @@
   overflow: hidden; 
   margin-top: 20px;
   border: 2px solid #e6c17e; 
+}
 
-}.arrow-button {
+.arrow-button {
   position: absolute;
   top: 20px; 
   left: 20px; 
@@ -61,6 +71,32 @@
   border:none;
   border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
   border-radius: 10px;
+}
+
+
+/* Media query para dispositivos móviles */
+@media (max-width: 767px) {
+  .image-container {
+    width: 105px;
+    height: 150px;
+  }
+
+  .ubicacion, .distancia, .duracion {
+    font-size: 0.65em !important;
+  }
+
+  .btn-movil {
+    --bs-btn-padding-y: 0.22rem;
+    --bs-btn-padding-x: 0.22rem;
+    --bs-btn-font-size: 0.700rem;
+    --bs-border-radius-sm: 0.25rem;
+  }
+
+  .card {
+    margin-bottom: 10px;
+  }
+
+
 }
 
 .arrow-button img {

@@ -24,12 +24,12 @@
            {{ calcularDuracion(ruta.duracionTotal)}} </p>
 
         <button *ngIf="!this.cookie.init || (this.cookie != null && this.cookie.ruta?.id != this.ruta.id);  else btnEndRoute" 
-                class="btn btn-start-route"  
+                class="btn-movil btn btn-start-route"  
                 (click)="startRoute()">
                 Iniciar ruta
           </button>     
         <ng-template #btnEndRoute>
-          <button class="btn btn-start-route disabled" aria-disabled="true"> Ruta en curso</button>
+          <button class="btn btn-movil btn-start-route disabled" aria-disabled="true"> Ruta en curso</button>
         </ng-template>      
        
       </div>
