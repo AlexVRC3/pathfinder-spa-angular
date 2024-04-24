@@ -57,7 +57,7 @@ export default class GoogleMapService {
             
             this.userMarker.setMap(this.map);
             this.userMarker.setPosition(posicion)
-            if(!this.ubicacionEnRango(posicion,this.routeCoordinates[0],10))
+            if(!this.ubicacionEnRango(posicion,this.routeCoordinates[0],10) && !this.iniciada)
               this.drawRouteToInitPoint(posicion,this.routeCoordinates[0]);        
           }
       });
@@ -161,6 +161,7 @@ iniciarRuta(ruta: Ruta) {
     if (!this.terminado) {
       //const newPosition = routeCoordinates[index];
       const newPosition = await this.posicionActual();
+      this.pos = newPosition;
       if(this.iniciada)this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
