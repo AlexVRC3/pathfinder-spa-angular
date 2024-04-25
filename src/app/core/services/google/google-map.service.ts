@@ -111,7 +111,7 @@ iniciarRuta(ruta: Ruta) {
       //let posicion: google.maps.LatLngLiteral = {lat: this.startLocation.lat(), lng: this.startLocation.lng()};  
       newPosition = posicion;
        
-       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],10)&&!this.iniciada){
+       if(!this.ubicacionEnRango(newPosition,this.routeCoordinates[0],15)&&!this.iniciada){
         this.drawRouteToInitPoint(this.pos!,this.routeCoordinates[0]);
        }
        else{
@@ -162,7 +162,13 @@ iniciarRuta(ruta: Ruta) {
       //const newPosition = routeCoordinates[index];
       const newPosition = await this.posicionActual();
       this.pos = newPosition;
-      if(this.iniciada)this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
+      if(this.iniciada){
+        this.calcularPos_TiempoRestante(newPosition,routeCoordinates);
+      }
+      else if(this.ubicacionEnRango(newPosition,this.routeCoordinates[0],15)){ 
+         this.iniciada=true;
+          this.actualizarIniciada(this.iniciada);
+      }
       previousUserPositions.push(newPosition);
       this.initUserMarker(newPosition);
       this.drawUserPath(previousUserPositions);
